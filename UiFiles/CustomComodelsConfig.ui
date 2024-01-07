@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CustomComodelsConfig_Form</class>
+ <widget class="QWidget" name="CustomComodelsConfig_Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>524</width>
+    <height>418</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* QFrame */
+QWidget {
+	border-radius: 15px;
+	background-color: rgb(37, 40, 50);
+}
+/* Label */
+QLabel{
+	color: rgb(255, 255, 255);
+font-size:22px;
+font:normal;
+}
+QComboBox {
+	background-color: rgb(52, 59, 72);
+	border: 1px solid rgb(49, 54, 65);
+	height: 30px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 15px;
+	color: rgb(255, 255, 255);
+    font-size:22px;
+    font:normal; 
+}
+QComboBox QAbstractItemView {
+    background-color:rgb(27, 29, 35);
+	border: 0px;
+	color: #fff;
+    selection-background-color: rgb(22, 51, 79);
+    outline: none;
+}
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgb(22, 51, 79);
+}
+QComboBox::drop-down {
+	border: 0px;
+}
+QComboBox::down-arrow{
+	image: url(&quot;:/icons/icons/cil-chevron-bottom.png&quot;);
+	width:15px;
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on {
+	border: 0px solid rgb(61, 70, 86);
+	background-color: rgb(57, 65, 80)
+}
+QComboBox QListView {
+	background-color: rgb(27, 29, 35);
+	border-radius: 10px;
+	color: #FFF;
+	padding: 10px;
+}
+QComboBox:disabled {
+	background-color: #808080;
+}
+/* ToolButton */
+QToolButton {
+	border: 0px;
+	width: 28px;
+	height: 28px;
+	background-color: transparent;
+	color: rgb(255, 255, 255);
+	border-radius: 15px;
+}
+QToolButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 2px solid rgb(61, 70, 86);
+}
+QToolButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 2px solid rgb(43, 50, 61);
+}
+/* Button */
+QPushButton {
+	border: 0px solid rgb(52, 59, 72);
+	color: rgb(255, 255, 255);
+	border-radius: 10px;
+    background-color:#1b1d23;
+	color: rgb(255, 255, 255);
+	margin:10px;
+	padding:5px;
+font:bold 20px;
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 5px solid transparent;
+}
+QPushButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 7px solid transparent;
+}
+QPushButton:disabled {
+	background-color: rgb(102, 109, 122);
+	color: rgb(168, 168, 168);
+}
+
+QHeaderView::section{
+	Background-color: rgb(39, 44, 54);
+	border: 1px solid rgb(44, 49, 60);
+	color: white;
+	border-style: none;
+    border-bottom: 1px solid rgb(44, 49, 60);
+    border-right: 1px solid rgb(44, 49, 60);
+}
+QGroupBox::title{
+	color: rgb(255, 255, 255);
+	margin-top: 10px;
+	bottom: 20px;
+}
+QGroupBox{
+	margin-top: 10px;
+	background-color: transparent;
+    border: 1px solid rgb(255, 255, 255);
+	padding-top: 20px;
+font:22px;
+font:bold;
+border-color:white;
+}
+
+</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QGroupBox" name="CustomComodConf_groupBox">
+     <property name="title">
+      <string>Custom Comodels config</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="CustomComodelsAdd_Hlayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="CustomComodelsAdd_HSpacer_left">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="CustomComodelsAdd_PushButton">
+          <property name="styleSheet">
+           <string notr="true">    background-color:#1b1d23;
+padding-right:10px;
+padding-left:10px;
+</string>
+          </property>
+          <property name="text">
+           <string>+</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="CustomConfig_InnergroupBox">
+        <property name="title">
+         <string>Config 1</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="HostName_Hlayout">
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <spacer name="HostName_HSpacer_left">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="HostName_HSpacer_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>8</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font-size:22px;
+font:normal</string>
+             </property>
+             <property name="text">
+              <string>Host Name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="HostName_HSpacer_mid">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QComboBox" name="HostName_comboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>20</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:#343b48;
+font:normal;
+font-size:22px;
+border-radius:7px;</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Auto</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>egc-med-bell</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>egc-med-baird</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>egc-med-nozark</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <spacer name="HostName_HSpacer_right">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>65</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="DomainId_Hlayout">
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <spacer name="DomainId_HSpacer_left">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>28</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="DomainId_HSpacer_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>8</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font-size:22px;
+font:normal</string>
+             </property>
+             <property name="text">
+              <string>Domain Id</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="DomainId_HSpacer_mid">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QComboBox" name="DomainId_comboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>20</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:#343b48;
+font:normal;
+font-size:22px;
+border-radius:7px;</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>0</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>3</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <spacer name="DomainId_HSpacer_right">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>65</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
