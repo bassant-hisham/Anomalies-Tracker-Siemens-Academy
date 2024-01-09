@@ -186,7 +186,7 @@ class Ui_MainWindow(object):
         self.toolButtonBrowseOutput_2.setText(_translate("MainWindow", "..."))
         self.ErrorConf.setText(_translate("MainWindow", "Error Configuration"))
     def get_ui_elements(self):
-        return self.RunC, self.ErrorL, self.ErrorC ,  self.ErrorConf , self.toolButtonBrowseOutput_2
+        return self.RunC, self.ErrorL, self.ErrorC ,  self.ErrorConf , self.toolButtonBrowseOutput_2 , self.lineEditOutputDirectory_2
 
 
 if __name__ == "__main__":

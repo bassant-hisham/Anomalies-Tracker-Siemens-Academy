@@ -13,7 +13,7 @@ class CustomRuntimeWindow(QtWidgets.QMainWindow):
         self.widget_resize()
         self.ui.widget.resizeEvent = lambda event: self.window_resize()
 
-        self.RunC, self.ErrorL, self.ErrorC, self.ErrorConf, self.toolButtonBrowseOutput_2 = self.ui.get_ui_elements()
+        self.RunC, self.ErrorL, self.ErrorC, self.ErrorConf, self.toolButtonBrowseOutput_2 ,self.lineEditOutputDirectory_2 = self.ui.get_ui_elements()
         self.ErrorConf.hide()
 
         self.ErrorC.currentTextChanged.connect(self.check_error_conf_visibility)
