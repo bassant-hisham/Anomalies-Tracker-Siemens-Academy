@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Jobs</class>
+ <widget class="QWidget" name="Jobs">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>796</width>
+    <height>527</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+background-color:rgb(37, 40, 50);
+	color: white;
+}
+QScrollBar:horizontal {
+	border: none;
+	background: rgb(52, 59, 72);
+	height: 14px;
+	margin: 0px 21px 0 21px;
+	border-radius: 0px;
+}
+QFrame QScrollBar:vertical {
+	border: none;
+	background: rgb(52, 59, 72);
+	width: 14px;
+	margin: 21px 0 21px 0;
+	border-radius: 0px;
+}
+
+QScrollBar::handle:horizontal {
+	background: rgb(85, 170, 255);
+	min-width: 25px;
+	border-radius: 7px
+}
+QScrollBar::add-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: right;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	subcontrol-position: left;
+	subcontrol-origin: margin;
+}
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal
+{
+	background: none;
+}
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
+	background: none;
+}
+QScrollBar::handle:vertical {
+	background: rgb(85, 170, 255);
+	min-height: 25px;
+	border-radius: 7px
+}
+QScrollBar::add-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="styleSheet">
+      <string notr="true">color:rgb(37, 40, 50);
+QTableWidget::item{
+background-color:rgb(37, 40, 50);
+
+}</string>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents_3">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>772</width>
+        <height>503</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget::pane{
+border-color:none;
+
+background-color:rgb(37, 40, 50);
+}
+
+</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QTableWidget" name="tableWidget">
+         <property name="styleSheet">
+          <string notr="true">QTableWidget::item {
+background-color:rgb(37, 40, 50);
+color:white;
+}</string>
+         </property>
+         <column>
+          <property name="text">
+           <string>Include</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Script Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Run Script</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Error Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Attach GDB</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>EPGM</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DPI</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Controller</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Environment Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Design Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Compile Design</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Source Design Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Output Directory</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Force</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Timeout</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Launch DPI</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Terminate DPI</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Terminate DPI on Error</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Design Path (Launch)</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Design Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Record Directory</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Configuration Value</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Replay Directory</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Reply Directory</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DPI Launch Mode</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>DPI Launch Type</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Use Custom Comodel Config</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Custom Comodel Config</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
