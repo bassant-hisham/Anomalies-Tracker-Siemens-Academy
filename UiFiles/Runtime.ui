@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>715</width>
+    <height>246</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>691</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget{
+	border-radius: 15px;
+	background-color: rgb(37, 40, 50);
+}
+QCheckBox{
+	color: rgb(255, 255, 255);
+	font-size: 11pt;
+}
+QComboBox {
+	background-color: rgb(52, 59, 72);
+	border: 1px solid rgb(49, 54, 65);
+	height: 30px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 15px;
+	color: rgb(255, 255, 255);
+}
+QComboBox QAbstractItemView {
+    background-color:rgb(27, 29, 35);
+	border: 0px;
+	color: #fff;
+    selection-background-color: rgb(22, 51, 79);
+    outline: none;
+}
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgb(22, 51, 79);
+}
+QComboBox:on {
+	border: 0px solid rgb(61, 70, 86);
+	background-color: rgb(57, 65, 80)
+}
+QComboBox QListView {
+	background-color: rgb(27, 29, 35);
+	border-radius: 10px;
+	color: #FFF;
+	padding: 10px;
+}
+QComboBox:disabled {
+	background-color: #808080;
+}
+/* Label */
+QLabel{
+	color: rgb(255, 255, 255);
+	font-size: 11pt;
+
+}
+QLineEdit{
+	border: 0px solid rgb(37, 39, 48);
+	height: 30px;
+	border-radius: 15px;
+	color: white;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: rgb(27, 29, 35);
+}
+QLineEdit:hover{
+	border: 2px solid rgb(64, 71, 88)
+}
+QLineEdit:focus{
+	border: 3px solid rgb(91, 101, 124);
+	color: white;
+}
+QLineEdit:disabled {
+	background-color: #808080;
+}
+/* QGroupBox  */
+QGroupBox{
+	margin-top: 10px;
+	background-color: transparent;
+    border: 1px solid rgb(255, 255, 255);
+	padding-top: 20px;
+}
+QGroupBox::title{
+	color: rgb(255, 255, 255);
+	font-size: 12pt;
+	margin-top: 10px;
+	bottom: 20px;
+}
+/* Button */
+QPushButton {
+	border: 0px solid rgb(52, 59, 72);
+	background-color: rgb(52, 59, 72);
+	color: rgb(255, 255, 255);
+	border-radius: 10px;
+	margin-right:10px;
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 5px solid transparent;
+}
+QPushButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 7px solid transparent;
+}
+QPushButton:disabled {
+	background-color: rgb(102, 109, 122);
+	color: rgb(168, 168, 168);
+}
+</string>
+    </property>
+    <widget class="QCheckBox" name="RunC">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Run Script</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="ErrorC">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>100</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Mismatch</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Crash</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Hang</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="ErrorL">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Error Type</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="directoryLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>91</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>MS Shell Dlg 2</family>
+       <pointsize>11</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="text">
+      <string>Script Path</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditOutputDirectory_2">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>551</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="toolButtonBrowseOutput_2">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>20</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QToolButton {
+    border: none; /* Remove border */
+    background-color: transparent; /* Set background color to transparent */
+}
+
+QToolButton::icon {
+    background-color: transparent; /* Set icon background color to transparent */
+}</string>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../First Try/file.png</normaloff>../First Try/file.png</iconset>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ErrorConf">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>100</y>
+       <width>191</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Error Configuration</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
