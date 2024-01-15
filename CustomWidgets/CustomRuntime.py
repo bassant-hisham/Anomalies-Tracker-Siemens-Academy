@@ -57,11 +57,6 @@ class CustomRuntimeWindow(QtWidgets.QMainWindow):
             selected_button = self.config_window_hang.button_group.checkedButton()
             if selected_button:
                 self.running_configurations['crash_configurations']['crashed_process'] = selected_button.text()
-                # print("Selected:", selected_button.text())
-            # if self.config_window_hang.checkbox1.isChecked():
-            #     self.running_configurations['crash_configurations']['crashed_process'] = "EPGM"
-            # elif self.config_window_hang.checkbox2.isChecked():
-            #     self.running_configurations['crash_configurations']['crashed_process'] = "Controller"
         print(self.running_configurations)
 
             
