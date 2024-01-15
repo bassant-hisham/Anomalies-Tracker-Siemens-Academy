@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QCheckBox, QPushButton, QWidget
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QRadioButton, QPushButton, QWidget,QButtonGroup
 from PyQt5.QtCore import Qt
 
 class HangConfigWindow(QMainWindow):
@@ -9,9 +9,11 @@ class HangConfigWindow(QMainWindow):
         layout = QVBoxLayout()
 
         # Create Checkboxes
-        self.checkbox1 = QCheckBox('EPGM', self)
-        self.checkbox2 = QCheckBox('Controller', self)
-
+        self.radiobutton1 = QRadioButton('EPGM', self)
+        self.radiobutton2 = QRadioButton('Controller', self)
+        self.button_group = QButtonGroup(self)
+        self.button_group.addButton(self.radiobutton1)
+        self.button_group.addButton(self.radiobutton2)
         # Apply styles
         self.setStyleSheet(
             """
@@ -19,7 +21,7 @@ class HangConfigWindow(QMainWindow):
                 border-radius: 15px;
                 background-color: rgb(37, 40, 50);
             }
-            QCheckBox {
+            QRadioButton {
                 color: rgb(255, 255, 255);
                 font-size: 11pt;
             }
@@ -42,8 +44,8 @@ QPushButton:disabled {
             """
         )
 
-        layout.addWidget(self.checkbox1)
-        layout.addWidget(self.checkbox2)
+        layout.addWidget(self.radiobutton1)
+        layout.addWidget(self.radiobutton2)
 
         # Close button
         close_button = QPushButton('Done', self)

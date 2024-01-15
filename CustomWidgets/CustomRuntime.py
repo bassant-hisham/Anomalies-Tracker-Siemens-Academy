@@ -21,6 +21,7 @@ class CustomRuntimeWindow(QtWidgets.QMainWindow):
 
         self.config_window_crash = CrashConfigWindow(self)
         self.config_window_hang = HangConfigWindow(self)  # Create an instance of HangConfigWindow
+        self.running_configurations = {}
 
     def check_error_conf_visibility(self, selected_text):
         if selected_text in ["Crash", "Hang"]:
@@ -41,7 +42,29 @@ class CustomRuntimeWindow(QtWidgets.QMainWindow):
     def widget_resize(self):
         self.ui.widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.window_resize()
+    
+    def collect_running_config(self):
+        self.running_configurations['script_path'] = self.lineEditOutputDirectory_2.text()
+        self.running_configurations['run_script'] = self.RunC.isChecked()
+        self.running_configurations['error_type'] = self.ErrorC.currentText()
+        self.running_configurations['crash_configurations'] = {}
 
+        if self.running_configurations['error_type'] == "Crash":
+            self.running_configurations['crash_configurations']['crashed_process'] = self.config_window_crash.tool_combo_box.currentText()
+            self.running_configurations['crash_configurations']['attach_gdb'] = self.config_window_crash.checkbox1.isChecked()
+        
+        if self.running_configurations['error_type'] == "Hang":
+            selected_button = self.config_window_hang.button_group.checkedButton()
+            if selected_button:
+                self.running_configurations['crash_configurations']['crashed_process'] = selected_button.text()
+                # print("Selected:", selected_button.text())
+            # if self.config_window_hang.checkbox1.isChecked():
+            #     self.running_configurations['crash_configurations']['crashed_process'] = "EPGM"
+            # elif self.config_window_hang.checkbox2.isChecked():
+            #     self.running_configurations['crash_configurations']['crashed_process'] = "Controller"
+        print(self.running_configurations)
+
+            
 def run_custom_runtime():
     import sys
     app = QtWidgets.QApplication(sys.argv)

@@ -10,10 +10,10 @@ class CrashConfigWindow(QMainWindow):
         # Create a QHBoxLayout for the label and combo box
         tool_layout = QHBoxLayout()
         tool_label = QLabel("Tool Name")
-        tool_combo_box = QComboBox(self)
-        tool_combo_box.addItems(["EPGM", "DPI", "Controller"])
+        self.tool_combo_box = QComboBox(self)
+        self.tool_combo_box.addItems(["EPGM", "DPI", "Controller"])
         tool_layout.addWidget(tool_label)
-        tool_layout.addWidget(tool_combo_box)
+        tool_layout.addWidget(self.tool_combo_box)
         layout.addLayout(tool_layout)
 
         # Create Checkboxes
