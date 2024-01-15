@@ -152,3 +152,22 @@ class Add_DUTConfClass():
             self.DutConfgObject.FromConfigValue_Hlayout.addWidget(self.ConfigValue)
             self.DutConfgObject.FromConfigValue_Hlayout.addItem(spacerItem_right)
             #self.DutConfgObject.ConfigValue_Vlayout.addLayout(self.DutConfgObject.FromConfigValue_Hlayout)
+    def collect_data(self):
+                data = {
+                        "TerminateDPIOnError_checkBox": self.DutConfgObject.TerminateDPIOnError_checkBox.isChecked(),
+                        "TermianteDPI_checkBox": self.DutConfgObject.TermianteDPI_checkBox.isChecked(),
+                        "LanuchDPI_checkBox": self.DutConfgObject.LanuchDPI_checkBox.isChecked(),
+                        "AVB_ListView": self.DutConfgObject.AVB_ListView.selectedIndexes(),
+                        "DesignPath_lineEdit": self.DutConfgObject.DesignPath_lineEdit.text(),
+                        "RecordDir_HSpacer_lineEdit": self.DutConfgObject.RecordDir_HSpacer_lineEdit.text(),
+                        "ConfigType_comboBox":self.DutConfgObject.ConfigType_comboBox.currentText(),
+                        "FromConfigValue_lineEdit": self.DutConfgObject.FromConfigValue_lineEdit.text(),
+                        "ToConfigValue_lineEdit": self.DutConfgObject.ToConfigValue_lineEdit.text(),
+                        "ReplyDir_lineEdit": self.DutConfgObject.ReplyDir_lineEdit.text(),
+                        "ReplySnapshotName_lineEdit": self.DutConfgObject.ReplySnapshotName_lineEdit.text(),
+                        "DPILaunchMode_lineEdit": self.DutConfgObject.DPILaunchMode_lineEdit.text(),
+                        "DPILaunchType_comboBox": self.DutConfgObject.DPILaunchType_comboBox.currentText(),
+                        "EnvVarName_HSpacer_mid_lineEdit": self.DutConfgObject.EnvVarName_HSpacer_mid_lineEdit.text(),
+                        "CustomComConf_checkbox": self.DutConfgObject.CustomComConf_checkbox.isChecked(),
+                }
+                return data

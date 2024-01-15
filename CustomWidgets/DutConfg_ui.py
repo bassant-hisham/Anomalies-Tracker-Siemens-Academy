@@ -994,22 +994,4 @@ class Ui_DutConf_Form(object):
         self.EnvVarName_label.setText(_translate("DutConf_Form", "Env Variable Name"))
         self.EnvVarValue_label.setText(_translate("DutConf_Form", "Env Variable Value"))
         self.CustomComConf_checkbox.setText(_translate("DutConf_Form", "Use Custom Comodels Config"))
-        def collect_data(ui_instance):
-                data = {
-                        "TerminateDPIOnError_checkBox": ui_instance.TerminateDPIOnError_checkBox.isChecked(),
-                        "TermianteDPI_checkBox": ui_instance.TermianteDPI_checkBox.isChecked(),
-                        "LanuchDPI_checkBox": ui_instance.LanuchDPI_checkBox.isChecked(),
-                        "AVB_ListView": ui_instance.AVB_ListView.currentItem().text(),
-                        "DesignPath_lineEdit": ui_instance.DesignPath_lineEdit.text(),
-                        "RecordDir_HSpacer_lineEdit": ui_instance.RecordDir_HSpacer_lineEdit.text(),
-                        "ConfigType_comboBox": ui_instance.ConfigType_comboBox.currentText(),
-                        "FromConfigValue_lineEdit": ui_instance.FromConfigValue_lineEdit.text(),
-                        "ToConfigValue_lineEdit": ui_instance.ToConfigValue_lineEdit.text(),
-                        "ReplyDir_lineEdit": ui_instance.ReplyDir_lineEdit.text(),
-                        "ReplySnapshotName_lineEdit": ui_instance.ReplySnapshotName_lineEdit.text(),
-                        "DPILaunchMode_lineEdit": ui_instance.DPILaunchMode_lineEdit.text(),
-                        "DPILaunchType_comboBox": ui_instance.DPILaunchType_comboBox.currentText(),
-                        "EnvVarName_HSpacer_mid_lineEdit": ui_instance.EnvVarName_HSpacer_mid_lineEdit.text(),
-                        "CustomComConf_checkbox": ui_instance.CustomComConf_checkbox.isChecked(),
-                }
-                return data
+       

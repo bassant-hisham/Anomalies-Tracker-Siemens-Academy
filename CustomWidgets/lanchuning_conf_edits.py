@@ -20,6 +20,8 @@ class Ui_lanchuning_configEdits(Ui_lanchuning_config):
         self.DutConfCounter+=1
         self.DutObject=Add_DUTConfClass(self.ui_lanchuning_configObject,self.DutConfs_VLayout,self.DutConfCounter)
         self.listGroupBoxes.append(self.DutObject)
+    def GetList(self):
+        return self.listGroupBoxes
         
 
 
