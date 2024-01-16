@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from CustomWidgets.RuntimeUI import Ui_MainWindow as Ui_Running_MainWindow
+from Runtime import Ui_MainWindow as Ui_Running_MainWindow
 from CustomRuntime import CustomRuntimeWindow
 from commonFunctions import *
 
