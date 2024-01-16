@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from Runtime import Ui_MainWindow
+from CustomWidgets.RuntimeUI import Ui_MainWindow
 from CrashConfigUI import CrashConfigWindow
 from HangConfigUI import HangConfigWindow  # Import HangConfigWindow
 from PyQt5.QtWidgets import *
