@@ -1,19 +1,23 @@
 from PyQt5 import QtWidgets
-from Runtime import Ui_MainWindow
+from Runtime2 import Ui_MainWindow
 from CrashConfig import CrashConfigWindow
 from HangConfig import HangConfigWindow  # Import HangConfigWindow
+from PyQt5.QtWidgets import *
 
-class CustomRuntimeWindow(QtWidgets.QMainWindow):
+class CustomRuntimeWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        #self.widget_resize()
+        #self.ui.groupBox.resizeEvent = lambda event: self.window_resize()
 
-        self.setCentralWidget(self.ui.widget)
-        self.widget_resize()
-        self.ui.widget.resizeEvent = lambda event: self.window_resize()
-
-        self.RunC, self.ErrorL, self.ErrorC, self.ErrorConf, self.toolButtonBrowseOutput_2 ,self.lineEditOutputDirectory_2 = self.ui.get_ui_elements()
+        self.RunC=self.ui.RunC_2
+        self.ErrorL=self.ui.ErrorL_2
+        self.ErrorC=self.ui.ErrorC_2
+        self.ErrorConf=self.ui.ErrorConf_2
+        self.toolButtonBrowseOutput_2=self.ui.toolButtonBrowseDatabase_3 
+        self.lineEditOutputDirectory_2 = self.ui.lineEditDatabasePath_2
         self.ErrorConf.hide()
 
         self.ErrorC.currentTextChanged.connect(self.check_error_conf_visibility)
@@ -36,12 +40,12 @@ class CustomRuntimeWindow(QtWidgets.QMainWindow):
         elif selected_text == "Hang":  # Check for Hang error type
             self.config_window_hang.show_window()
 
-    def window_resize(self):
-        self.ui.widget.resize(self.centralWidget().size())
+    # def window_resize(self):
+    #     self.ui.groupBox.resize(self.centralWidget().size())
 
-    def widget_resize(self):
-        self.ui.widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        self.window_resize()
+    # def widget_resize(self):
+    #     self.ui.groupBox.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+    #     self.window_resize()
     
     def collect_running_config(self):
         self.running_configurations['script_path'] = self.lineEditOutputDirectory_2.text()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>771</width>
-    <height>552</height>
+    <width>759</width>
+    <height>449</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,13 +19,12 @@ background-color:rgb(37, 40, 50);
 	color: white;
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="font">
       <font>
        <pointsize>8</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -114,6 +113,73 @@ QPushButton:disabled {
       <attribute name="title">
        <string>Running Configurations</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>658</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>51</width>
+             <height>41</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>51</width>
+             <height>41</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>+</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaRunningConfig">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>721</width>
+            <height>339</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="environments">
       <property name="styleSheet">
@@ -134,7 +200,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -187,7 +252,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -231,7 +295,6 @@ QPushButton:disabled {
             <property name="font">
              <font>
               <pointsize>11</pointsize>
-              <weight>50</weight>
               <bold>false</bold>
              </font>
             </property>
@@ -260,7 +323,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -289,7 +351,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -334,7 +395,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -363,7 +423,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -404,7 +463,6 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>10</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -424,7 +482,6 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>10</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -483,7 +540,6 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>13</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -504,8 +560,8 @@ QPushButton:disabled {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>725</width>
-            <height>85</height>
+            <width>721</width>
+            <height>339</height>
            </rect>
           </property>
          </widget>
