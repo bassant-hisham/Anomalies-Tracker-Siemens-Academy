@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from DutConfg_ui import Ui_DutConf_Form
 from CustomComodelsConfig_ui import Ui_CustomComodelsConfig_Form
 from AddCustomConfig import AddCustomConfig
+from commonFunctions import *
 
 class Add_DUTConfClass():
     def __init__(self, ui_lanchuning_config : Ui_lanchuning_config, DutConfs_VLayout : QtWidgets.QVBoxLayout,DutConfCounter: int):
@@ -13,6 +14,8 @@ class Add_DUTConfClass():
         self.DutConfCounter= DutConfCounter
         self.CustomConfCounter=1
         self.Add_DUTConf()
+
+         
 
     def Add_DUTConf(self) -> None:
 

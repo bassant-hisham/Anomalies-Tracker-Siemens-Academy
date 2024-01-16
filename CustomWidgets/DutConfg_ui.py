@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\Siemens diploma\Final project\task2\python code\DutConfg.ui'
+# Form implementation generated from reading ui file 'd:\Siemens diploma\Anomalies-Tracker-Siemens-Academy\UiFiles\DutConfg.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -351,7 +351,7 @@ class Ui_DutConf_Form(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 735, 987))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -63, 735, 987))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -582,19 +582,19 @@ class Ui_DutConf_Form(object):
         self.RecordDir_Hlayout.addWidget(self.RecordDir_label)
         spacerItem8 = QtWidgets.QSpacerItem(25, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.RecordDir_Hlayout.addItem(spacerItem8)
-        self.RecordDir_HSpacer_lineEdit = QtWidgets.QLineEdit(self.RecordConf_Groupbox)
+        self.RecordDir_lineEdit = QtWidgets.QLineEdit(self.RecordConf_Groupbox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(50)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.RecordDir_HSpacer_lineEdit.sizePolicy().hasHeightForWidth())
-        self.RecordDir_HSpacer_lineEdit.setSizePolicy(sizePolicy)
-        self.RecordDir_HSpacer_lineEdit.setStyleSheet("background-color: #1b1d23;\n"
+        sizePolicy.setHeightForWidth(self.RecordDir_lineEdit.sizePolicy().hasHeightForWidth())
+        self.RecordDir_lineEdit.setSizePolicy(sizePolicy)
+        self.RecordDir_lineEdit.setStyleSheet("background-color: #1b1d23;\n"
 "font:normal;\n"
 "")
-        self.RecordDir_HSpacer_lineEdit.setObjectName("RecordDir_HSpacer_lineEdit")
-        self.RecordDir_Hlayout.addWidget(self.RecordDir_HSpacer_lineEdit)
-        self.RecordDir_HSpacer_toolButton = QtWidgets.QToolButton(self.RecordConf_Groupbox)
-        self.RecordDir_HSpacer_toolButton.setStyleSheet("QToolButton{\n"
+        self.RecordDir_lineEdit.setObjectName("RecordDir_lineEdit")
+        self.RecordDir_Hlayout.addWidget(self.RecordDir_lineEdit)
+        self.RecordDir_toolButton = QtWidgets.QToolButton(self.RecordConf_Groupbox)
+        self.RecordDir_toolButton.setStyleSheet("QToolButton{\n"
 "background-color:none;\n"
 "border:none;\n"
 "}\n"
@@ -602,8 +602,8 @@ class Ui_DutConf_Form(object):
 "background-color: #394150;\n"
 "border-radius:13px;\n"
 "}")
-        self.RecordDir_HSpacer_toolButton.setObjectName("RecordDir_HSpacer_toolButton")
-        self.RecordDir_Hlayout.addWidget(self.RecordDir_HSpacer_toolButton)
+        self.RecordDir_toolButton.setObjectName("RecordDir_toolButton")
+        self.RecordDir_Hlayout.addWidget(self.RecordDir_toolButton)
         spacerItem9 = QtWidgets.QSpacerItem(30, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.RecordDir_Hlayout.addItem(spacerItem9)
         self.verticalLayout_4.addLayout(self.RecordDir_Hlayout)
@@ -971,7 +971,7 @@ class Ui_DutConf_Form(object):
         self.DesignPath_label.setText(_translate("DutConf_Form", "Design Path"))
         self.RecordConf_Groupbox.setTitle(_translate("DutConf_Form", "Record Configurations"))
         self.RecordDir_label.setText(_translate("DutConf_Form", "Record Directory"))
-        self.RecordDir_HSpacer_toolButton.setText(_translate("DutConf_Form", "..."))
+        self.RecordDir_toolButton.setText(_translate("DutConf_Form", "..."))
         self.Snapshots_GroupBox.setTitle(_translate("DutConf_Form", "SnapShots Number"))
         self.ConfigType_label.setText(_translate("DutConf_Form", "Config Type"))
         self.ConfigType_comboBox.setItemText(0, _translate("DutConf_Form", "Range"))
@@ -994,4 +994,3 @@ class Ui_DutConf_Form(object):
         self.EnvVarName_label.setText(_translate("DutConf_Form", "Env Variable Name"))
         self.EnvVarValue_label.setText(_translate("DutConf_Form", "Env Variable Value"))
         self.CustomComConf_checkbox.setText(_translate("DutConf_Form", "Use Custom Comodels Config"))
-       

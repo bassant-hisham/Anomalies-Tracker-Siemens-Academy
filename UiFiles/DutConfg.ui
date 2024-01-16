@@ -356,7 +356,7 @@ QListWidget
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-63</y>
         <width>735</width>
         <height>987</height>
        </rect>
@@ -938,7 +938,7 @@ font:normal</string>
                 </spacer>
                </item>
                <item>
-                <widget class="QLineEdit" name="RecordDir_HSpacer_lineEdit">
+                <widget class="QLineEdit" name="RecordDir_lineEdit">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                    <horstretch>50</horstretch>
@@ -953,7 +953,7 @@ font:normal;
                 </widget>
                </item>
                <item>
-                <widget class="QToolButton" name="RecordDir_HSpacer_toolButton">
+                <widget class="QToolButton" name="RecordDir_toolButton">
                  <property name="styleSheet">
                   <string notr="true">QToolButton{
 background-color:none;
