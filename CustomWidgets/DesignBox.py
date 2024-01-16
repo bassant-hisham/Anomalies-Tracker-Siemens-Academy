@@ -3,7 +3,7 @@ from PyQt5 import QtWidgets
 from commonFunctions import *
 from CompilationConfigurationWindow import MyCompilationConfigWindow 
 from LaunchingConfigurationWindow import MyLaunchingConfigWindow
-from DesignBoxUI import Ui_GroupBox
+from UIs.DesignBoxUI import Ui_GroupBox
 
 class MyDesignBox(QtWidgets.QGroupBox,Ui_GroupBox):
     def __init__(self,id):

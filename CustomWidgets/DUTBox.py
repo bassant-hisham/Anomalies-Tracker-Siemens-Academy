@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-from DUTBoxUI import Ui_DUTConfiguration
+from UIs.DUTBoxUI import Ui_DUTConfiguration
 from CustomCoModelsConfig import CustomCoModelsConfig
 from commonFunctions import *
 import ast  # Import the ast module for safer evaluation

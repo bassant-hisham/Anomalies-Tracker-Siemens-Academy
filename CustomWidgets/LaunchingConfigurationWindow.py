@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-from LaunchingConfigUI import Ui_launching_config
+from UIs.LaunchingConfigUI import Ui_launching_config
 from commonFunctions import *
 from DUTBox import MyDUTGroupBox
 

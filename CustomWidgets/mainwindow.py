@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
-from MainWindowUI import Ui_MainWindow
+from UIs.MainWindowUI import Ui_MainWindow
 from CompilationConfigurationWindow import MyCompilationConfigWindow
 from LaunchingConfigurationWindow import MyLaunchingConfigWindow
 from TaskTabIntegrated import MyTaskTab

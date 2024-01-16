@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
-from CompilationConfigUI import Ui_Form
+from UIs.CompilationConfigUI import Ui_Form
 from commonFunctions import *
 
 class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_Form):

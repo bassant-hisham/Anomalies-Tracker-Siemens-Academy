@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from CustomComodelsConfigUI import Ui_CustomComodelsConfig_Form
+from UIs.CustomComodelsConfigUI import Ui_CustomComodelsConfig_Form
 from ComodelsConfigBox import MyComodelsConfigGroupBox
 
 class CustomCoModelsConfig(QtWidgets.QWidget, Ui_CustomComodelsConfig_Form):
