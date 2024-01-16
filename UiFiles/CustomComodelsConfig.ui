@@ -21,6 +21,7 @@ QWidget {
 }
 /* Label */
 QLabel{
+background-color:none;
 	color: rgb(255, 255, 255);
 font-size:22px;
 font:normal;
@@ -392,6 +393,9 @@ border-radius:7px;</string>
          </item>
         </layout>
        </widget>
+      </item>
+      <item row="2" column="0">
+       <layout class="QVBoxLayout" name="ConfigVLayout"/>
       </item>
      </layout>
     </widget>

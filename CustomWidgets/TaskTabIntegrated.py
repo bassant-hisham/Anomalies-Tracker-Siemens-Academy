@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
-from TaskTab import Ui_Task_Tab
+from TaskTabUI import Ui_Task_Tab
 from commonFunctions import *
-from DesignBoxIntegrated import MyDesignBox
+from DesignBox import MyDesignBox
 from AddRuntime import MyRunningConfigurations
 
 

@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 from Runtime import Ui_MainWindow
-from CrashConfig import CrashConfigWindow
-from HangConfig import HangConfigWindow  # Import HangConfigWindow
+from CrashConfigUI import CrashConfigWindow
+from HangConfigUI import HangConfigWindow  # Import HangConfigWindow
 from PyQt5.QtWidgets import *
 
 class CustomRuntimeWindow(QtWidgets.QWidget):
