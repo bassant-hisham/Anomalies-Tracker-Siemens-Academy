@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Runtime.ui'
+# Form implementation generated from reading ui file 'd:\Siemens diploma\Anomalies-Tracker-Siemens-Academy\UiFiles\Runtime2.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -14,12 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(715, 246)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(10, 50, 691, 151))
-        self.widget.setStyleSheet("QWidget{\n"
+        MainWindow.resize(654, 356)
+        MainWindow.setStyleSheet("QWidget{\n"
 "    border-radius: 15px;\n"
 "    background-color: rgb(37, 40, 50);\n"
 "}\n"
@@ -118,43 +114,135 @@ class Ui_MainWindow(object):
 "    color: rgb(168, 168, 168);\n"
 "}\n"
 "")
-        self.widget.setObjectName("widget")
-        self.RunC = QtWidgets.QCheckBox(self.widget)
-        self.RunC.setGeometry(QtCore.QRect(10, 60, 121, 21))
-        self.RunC.setObjectName("RunC")
-        self.ErrorC = QtWidgets.QComboBox(self.widget)
-        self.ErrorC.setGeometry(QtCore.QRect(100, 100, 101, 21))
-        self.ErrorC.setObjectName("ErrorC")
-        self.ErrorC.addItem("")
-        self.ErrorC.addItem("")
-        self.ErrorC.addItem("")
-        self.ErrorL = QtWidgets.QLabel(self.widget)
-        self.ErrorL.setGeometry(QtCore.QRect(10, 100, 91, 21))
-        self.ErrorL.setObjectName("ErrorL")
-        self.directoryLabel_2 = QtWidgets.QLabel(self.widget)
-        self.directoryLabel_2.setGeometry(QtCore.QRect(10, 20, 91, 30))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.directoryLabel_2.sizePolicy().hasHeightForWidth())
-        self.directoryLabel_2.setSizePolicy(sizePolicy)
+        self.verticalLayout = QtWidgets.QVBoxLayout(MainWindow)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.groupBox = QtWidgets.QGroupBox(MainWindow)
+        self.groupBox.setStyleSheet("QWidget{\n"
+"    border-radius: 15px;\n"
+"    background-color: rgb(37, 40, 50);\n"
+"}\n"
+"QCheckBox{\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-size: 11pt;\n"
+"}\n"
+"QComboBox {\n"
+"    background-color: rgb(52, 59, 72);\n"
+"    border: 1px solid rgb(49, 54, 65);\n"
+"    height: 30px;\n"
+"    border-radius: 10px;\n"
+"    padding-left: 10px;\n"
+"    padding-right: 15px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color:rgb(27, 29, 35);\n"
+"    border: 0px;\n"
+"    color: #fff;\n"
+"    selection-background-color: rgb(22, 51, 79);\n"
+"    outline: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgb(22, 51, 79);\n"
+"}\n"
+"QComboBox:on {\n"
+"    border: 0px solid rgb(61, 70, 86);\n"
+"    background-color: rgb(57, 65, 80)\n"
+"}\n"
+"QComboBox QListView {\n"
+"    background-color: rgb(27, 29, 35);\n"
+"    border-radius: 10px;\n"
+"    color: #FFF;\n"
+"    padding: 10px;\n"
+"}\n"
+"QComboBox:disabled {\n"
+"    background-color: #808080;\n"
+"}\n"
+"/* Label */\n"
+"QLabel{\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-size: 11pt;\n"
+"\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 0px solid rgb(37, 39, 48);\n"
+"    height: 30px;\n"
+"    border-radius: 15px;\n"
+"    color: white;\n"
+"    padding-left: 20px;\n"
+"    padding-right: 20px;\n"
+"    background-color: rgb(27, 29, 35);\n"
+"}\n"
+"QLineEdit:hover{\n"
+"    border: 2px solid rgb(64, 71, 88)\n"
+"}\n"
+"QLineEdit:focus{\n"
+"    border: 3px solid rgb(91, 101, 124);\n"
+"    color: white;\n"
+"}\n"
+"QLineEdit:disabled {\n"
+"    background-color: #808080;\n"
+"}\n"
+"/* QGroupBox  */\n"
+"QGroupBox{\n"
+"    margin-top: 10px;\n"
+"    background-color: transparent;\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    padding-top: 20px;\n"
+"}\n"
+"QGroupBox::title{\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-size: 12pt;\n"
+"    margin-top: 10px;\n"
+"    bottom: 20px;\n"
+"    font-style:bold;\n"
+"\n"
+"}\n"
+"/* Button */\n"
+"QPushButton {\n"
+"    border: 0px solid rgb(52, 59, 72);\n"
+"    background-color: rgb(52, 59, 72);\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-radius: 10px;\n"
+"    margin-right:10px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(57, 65, 80);\n"
+"    border: 5px solid transparent;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(35, 40, 49);\n"
+"    border: 7px solid transparent;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: rgb(102, 109, 122);\n"
+"    color: rgb(168, 168, 168);\n"
+"}\n"
+"")
+        self.groupBox.setObjectName("groupBox")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.groupBox)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        spacerItem = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_2.addItem(spacerItem)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setSpacing(0)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.databaseLabel_2 = QtWidgets.QLabel(self.groupBox)
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
-        font.setWeight(50)
-        self.directoryLabel_2.setFont(font)
-        self.directoryLabel_2.setLineWidth(0)
-        self.directoryLabel_2.setObjectName("directoryLabel_2")
-        self.lineEditOutputDirectory_2 = QtWidgets.QLineEdit(self.widget)
-        self.lineEditOutputDirectory_2.setGeometry(QtCore.QRect(100, 20, 551, 30))
-        self.lineEditOutputDirectory_2.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.lineEditOutputDirectory_2.setStyleSheet("")
-        self.lineEditOutputDirectory_2.setObjectName("lineEditOutputDirectory_2")
-        self.toolButtonBrowseOutput_2 = QtWidgets.QToolButton(self.widget)
-        self.toolButtonBrowseOutput_2.setGeometry(QtCore.QRect(650, 20, 41, 31))
-        self.toolButtonBrowseOutput_2.setStyleSheet("QToolButton {\n"
+        self.databaseLabel_2.setFont(font)
+        self.databaseLabel_2.setLineWidth(0)
+        self.databaseLabel_2.setObjectName("databaseLabel_2")
+        self.horizontalLayout_4.addWidget(self.databaseLabel_2)
+        self.lineEditDatabasePath_2 = QtWidgets.QLineEdit(self.groupBox)
+        self.lineEditDatabasePath_2.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.lineEditDatabasePath_2.setStyleSheet("")
+        self.lineEditDatabasePath_2.setObjectName("lineEditDatabasePath_2")
+        self.horizontalLayout_4.addWidget(self.lineEditDatabasePath_2)
+        self.toolButtonBrowseDatabase_3 = QtWidgets.QToolButton(self.groupBox)
+        self.toolButtonBrowseDatabase_3.setStyleSheet("QToolButton {\n"
 "    border: none; /* Remove border */\n"
 "    background-color: transparent; /* Set background color to transparent */\n"
 "}\n"
@@ -163,37 +251,54 @@ class Ui_MainWindow(object):
 "    background-color: transparent; /* Set icon background color to transparent */\n"
 "}")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../First Try/file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButtonBrowseOutput_2.setIcon(icon)
-        self.toolButtonBrowseOutput_2.setObjectName("toolButtonBrowseOutput_2")
-        self.ErrorConf = QtWidgets.QPushButton(self.widget)
-        self.ErrorConf.setGeometry(QtCore.QRect(260, 100, 191, 28))
-        self.ErrorConf.setObjectName("ErrorConf")
-        MainWindow.setCentralWidget(self.centralwidget)
+        icon.addPixmap(QtGui.QPixmap(":/icons/icons/folder_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.toolButtonBrowseDatabase_3.setIcon(icon)
+        self.toolButtonBrowseDatabase_3.setObjectName("toolButtonBrowseDatabase_3")
+        self.horizontalLayout_4.addWidget(self.toolButtonBrowseDatabase_3)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+        self.RunC_2 = QtWidgets.QCheckBox(self.groupBox)
+        self.RunC_2.setObjectName("RunC_2")
+        self.verticalLayout_2.addWidget(self.RunC_2)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(-1, 0, -1, -1)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.ErrorL_2 = QtWidgets.QLabel(self.groupBox)
+        self.ErrorL_2.setObjectName("ErrorL_2")
+        self.horizontalLayout.addWidget(self.ErrorL_2)
+        self.ErrorC_2 = QtWidgets.QComboBox(self.groupBox)
+        self.ErrorC_2.setObjectName("ErrorC_2")
+        self.ErrorC_2.addItem("")
+        self.ErrorC_2.addItem("")
+        self.ErrorC_2.addItem("")
+        self.horizontalLayout.addWidget(self.ErrorC_2)
+        self.ErrorConf_2 = QtWidgets.QPushButton(self.groupBox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(88)
+        sizePolicy.setHeightForWidth(self.ErrorConf_2.sizePolicy().hasHeightForWidth())
+        self.ErrorConf_2.setSizePolicy(sizePolicy)
+        self.ErrorConf_2.setMinimumSize(QtCore.QSize(0, 30))
+        self.ErrorConf_2.setObjectName("ErrorConf_2")
+        self.horizontalLayout.addWidget(self.ErrorConf_2)
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_2.addItem(spacerItem1)
+        self.verticalLayout.addWidget(self.groupBox)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "RunTime"))
-        self.RunC.setText(_translate("MainWindow", "Run Script"))
-        self.ErrorC.setItemText(0, _translate("MainWindow", "Mismatch"))
-        self.ErrorC.setItemText(1, _translate("MainWindow", "Crash"))
-        self.ErrorC.setItemText(2, _translate("MainWindow", "Hang"))
-        self.ErrorL.setText(_translate("MainWindow", "Error Type"))
-        self.directoryLabel_2.setText(_translate("MainWindow", "Script Path"))
-        self.toolButtonBrowseOutput_2.setText(_translate("MainWindow", "..."))
-        self.ErrorConf.setText(_translate("MainWindow", "Error Configuration"))
-    def get_ui_elements(self):
-        return self.RunC, self.ErrorL, self.ErrorC ,  self.ErrorConf , self.toolButtonBrowseOutput_2 , self.lineEditOutputDirectory_2
+        MainWindow.setWindowTitle(_translate("MainWindow", "Form"))
+        self.groupBox.setTitle(_translate("MainWindow", "Running Configuration"))
+        self.databaseLabel_2.setText(_translate("MainWindow", "Script Path"))
+        self.toolButtonBrowseDatabase_3.setText(_translate("MainWindow", "..."))
+        self.RunC_2.setText(_translate("MainWindow", "Run Script"))
+        self.ErrorL_2.setText(_translate("MainWindow", "Error Type"))
+        self.ErrorC_2.setItemText(0, _translate("MainWindow", "Mismatch"))
+        self.ErrorC_2.setItemText(1, _translate("MainWindow", "Crash"))
+        self.ErrorC_2.setItemText(2, _translate("MainWindow", "Hang"))
+        self.ErrorConf_2.setText(_translate("MainWindow", "Error Configuration"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
