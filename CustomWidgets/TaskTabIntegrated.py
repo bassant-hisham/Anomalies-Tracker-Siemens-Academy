@@ -12,16 +12,16 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.setupUi(self)  # This sets up the UI components from the TaskTab section
         self.widget.hide()
         self.widget_2.hide()
-        self.pushButton.clicked.connect(self.add_design)
-        self.pushButton_4.clicked.connect(self.add_running_config)
+        self.AddDesignB.clicked.connect(self.add_design)
+        self.AddRunningConfgB.clicked.connect(self.add_running_config)
         self.scrollLayout = QVBoxLayout(self.scrollAreaWidgetContents_3)
         self.scrollLayoutRunning = QVBoxLayout(self.scrollAreaRunningConfig)
         self.scrollAreaWidgetContents_3.setLayout(self.scrollLayout)
         self.scrollAreaRunningConfig.setLayout(self.scrollLayoutRunning)
         self.AddDirectoryB.clicked.connect(self.toggle_directory)
         self.AddFileB.clicked.connect(self.toggle_file)
-        self.toolButtonBrowseDatabase_3.clicked.connect(lambda: showDirectoryDialog(self,self.lineEditDatabasePath_2))
-        self.toolButtonBrowseDatabase_4.clicked.connect(lambda: showFileDialog(self,self.lineEditDatabasePath_5))
+        self.BrowseEvnParentDirectoryB.clicked.connect(lambda: showDirectoryDialog(self,self.lineEditDatabasePath_2))
+        self.BrowseEvnFilePathB.clicked.connect(lambda: showFileDialog(self,self.lineEditDatabasePath_5))
         self.Running_data=[]
         self.Design_data = []
     

@@ -131,7 +131,7 @@ QPushButton:disabled {
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="AddRunningConfgB">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -226,7 +226,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="toolButtonBrowseDatabase_4">
+             <widget class="QToolButton" name="BrowseEvnFilePathB">
               <property name="styleSheet">
                <string notr="true"/>
               </property>
@@ -279,7 +279,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="toolButtonBrowseDatabase_3">
+             <widget class="QToolButton" name="BrowseEvnParentDirectoryB">
               <property name="styleSheet">
                <string notr="true"/>
               </property>
@@ -529,7 +529,7 @@ QPushButton:disabled {
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="AddDesignB">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
