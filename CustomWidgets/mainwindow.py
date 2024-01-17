@@ -10,7 +10,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
         self.setupUi(self)
-        self.Tasks.hide()
         self.pushButtonCreate_2.hide()
         self.pushButtonCreate.clicked.connect(self.createTaskTabWidget)
         self.compilation_config = MyCompilationConfigWindow()
