@@ -42,7 +42,21 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
 
     def get_design(self):
         return self.Design_data
+    def get_running(self):
+        return self.Running_data
         
     def add_running_config(self):
         new_running_box = MyRunningConfigurations(self.scrollLayoutRunning)
-        self.Running_data.append(new_running_box)     
+        self.Running_data.append(new_running_box)  
+    def envData(self):
+        file_path = self.lineEditDatabasePath_5.text()
+        parent_direc = self.lineEditDatabasePath_2.text()
+
+        if self.radioButton_2.isChecked():
+            path3 = self.lineEditDatabasePath_3.text()
+            path4 = self.lineEditDatabasePath_4.text()
+            
+        elif self.radioButton_3.isChecked():
+            path7 = self.lineEditDatabasePath_7.text()
+            path6 = self.lineEditDatabasePath_6.text()
+ 
