@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from UIs.TaskTabUI import Ui_Task_Tab
@@ -24,6 +25,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.BrowseEvnFilePathB.clicked.connect(lambda: showFileDialog(self,self.lineEditDatabasePath_5))
         self.Running_data=[]
         self.Design_data = []
+        self.Builds = []
     
     def toggle_directory(self):
         self.widget.show()
@@ -50,13 +52,26 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.Running_data.append(new_running_box)  
     def envData(self):
         file_path = self.lineEditDatabasePath_5.text()
-        parent_direc = self.lineEditDatabasePath_2.text()
-
+        parent_dir = self.lineEditDatabasePath_2.text()
+        StartRange = 0
+        EndRange = 0
         if self.radioButton_2.isChecked():
-            path3 = self.lineEditDatabasePath_3.text()
-            path4 = self.lineEditDatabasePath_4.text()
-            
+            StartRange = self.lineEditDatabasePath_3.text()
+            EndRange = self.lineEditDatabasePath_4.text()
+
         elif self.radioButton_3.isChecked():
-            path7 = self.lineEditDatabasePath_7.text()
-            path6 = self.lineEditDatabasePath_6.text()
- 
+            StartRange = self.lineEditDatabasePath_7.text()
+            EndRange = self.lineEditDatabasePath_6.text()
+
+        if self.radioButton.isChecked():
+            bash_files = [f for f in os.listdir(parent_dir) if f.endswith(".bash")]
+            for file_name in bash_files:
+                self.Builds.append(file_name)
+        else :
+            start_value = int(StartRange[4:-5])  # remove ".bash" from end
+            end_value = int(EndRange[4:-5])  # remove ".bash" from end
+            for i in range(start_value, end_value + 1):
+                file_name = f"vved{i}.bash"
+                if os.path.exists(os.path.join(parent_dir, file_name)):
+                    self.Builds.append(file_name)
+        print (self.Builds)
