@@ -28,7 +28,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
-        Design  = self.Tasks.TaskTab.GetDesign()
         if isinstance(current_widget, MyTaskTab) and current_widget.tabWidget.count() < 4:
             current_widget.tabWidget.addTab(MyJobs(),"Jobs")
         # current_widget.custom_window.collect_running_config()

@@ -40,7 +40,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.scrollLayout.addWidget(new_design_box)
         self.Design_data.append(new_design_box)
 
-    def GetDesign(self):
+    def get_design(self):
         return self.Design_data
         
     def add_running_config(self):
