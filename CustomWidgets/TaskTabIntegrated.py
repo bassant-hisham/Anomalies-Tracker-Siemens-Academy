@@ -18,8 +18,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.scrollLayoutRunning = QVBoxLayout(self.scrollAreaRunningConfig)
         self.scrollAreaWidgetContents_3.setLayout(self.scrollLayout)
         self.scrollAreaRunningConfig.setLayout(self.scrollLayoutRunning)
-        self.pushButton_2.clicked.connect(self.toggle_directory)
-        self.pushButton_3.clicked.connect(self.toggle_file)
+        self.AddDirectoryB.clicked.connect(self.toggle_directory)
+        self.AddFileB.clicked.connect(self.toggle_file)
         self.toolButtonBrowseDatabase_3.clicked.connect(lambda: showDirectoryDialog(self,self.lineEditDatabasePath_2))
         self.toolButtonBrowseDatabase_4.clicked.connect(lambda: showFileDialog(self,self.lineEditDatabasePath_5))
         self.Running_data=[]

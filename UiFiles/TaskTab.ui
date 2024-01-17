@@ -25,6 +25,7 @@ background-color:rgb(37, 40, 50);
      <property name="font">
       <font>
        <pointsize>8</pointsize>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -152,6 +153,7 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>13</pointsize>
+             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -172,8 +174,8 @@ QPushButton:disabled {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>721</width>
-            <height>339</height>
+            <width>713</width>
+            <height>329</height>
            </rect>
           </property>
          </widget>
@@ -200,6 +202,7 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -252,6 +255,7 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -295,6 +299,7 @@ QPushButton:disabled {
             <property name="font">
              <font>
               <pointsize>11</pointsize>
+              <weight>50</weight>
               <bold>false</bold>
              </font>
             </property>
@@ -323,6 +328,7 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -351,6 +357,7 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -395,6 +402,7 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -423,6 +431,7 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
+                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -453,7 +462,7 @@ QPushButton:disabled {
        <item row="0" column="0" colspan="2">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="AddDirectoryB">
            <property name="minimumSize">
             <size>
              <width>211</width>
@@ -463,6 +472,7 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>10</pointsize>
+             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -472,7 +482,7 @@ QPushButton:disabled {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="AddFileB">
            <property name="minimumSize">
             <size>
              <width>211</width>
@@ -482,6 +492,7 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>10</pointsize>
+             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -540,6 +551,7 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>13</pointsize>
+             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -560,8 +572,8 @@ QPushButton:disabled {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>721</width>
-            <height>339</height>
+            <width>713</width>
+            <height>85</height>
            </rect>
           </property>
          </widget>
