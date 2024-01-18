@@ -161,22 +161,17 @@ color:white;
          </column>
          <column>
           <property name="text">
+           <string>Crashed Process</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Attach GDB</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>EPGM</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>DPI</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Controller</string>
+           <string>Build</string>
           </property>
          </column>
          <column>

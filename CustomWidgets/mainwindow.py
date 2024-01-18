@@ -17,7 +17,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
         self.pushButtonCreate_2.clicked.connect(self.createJobs)
-        self.pushButtonCreate_2.clicked.connect(self.collectData)
+        #self.pushButtonCreate_2.clicked.connect(self.collectData)
 
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
@@ -30,10 +30,23 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
-        #Running  = self.Tasks.TaskTab.get_running()
         if isinstance(current_widget, MyTaskTab) and current_widget.tabWidget.count() < 4:
-            current_widget.tabWidget.addTab(MyJobs(),"Jobs")
-        # current_widget.custom_window.collect_running_config()
+            Job = MyJobs()
+            combinations = self.collectData()
+            Job.tableWidget.setRowCount(len(combinations))
+            for row_index, (running_config, design, build) in enumerate(combinations):
+                Job.tableWidget.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
+                running_dict = running_config.custom_window.running_configurations
+                col_index = 2
+                for (num,(key,value)) in enumerate(running_dict.items()):
+                    Job.tableWidget.setItem(row_index, col_index , QTableWidgetItem(str(value)))
+                    col_index += 1
+                Job.tableWidget.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+                col_index += 1
+
+            current_widget.tabWidget.addTab(Job,"Jobs")
+            
+
     def collectData(self):
         Designs = self.Tasks.TaskTab.get_design()
         RunningConfigs = self.Tasks.TaskTab.get_running()
@@ -44,7 +57,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             Duts = designs.get_Duts()
             for dut in Duts:
                 dut.collect_data()
-        combinations = list(product(Designs, RunningConfigs, Builds))
+        combinations = list(product(RunningConfigs , Designs, Builds))
+        return combinations
+    
+        
+        
+       
+
+                   
 
 
 
