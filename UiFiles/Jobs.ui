@@ -176,12 +176,12 @@ color:white;
          </column>
          <column>
           <property name="text">
-           <string>Environment Path</string>
+           <string>Design Path</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Design Path</string>
+           <string>Environment Path</string>
           </property>
          </column>
          <column>

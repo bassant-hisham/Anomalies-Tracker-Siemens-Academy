@@ -43,7 +43,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     col_index += 1
                 Job.tableWidget.setItem(row_index, col_index , QTableWidgetItem(str(build)))
                 col_index += 1
-
+                DesignPath = design.lineEditDatabasePath_2.text()
+                Job.tableWidget.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
+                col_index += 1
             current_widget.tabWidget.addTab(Job,"Jobs")
             
 
