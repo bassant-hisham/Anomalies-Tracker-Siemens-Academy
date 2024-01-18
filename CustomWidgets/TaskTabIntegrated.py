@@ -68,8 +68,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
             for file_name in bash_files:
                 self.Builds.append(file_name)
         else :
-            start_value = int(StartRange[4:-5])  # remove ".bash" from end
-            end_value = int(EndRange[4:-5])  # remove ".bash" from end
+            start_value = int(StartRange) 
+            end_value = int(EndRange) 
             for i in range(start_value, end_value + 1):
                 file_name = f"vved{i}.bash"
                 if os.path.exists(os.path.join(parent_dir, file_name)):
