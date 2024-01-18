@@ -31,6 +31,6 @@ class MyDesignBox(QtWidgets.QGroupBox,Ui_GroupBox):
     def open_launching_config(self):
         self.launching_configurations.show()
         
-    def GetLists(self):
-        return self.launching_configurations.lanchuning_conf_editsObject.GetList()
+    def get_Duts(self):
+        return self.launching_configurations.get_Duts()
    

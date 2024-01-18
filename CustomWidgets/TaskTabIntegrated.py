@@ -50,7 +50,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def add_running_config(self):
         new_running_box = MyRunningConfigurations(self.scrollLayoutRunning)
         self.Running_data.append(new_running_box)  
-    def envData(self):
+    def get_builds(self):
         file_path = self.lineEditDatabasePath_5.text()
         parent_dir = self.lineEditDatabasePath_2.text()
         StartRange = 0
@@ -74,4 +74,4 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
                 file_name = f"vved{i}.bash"
                 if os.path.exists(os.path.join(parent_dir, file_name)):
                     self.Builds.append(file_name)
-        print (self.Builds)
+        return self.Builds

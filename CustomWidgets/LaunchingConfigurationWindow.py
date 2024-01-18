@@ -13,6 +13,7 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.toggle_content()
         self.ToolConfigGroupBox.toggled.connect(self.toggle_content)
         self.Add_PushButton.clicked.connect(self.add_dut_config)
+        self.Duts = []
 
     def toggle_content(self):
         if self.ToolConfigGroupBox.isChecked():
@@ -25,3 +26,6 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         new_dut_box = MyDUTGroupBox(self.lanch_conf_VLayout.count() - 2)
         self.lanch_conf_VLayout.addWidget(new_dut_box)
         # self.Design_data.append(new_design_box)
+        self.Duts.append(new_dut_box)
+    def get_Duts(self):
+        return self.Duts

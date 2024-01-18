@@ -1,3 +1,4 @@
+from itertools import product
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from UIs.MainWindowUI import Ui_MainWindow
@@ -36,4 +37,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def collectData(self):
         Designs = self.Tasks.TaskTab.get_design()
         RunningConfigs = self.Tasks.TaskTab.get_running()
-        self.Tasks.TaskTab.envData()
+        Builds  = self.Tasks.TaskTab.get_builds()
+        combinations = list(product(Designs, RunningConfigs, Builds))
+        
+        
+
