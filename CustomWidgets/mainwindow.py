@@ -38,7 +38,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         Designs = self.Tasks.TaskTab.get_design()
         RunningConfigs = self.Tasks.TaskTab.get_running()
         Builds  = self.Tasks.TaskTab.get_builds()
+        for running in RunningConfigs:
+           running.custom_window.collect_running_config()
         combinations = list(product(Designs, RunningConfigs, Builds))
-        
+
+
+
         
 

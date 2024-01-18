@@ -61,7 +61,7 @@ class CustomRuntimeWindow(QtWidgets.QWidget):
             selected_button = self.config_window_hang.button_group.checkedButton()
             if selected_button:
                 self.running_configurations['crash_configurations']['crashed_process'] = selected_button.text()
-        print(self.running_configurations)
+        #print(self.running_configurations)
 
             
 def run_custom_runtime():
