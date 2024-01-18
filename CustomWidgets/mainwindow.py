@@ -40,6 +40,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         Builds  = self.Tasks.TaskTab.get_builds()
         for running in RunningConfigs:
            running.custom_window.collect_running_config()
+        for designs in Designs:
+            Duts = designs.get_Duts()
+            for dut in Duts:
+                dut.collect_data()
         combinations = list(product(Designs, RunningConfigs, Builds))
 
 
