@@ -11,31 +11,31 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def __init__(self):
         super(MyTaskTab, self).__init__()
         self.setupUi(self)  # This sets up the UI components from the TaskTab section
-        self.widget.hide()
-        self.widget_2.hide()
-        self.AddDesignB.clicked.connect(self.add_design)
-        self.AddRunningConfgB.clicked.connect(self.add_running_config)
-        self.scrollLayout = QVBoxLayout(self.scrollAreaWidgetContents_3)
-        self.scrollLayoutRunning = QVBoxLayout(self.scrollAreaRunningConfig)
-        self.scrollAreaWidgetContents_3.setLayout(self.scrollLayout)
-        self.scrollAreaRunningConfig.setLayout(self.scrollLayoutRunning)
-        self.AddDirectoryB.clicked.connect(self.toggle_directory)
-        self.AddFileB.clicked.connect(self.toggle_file)
-        self.BrowseEvnParentDirectoryB.clicked.connect(lambda: showDirectoryDialog(self,self.lineEditDatabasePath_2))
-        self.BrowseEvnFilePathB.clicked.connect(lambda: showFileDialog(self,self.lineEditDatabasePath_5))
+        self.Directory_widget.hide()
+        self.File_widget.hide()
+        self.AddDesign_button.clicked.connect(self.add_design)
+        self.AddRunningConfig_button.clicked.connect(self.add_running_config)
+        self.scrollLayout = QVBoxLayout(self.Designs_scrollArea)
+        self.scrollLayoutRunning = QVBoxLayout(self.RunningConfig_scroll)
+        self.Designs_scrollArea.setLayout(self.scrollLayout)
+        self.RunningConfig_scroll.setLayout(self.scrollLayoutRunning)
+        self.AddDirectory_button.clicked.connect(self.toggle_directory)
+        self.AddFile_button.clicked.connect(self.toggle_file)
+        self.BrowseParentDir_button.clicked.connect(lambda: showDirectoryDialog(self,self.ParentDir_lineEdit))
+        self.BrowseFilePath_button.clicked.connect(lambda: showFileDialog(self,self.FilePath_lineEdit))
         self.Running_data=[]
         self.Design_data = []
         self.Builds = []
     
     def toggle_directory(self):
-        self.widget.show()
-        if self.widget_2.isVisible():
-            self.widget_2.hide()
+        self.Directory_widget.show()
+        if self.File_widget.isVisible():
+            self.File_widget.hide()
             
     def toggle_file(self):
-        self.widget_2.show()
-        if self.widget.isVisible():
-            self.widget.hide()
+        self.File_widget.show()
+        if self.Directory_widget.isVisible():
+            self.Directory_widget.hide()
     def add_design(self):
         #self.scrollLayout.addWidget(MyDesignBox(self.scrollLayout.count()+1))
         new_design_box = MyDesignBox(self.scrollLayout.count() + 1)
@@ -51,19 +51,19 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         new_running_box = MyRunningConfigurations(self.scrollLayoutRunning)
         self.Running_data.append(new_running_box)  
     def get_builds(self):
-        file_path = self.lineEditDatabasePath_5.text()
-        parent_dir = self.lineEditDatabasePath_2.text()
+        file_path = self.FilePath_lineEdit.text()
+        parent_dir = self.ParentDir_lineEdit.text()
         StartRange = 0
         EndRange = 0
-        if self.radioButton_2.isChecked():
-            StartRange = self.lineEditDatabasePath_3.text()
-            EndRange = self.lineEditDatabasePath_4.text()
+        if self.Range_radioButton.isChecked():
+            StartRange = self.RangeFrom_lineEdit.text()
+            EndRange = self.RangeTo_lineEdit.text()
 
-        elif self.radioButton_3.isChecked():
-            StartRange = self.lineEditDatabasePath_7.text()
-            EndRange = self.lineEditDatabasePath_6.text()
+        elif self.BinarySearch_radioButton.isChecked():
+            StartRange = self.BinarySearchFrom_lineEdit.text()
+            EndRange = self.BinarySearchTo_lineEdit.text()
 
-        if self.radioButton.isChecked():
+        if self.All_radioButton.isChecked():
             bash_files = [f for f in os.listdir(parent_dir) if f.endswith(".bash")]
             for file_name in bash_files:
                 self.Builds.append(file_name)

@@ -1,10 +1,11 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import *
 from UIs.LaunchingConfigUI import Ui_launching_config
 from commonFunctions import *
 from DUTBox import MyDUTGroupBox
 
 class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
+    closed_signal = QtCore.pyqtSignal()
     def __init__(self):
         super(MyLaunchingConfigWindow, self).__init__()
         self.setupUi(self) # This sets up the UI components from the Launching Config window
@@ -19,7 +20,7 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         if self.ToolConfigGroupBox.isChecked():
             self.ToolConfigGroupBox.setMaximumHeight(16777215)
         else:
-            self.ToolConfigGroupBox.setMaximumHeight(70)
+            self.ToolConfigGroupBox.setMaximumHeight(120)
             
     def add_dut_config(self):
         #self.scrollLayout.addWidget(MyDesignBox(self.scrollLayout.count()+1))
@@ -29,3 +30,7 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.Duts.append(new_dut_box)
     def get_Duts(self):
         return self.Duts
+    
+    def closeEvent(self, event):
+        self.closed_signal.emit()
+        event.accept()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QWidget" name="MainWindow">
+ <class>RunningConfiguration</class>
+ <widget class="QWidget" name="RunningConfiguration">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -117,6 +117,13 @@ QPushButton:disabled {
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QGroupBox" name="groupBox">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="styleSheet">
       <string notr="true">QWidget{
 	border-radius: 15px;
@@ -241,16 +248,17 @@ QPushButton:disabled {
        </spacer>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QHBoxLayout" name="ScriptPath_horizontalLayout">
         <property name="spacing">
          <number>0</number>
         </property>
         <item>
-         <widget class="QLabel" name="databaseLabel_2">
+         <widget class="QLabel" name="ScriptPath_label">
           <property name="font">
            <font>
             <family>MS Shell Dlg 2</family>
             <pointsize>11</pointsize>
+            <weight>50</weight>
             <italic>false</italic>
             <bold>false</bold>
            </font>
@@ -264,7 +272,7 @@ QPushButton:disabled {
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEditDatabasePath_2">
+         <widget class="QLineEdit" name="ScriptPath_lineEdit">
           <property name="focusPolicy">
            <enum>Qt::ClickFocus</enum>
           </property>
@@ -274,7 +282,7 @@ QPushButton:disabled {
          </widget>
         </item>
         <item>
-         <widget class="QToolButton" name="toolButtonBrowseDatabase_3">
+         <widget class="QToolButton" name="BrowseScriptPath_button">
           <property name="styleSheet">
            <string notr="true">QToolButton {
     border: none; /* Remove border */
@@ -304,7 +312,7 @@ QToolButton::icon {
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="ErrorType_horizontalLayout">
         <property name="topMargin">
          <number>0</number>
         </property>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Launching_Config.ui'
+# Form implementation generated from reading ui file 'LaunchingConfig.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -195,6 +195,8 @@ class Ui_launching_config(object):
 "QGroupBox{\n"
 "    margin-top: 40px;\n"
 "margin-left:20px;\n"
+"    margin-bottom: 40px;\n"
+"margin-right:20px;\n"
 "    background-color: transparent;\n"
 "    border: 1px solid rgb(255, 255, 255);\n"
 "    padding-top: 20px;\n"
@@ -344,7 +346,7 @@ class Ui_launching_config(object):
         self.lanch_conf_scrollArea.setWidgetResizable(True)
         self.lanch_conf_scrollArea.setObjectName("lanch_conf_scrollArea")
         self.lanch_conf_Hlayout = QtWidgets.QWidget()
-        self.lanch_conf_Hlayout.setGeometry(QtCore.QRect(0, 0, 808, 1277))
+        self.lanch_conf_Hlayout.setGeometry(QtCore.QRect(0, -494, 808, 1275))
         self.lanch_conf_Hlayout.setObjectName("lanch_conf_Hlayout")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.lanch_conf_Hlayout)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -407,8 +409,7 @@ class Ui_launching_config(object):
         self.LaunchToolCheckBox.setObjectName("LaunchToolCheckBox")
         self.gridLayout_4.addWidget(self.LaunchToolCheckBox, 0, 0, 1, 1)
         self.MasterToolGroupBox = QtWidgets.QGroupBox(self.ToolConfigGroupBox)
-        self.MasterToolGroupBox.setStyleSheet("border:none;\n"
-"margin-left:20px;")
+        self.MasterToolGroupBox.setStyleSheet("")
         self.MasterToolGroupBox.setObjectName("MasterToolGroupBox")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.MasterToolGroupBox)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -426,7 +427,7 @@ class Ui_launching_config(object):
         self.gridLayout_5 = QtWidgets.QGridLayout(self.AdditionalArg_groupBox)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.ToolAdditionalEnvValues = QtWidgets.QTextBrowser(self.AdditionalArg_groupBox)
-        self.ToolAdditionalEnvValues.setStyleSheet("border:1px solid white;\n"
+        self.ToolAdditionalEnvValues.setStyleSheet("border:none;\n"
 "")
         self.ToolAdditionalEnvValues.setObjectName("ToolAdditionalEnvValues")
         self.gridLayout_5.addWidget(self.ToolAdditionalEnvValues, 5, 0, 1, 1)
@@ -576,7 +577,7 @@ class Ui_launching_config(object):
         self.AddArgLayout.addWidget(self.AddArgButton)
         self.gridLayout_3.addLayout(self.AddArgLayout, 4, 0, 1, 1)
         self.AdditionalArg = QtWidgets.QTextBrowser(self.AdditionalArgGroupBox)
-        self.AdditionalArg.setStyleSheet("border:1px solid white;\n"
+        self.AdditionalArg.setStyleSheet("border:none;\n"
 "")
         self.AdditionalArg.setObjectName("AdditionalArg")
         self.gridLayout_3.addWidget(self.AdditionalArg, 3, 0, 1, 1)

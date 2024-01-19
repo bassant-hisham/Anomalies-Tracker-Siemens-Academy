@@ -7,5 +7,5 @@ class MyJobs(QtWidgets.QWidget,Ui_Jobs):
     def __init__(self):
         super(MyJobs, self).__init__()
         self.setupUi(self)
-        self.tableWidget.resizeColumnsToContents()
-        self.tableWidget.resizeRowsToContents()
+        self.Jobs_table.resizeColumnsToContents()
+        self.Jobs_table.resizeRowsToContents()

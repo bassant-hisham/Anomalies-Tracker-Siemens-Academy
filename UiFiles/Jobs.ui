@@ -107,7 +107,7 @@ background-color:rgb(37, 40, 50);
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents_3">
+     <widget class="QWidget" name="Jobs_scrollArea">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -127,7 +127,7 @@ background-color:rgb(37, 40, 50);
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="QTableWidget" name="tableWidget">
+        <widget class="QTableWidget" name="Jobs_table">
          <property name="styleSheet">
           <string notr="true">QTableWidget::item {
 background-color:rgb(37, 40, 50);

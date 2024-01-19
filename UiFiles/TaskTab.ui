@@ -21,7 +21,7 @@ background-color:rgb(37, 40, 50);
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTabWidget" name="tabWidget">
+    <widget class="QTabWidget" name="Task_tabWidget">
      <property name="font">
       <font>
        <pointsize>8</pointsize>
@@ -110,15 +110,15 @@ QPushButton:disabled {
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="running_config">
+     <widget class="QWidget" name="RunningConfig">
       <attribute name="title">
        <string>Running Configurations</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <layout class="QHBoxLayout" name="AddRunConfig_horizontalLayout">
          <item>
-          <spacer name="horizontalSpacer_4">
+          <spacer name="AddRunningConfig_horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -131,7 +131,7 @@ QPushButton:disabled {
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="AddRunningConfgB">
+          <widget class="QPushButton" name="AddRunningConfig_button">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -165,11 +165,11 @@ QPushButton:disabled {
         </layout>
        </item>
        <item row="1" column="0">
-        <widget class="QScrollArea" name="scrollArea_2">
+        <widget class="QScrollArea" name="RunningConfig_scrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaRunningConfig">
+         <widget class="QWidget" name="RunningConfig_scroll">
           <property name="geometry">
            <rect>
             <x>0</x>
@@ -183,7 +183,7 @@ QPushButton:disabled {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="environments">
+     <widget class="QWidget" name="Environments">
       <property name="styleSheet">
        <string notr="true"/>
       </property>
@@ -192,12 +192,12 @@ QPushButton:disabled {
       </attribute>
       <layout class="QFormLayout" name="formLayout_2">
        <item row="1" column="0" colspan="2">
-        <widget class="QWidget" name="widget_2" native="true">
+        <widget class="QWidget" name="File_widget" native="true">
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <layout class="QHBoxLayout" name="FilePath_horizontalLayout">
             <item>
-             <widget class="QLabel" name="databaseLabel_5">
+             <widget class="QLabel" name="FilePath_abel">
               <property name="font">
                <font>
                 <family>MS Shell Dlg 2</family>
@@ -216,7 +216,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEditDatabasePath_5">
+             <widget class="QLineEdit" name="FilePath_lineEdit">
               <property name="focusPolicy">
                <enum>Qt::ClickFocus</enum>
               </property>
@@ -226,7 +226,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="BrowseEvnFilePathB">
+             <widget class="QToolButton" name="BrowseFilePath_button">
               <property name="styleSheet">
                <string notr="true"/>
               </property>
@@ -245,12 +245,12 @@ QPushButton:disabled {
         </widget>
        </item>
        <item row="2" column="0" colspan="2">
-        <widget class="QWidget" name="widget" native="true">
+        <widget class="QWidget" name="Directory_widget" native="true">
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <layout class="QHBoxLayout" name="ParentDir_horizontalLayout">
             <item>
-             <widget class="QLabel" name="databaseLabel_2">
+             <widget class="QLabel" name="ParentDir_label">
               <property name="font">
                <font>
                 <family>MS Shell Dlg 2</family>
@@ -269,7 +269,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEditDatabasePath_2">
+             <widget class="QLineEdit" name="ParentDir_lineEdit">
               <property name="focusPolicy">
                <enum>Qt::ClickFocus</enum>
               </property>
@@ -279,7 +279,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="BrowseEvnParentDirectoryB">
+             <widget class="QToolButton" name="BrowseParentDir_button">
               <property name="styleSheet">
                <string notr="true"/>
               </property>
@@ -295,7 +295,7 @@ QPushButton:disabled {
            </layout>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="radioButton">
+           <widget class="QRadioButton" name="All_radioButton">
             <property name="font">
              <font>
               <pointsize>11</pointsize>
@@ -309,9 +309,9 @@ QPushButton:disabled {
            </widget>
           </item>
           <item row="2" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <layout class="QHBoxLayout" name="Range_horizontalLayout">
             <item>
-             <widget class="QRadioButton" name="radioButton_2">
+             <widget class="QRadioButton" name="Range_radioButton">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -323,7 +323,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="databaseLabel_4">
+             <widget class="QLabel" name="RangeFrom_label">
               <property name="font">
                <font>
                 <family>MS Shell Dlg 2</family>
@@ -342,7 +342,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEditDatabasePath_3">
+             <widget class="QLineEdit" name="RangeFrom_lineEdit">
               <property name="focusPolicy">
                <enum>Qt::ClickFocus</enum>
               </property>
@@ -352,7 +352,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="databaseLabel_3">
+             <widget class="QLabel" name="RangeTo_label">
               <property name="font">
                <font>
                 <family>MS Shell Dlg 2</family>
@@ -371,7 +371,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEditDatabasePath_4">
+             <widget class="QLineEdit" name="RangeTo_lineEdit">
               <property name="focusPolicy">
                <enum>Qt::ClickFocus</enum>
               </property>
@@ -383,9 +383,9 @@ QPushButton:disabled {
            </layout>
           </item>
           <item row="3" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <layout class="QHBoxLayout" name="BinarySearch_horizontalLayout">
             <item>
-             <widget class="QRadioButton" name="radioButton_3">
+             <widget class="QRadioButton" name="BinarySearch_radioButton">
               <property name="font">
                <font>
                 <pointsize>11</pointsize>
@@ -397,7 +397,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="databaseLabel_7">
+             <widget class="QLabel" name="BinarySearchFrom_label">
               <property name="font">
                <font>
                 <family>MS Shell Dlg 2</family>
@@ -416,7 +416,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEditDatabasePath_7">
+             <widget class="QLineEdit" name="BinarySearchFrom_lineEdit">
               <property name="focusPolicy">
                <enum>Qt::ClickFocus</enum>
               </property>
@@ -426,7 +426,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="databaseLabel_6">
+             <widget class="QLabel" name="BinarySearchTo_label">
               <property name="font">
                <font>
                 <family>MS Shell Dlg 2</family>
@@ -445,7 +445,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEditDatabasePath_6">
+             <widget class="QLineEdit" name="BinarySearchTo_lineEdit">
               <property name="focusPolicy">
                <enum>Qt::ClickFocus</enum>
               </property>
@@ -460,9 +460,9 @@ QPushButton:disabled {
         </widget>
        </item>
        <item row="0" column="0" colspan="2">
-        <layout class="QHBoxLayout" name="horizontalLayout">
+        <layout class="QHBoxLayout" name="Add_Dict_File_horizontalLayout">
          <item>
-          <widget class="QPushButton" name="AddDirectoryB">
+          <widget class="QPushButton" name="AddDirectory_button">
            <property name="minimumSize">
             <size>
              <width>211</width>
@@ -482,7 +482,7 @@ QPushButton:disabled {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="AddFileB">
+          <widget class="QPushButton" name="AddFile_button">
            <property name="minimumSize">
             <size>
              <width>211</width>
@@ -505,7 +505,7 @@ QPushButton:disabled {
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="design">
+     <widget class="QWidget" name="Design">
       <property name="styleSheet">
        <string notr="true"/>
       </property>
@@ -514,9 +514,9 @@ QPushButton:disabled {
       </attribute>
       <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0" colspan="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QHBoxLayout" name="AddDesign_horizontalLayout">
          <item>
-          <spacer name="horizontalSpacer_3">
+          <spacer name="AddDesign_horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -529,7 +529,7 @@ QPushButton:disabled {
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="AddDesignB">
+          <widget class="QPushButton" name="AddDesign_button">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -563,7 +563,7 @@ QPushButton:disabled {
         </layout>
        </item>
        <item row="1" column="0" colspan="2">
-        <widget class="QScrollArea" name="scrollArea">
+        <widget class="QScrollArea" name="Designs_scrollArea">
          <property name="widgetResizable">
           <bool>true</bool>
          </property>

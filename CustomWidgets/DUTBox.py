@@ -9,8 +9,6 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
     def __init__(self,id):
         super(MyDUTGroupBox, self).__init__()
         self.setupUi(self)
-        self.DutConfgObject = Ui_DUTConfiguration()
-        self.DutConfgObject.setupUi(self)
         self.setTitle("DUT Configuration " + str(id))
         self.setCheckable(True)
         self.setChecked(True)
@@ -27,7 +25,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         if self.isChecked():
             self.setMaximumHeight(16777215)
         else:
-            self.setMaximumHeight(70)
+            self.setMaximumHeight(120)
             
     def add_custom_comodel(self):
         if self.CustomComConf_checkbox_2.isChecked():
@@ -58,21 +56,21 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.DPIAdditionalEnvValues_2.append(str(self.additionalEnv))
     def collect_data(self):
                 data = {
-                        "TerminateDPIOnError_checkBox": self.DutConfgObject.TerminateDPIOnError_checkBox.isChecked(),
-                        "TermianteDPI_checkBox": self.DutConfgObject.TermianteDPI_checkBox.isChecked(),
-                        "LanuchDPI_checkBox": self.DutConfgObject.LanuchDPI_checkBox.isChecked(),
-                        "AVB_ListView": self.DutConfgObject.AVB_ListView_2.selectedIndexes(),
-                        "DesignPath_lineEdit": self.DutConfgObject.DesignPath_lineEdit_2.text(),
-                        "RecordDir_HSpacer_lineEdit": self.DutConfgObject.RecordDir_lineEdit_2.text(),
-                        "ConfigType_comboBox":self.DutConfgObject.ConfigType_comboBox_2.currentText(),
-                        "FromConfigValue_lineEdit": self.DutConfgObject.FromConfigValue_lineEdit_2.text(),
-                        "ToConfigValue_lineEdit": self.DutConfgObject.ToConfigValue_lineEdit_2.text(),
-                        "ReplyDir_lineEdit": self.DutConfgObject.ReplyDir_lineEdit_2.text(),
-                        "ReplySnapshotName_lineEdit": self.DutConfgObject.ReplySnapshotName_lineEdit_2.text(),
-                        "DPILaunchMode_lineEdit": self.DutConfgObject.DPILaunchMode_lineEdit_2.text(),
-                        "DPILaunchType_comboBox": self.DutConfgObject.DPILaunchType_comboBox_2.currentText(),
-                        "EnvVarName_HSpacer_mid_lineEdit": self.DutConfgObject.EnvVarName_HSpacer_mid_lineEdit_2.text(),
-                        "CustomComConf_checkbox": self.DutConfgObject.CustomComConf_checkbox_2.isChecked(),
+                        "TerminateDPIOnError_checkBox": self.TerminateDPIOnError_checkBox.isChecked(),
+                        "TermianteDPI_checkBox": self.TermianteDPI_checkBox.isChecked(),
+                        "LanuchDPI_checkBox": self.LanuchDPI_checkBox.isChecked(),
+                        "AVB_ListView": self.AVB_ListView_2.selectedIndexes(),
+                        "DesignPath_lineEdit": self.DesignPath_lineEdit_2.text(),
+                        "RecordDir_HSpacer_lineEdit": self.RecordDir_lineEdit_2.text(),
+                        "ConfigType_comboBox":self.ConfigType_comboBox_2.currentText(),
+                        "FromConfigValue_lineEdit": self.FromConfigValue_lineEdit_2.text(),
+                        "ToConfigValue_lineEdit": self.ToConfigValue_lineEdit_2.text(),
+                        "ReplyDir_lineEdit": self.ReplyDir_lineEdit_2.text(),
+                        "ReplySnapshotName_lineEdit": self.ReplySnapshotName_lineEdit_2.text(),
+                        "DPILaunchMode_lineEdit": self.DPILaunchMode_lineEdit_2.text(),
+                        "DPILaunchType_comboBox": self.DPILaunchType_comboBox_2.currentText(),
+                        "EnvVarName_HSpacer_mid_lineEdit": self.EnvVarName_HSpacer_mid_lineEdit_2.text(),
+                        "CustomComConf_checkbox": self.CustomComConf_checkbox_2.isChecked(),
                 }
                 print(data) 
 

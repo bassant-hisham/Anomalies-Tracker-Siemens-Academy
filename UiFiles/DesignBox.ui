@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GroupBox</class>
- <widget class="QGroupBox" name="GroupBox">
+ <class>DesignBox</class>
+ <widget class="QGroupBox" name="DesignBox">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,6 +24,7 @@
    <string notr="true">QGroupBox{
 background-color:rgb(37, 40, 50);
 color: white;
+	border-radius: 15px;
 }
 QLabel{
 color: white;
@@ -94,9 +95,9 @@ QPushButton:disabled {
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <layout class="QHBoxLayout" name="DesignPath_horizontalLayout">
      <item>
-      <widget class="QLabel" name="databaseLabel_2">
+      <widget class="QLabel" name="DesignPath_label">
        <property name="font">
         <font>
          <family>MS Shell Dlg 2</family>
@@ -115,7 +116,7 @@ QPushButton:disabled {
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditDatabasePath_2">
+      <widget class="QLineEdit" name="DesignPath_lineEdit">
        <property name="focusPolicy">
         <enum>Qt::ClickFocus</enum>
        </property>
@@ -125,7 +126,7 @@ QPushButton:disabled {
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="toolButtonBrowseDatabase_3">
+      <widget class="QToolButton" name="BrowseDesignPath_button">
        <property name="styleSheet">
         <string notr="true"/>
        </property>
@@ -141,9 +142,9 @@ QPushButton:disabled {
     </layout>
    </item>
    <item row="1" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
+    <layout class="QHBoxLayout" name="Configurations_horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButtonAdd_3">
+      <widget class="QPushButton" name="CompilationConfig_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -175,7 +176,7 @@ QPushButton:disabled {
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonAdd_4">
+      <widget class="QPushButton" name="LaunchingConfig_button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>

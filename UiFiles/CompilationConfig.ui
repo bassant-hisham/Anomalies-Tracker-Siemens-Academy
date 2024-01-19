@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>CompilationConfig_Form</class>
+ <widget class="QWidget" name="CompilationConfig_Form">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -25,7 +25,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="CompilationConfig_widget" native="true">
      <property name="styleSheet">
       <string notr="true">QLineEdit{
 	border: 0px solid rgb(37, 39, 48);
@@ -130,9 +130,9 @@ QPushButton:disabled {
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="CompilationConfig_gridLayout">
         <item row="0" column="0">
-         <widget class="QCheckBox" name="checkBox_2">
+         <widget class="QCheckBox" name="CompileDesign_checkBox">
           <property name="font">
            <font>
             <weight>75</weight>
@@ -148,11 +148,11 @@ QPushButton:disabled {
          </widget>
         </item>
         <item row="1" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="Source_Output_horizontalLayout">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout">
+           <layout class="QVBoxLayout" name="Labels_verticalLayout">
             <item>
-             <widget class="QLabel" name="label_4">
+             <widget class="QLabel" name="Source_label">
               <property name="font">
                <font>
                 <weight>75</weight>
@@ -169,7 +169,7 @@ QPushButton:disabled {
              </widget>
             </item>
             <item>
-             <widget class="QLabel" name="label_5">
+             <widget class="QLabel" name="Output_label">
               <property name="font">
                <font>
                 <weight>75</weight>
@@ -188,26 +188,26 @@ QPushButton:disabled {
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
+           <layout class="QVBoxLayout" name="LineEdits_verticalLayout">
             <item>
-             <widget class="QLineEdit" name="lineEdit_5"/>
+             <widget class="QLineEdit" name="Source_lineEdit"/>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_4"/>
+             <widget class="QLineEdit" name="Output_lineEdit"/>
             </item>
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
+           <layout class="QVBoxLayout" name="Browse_verticalLayout">
             <item>
-             <widget class="QToolButton" name="toolButton">
+             <widget class="QToolButton" name="BrowseSource_button">
               <property name="text">
                <string/>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QToolButton" name="toolButton_2">
+             <widget class="QToolButton" name="BrowseOutput_button">
               <property name="text">
                <string/>
               </property>
@@ -218,9 +218,9 @@ QPushButton:disabled {
          </layout>
         </item>
         <item row="2" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <layout class="QHBoxLayout" name="Machine_horizontalLayout">
           <item>
-           <widget class="QLabel" name="label_6">
+           <widget class="QLabel" name="Machine_label">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -236,7 +236,7 @@ QPushButton:disabled {
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="Machine_comboBox">
             <item>
              <property name="text">
               <string>Auto</string>
@@ -260,7 +260,7 @@ QPushButton:disabled {
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="Machine_horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -275,7 +275,7 @@ QPushButton:disabled {
          </layout>
         </item>
         <item row="3" column="0">
-         <widget class="QCheckBox" name="checkBox">
+         <widget class="QCheckBox" name="Force_checkBox">
           <property name="font">
            <font>
             <weight>75</weight>
@@ -291,9 +291,9 @@ QPushButton:disabled {
          </widget>
         </item>
         <item row="4" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="Timeout_horizontalLayout">
           <item>
-           <widget class="QLabel" name="label_7">
+           <widget class="QLabel" name="Timeout_label">
             <property name="font">
              <font>
               <weight>75</weight>
@@ -309,14 +309,14 @@ QPushButton:disabled {
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineEdit_3">
+           <widget class="QLineEdit" name="Timeout_lineEdit">
             <property name="placeholderText">
              <string>0</string>
             </property>
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer_2">
+           <spacer name="Timeout_horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -331,9 +331,9 @@ QPushButton:disabled {
          </layout>
         </item>
         <item row="5" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <layout class="QHBoxLayout" name="Done_horizontalLayout">
           <item>
-           <spacer name="horizontalSpacer_3">
+           <spacer name="Done_horizontalSpacer">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -346,7 +346,7 @@ QPushButton:disabled {
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButtonCreate_2">
+           <widget class="QPushButton" name="Done_button">
             <property name="minimumSize">
              <size>
               <width>150</width>

@@ -12,18 +12,18 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         super(MyMainWindow,self).__init__()
         self.setupUi(self)
         self.Tasks.hide()
-        self.pushButtonCreate_2.hide()
-        self.pushButtonCreate.clicked.connect(self.createTaskTabWidget)
+        self.CreateJobs_button.hide()
+        self.CreateTask_button.clicked.connect(self.createTaskTabWidget)
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
-        self.pushButtonCreate_2.clicked.connect(self.createJobs)
-        #self.pushButtonCreate_2.clicked.connect(self.collectData)
+        self.CreateJobs_button.clicked.connect(self.createJobs)
+        #self.CreateJobs_button.clicked.connect(self.collectData)
 
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
         if not self.Tasks.isVisible():
             self.Tasks.show()
-            self.pushButtonCreate_2.show()
+            self.CreateJobs_button.show()
             self.Tasks.addTab(self.Tasks.TaskTab , f"Task {self.Tasks.count() + 1}")
         else:
             self.Tasks.addTab(self.Tasks.TaskTab , f"Task {self.Tasks.count() + 1}")

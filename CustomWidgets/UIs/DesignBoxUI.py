@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Design.ui'
+# Form implementation generated from reading ui file 'DesignBox.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -11,18 +11,19 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_GroupBox(object):
-    def setupUi(self, GroupBox):
-        GroupBox.setObjectName("GroupBox")
-        GroupBox.resize(727, 210)
+class Ui_DesignBox(object):
+    def setupUi(self, DesignBox):
+        DesignBox.setObjectName("DesignBox")
+        DesignBox.resize(727, 210)
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        GroupBox.setFont(font)
-        GroupBox.setStyleSheet("QGroupBox{\n"
+        DesignBox.setFont(font)
+        DesignBox.setStyleSheet("QGroupBox{\n"
 "background-color:rgb(37, 40, 50);\n"
 "color: white;\n"
+"    border-radius: 15px;\n"
 "}\n"
 "QLabel{\n"
 "color: white;\n"
@@ -87,88 +88,78 @@ class Ui_GroupBox(object):
 "}\n"
 "\n"
 "")
-        self.gridLayout = QtWidgets.QGridLayout(GroupBox)
+        self.gridLayout = QtWidgets.QGridLayout(DesignBox)
         self.gridLayout.setObjectName("gridLayout")
-        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.databaseLabel_2 = QtWidgets.QLabel(GroupBox)
+        self.DesignPath_horizontalLayout = QtWidgets.QHBoxLayout()
+        self.DesignPath_horizontalLayout.setObjectName("DesignPath_horizontalLayout")
+        self.DesignPath_label = QtWidgets.QLabel(DesignBox)
         font = QtGui.QFont()
         font.setFamily("MS Shell Dlg 2")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
-        self.databaseLabel_2.setFont(font)
-        self.databaseLabel_2.setLineWidth(0)
-        self.databaseLabel_2.setObjectName("databaseLabel_2")
-        self.horizontalLayout_4.addWidget(self.databaseLabel_2)
-        self.lineEditDatabasePath_2 = QtWidgets.QLineEdit(GroupBox)
-        self.lineEditDatabasePath_2.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.lineEditDatabasePath_2.setStyleSheet("")
-        self.lineEditDatabasePath_2.setObjectName("lineEditDatabasePath_2")
-        self.horizontalLayout_4.addWidget(self.lineEditDatabasePath_2)
-        self.toolButtonBrowseDatabase_3 = QtWidgets.QToolButton(GroupBox)
-        self.toolButtonBrowseDatabase_3.setStyleSheet("")
+        self.DesignPath_label.setFont(font)
+        self.DesignPath_label.setLineWidth(0)
+        self.DesignPath_label.setObjectName("DesignPath_label")
+        self.DesignPath_horizontalLayout.addWidget(self.DesignPath_label)
+        self.DesignPath_lineEdit = QtWidgets.QLineEdit(DesignBox)
+        self.DesignPath_lineEdit.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.DesignPath_lineEdit.setStyleSheet("")
+        self.DesignPath_lineEdit.setObjectName("DesignPath_lineEdit")
+        self.DesignPath_horizontalLayout.addWidget(self.DesignPath_lineEdit)
+        self.BrowseDesignPath_button = QtWidgets.QToolButton(DesignBox)
+        self.BrowseDesignPath_button.setStyleSheet("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/folder_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.toolButtonBrowseDatabase_3.setIcon(icon)
-        self.toolButtonBrowseDatabase_3.setObjectName("toolButtonBrowseDatabase_3")
-        self.horizontalLayout_4.addWidget(self.toolButtonBrowseDatabase_3)
-        self.gridLayout.addLayout(self.horizontalLayout_4, 0, 0, 1, 1)
-        self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.pushButtonAdd_3 = QtWidgets.QPushButton(GroupBox)
+        self.BrowseDesignPath_button.setIcon(icon)
+        self.BrowseDesignPath_button.setObjectName("BrowseDesignPath_button")
+        self.DesignPath_horizontalLayout.addWidget(self.BrowseDesignPath_button)
+        self.gridLayout.addLayout(self.DesignPath_horizontalLayout, 0, 0, 1, 1)
+        self.Configurations_horizontalLayout = QtWidgets.QHBoxLayout()
+        self.Configurations_horizontalLayout.setObjectName("Configurations_horizontalLayout")
+        self.CompilationConfig_button = QtWidgets.QPushButton(DesignBox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButtonAdd_3.sizePolicy().hasHeightForWidth())
-        self.pushButtonAdd_3.setSizePolicy(sizePolicy)
-        self.pushButtonAdd_3.setMinimumSize(QtCore.QSize(150, 35))
+        sizePolicy.setHeightForWidth(self.CompilationConfig_button.sizePolicy().hasHeightForWidth())
+        self.CompilationConfig_button.setSizePolicy(sizePolicy)
+        self.CompilationConfig_button.setMinimumSize(QtCore.QSize(150, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButtonAdd_3.setFont(font)
-        self.pushButtonAdd_3.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonAdd_3.setStyleSheet("")
-        self.pushButtonAdd_3.setObjectName("pushButtonAdd_3")
-        self.horizontalLayout_5.addWidget(self.pushButtonAdd_3)
-        self.pushButtonAdd_4 = QtWidgets.QPushButton(GroupBox)
+        self.CompilationConfig_button.setFont(font)
+        self.CompilationConfig_button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.CompilationConfig_button.setStyleSheet("")
+        self.CompilationConfig_button.setObjectName("CompilationConfig_button")
+        self.Configurations_horizontalLayout.addWidget(self.CompilationConfig_button)
+        self.LaunchingConfig_button = QtWidgets.QPushButton(DesignBox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButtonAdd_4.sizePolicy().hasHeightForWidth())
-        self.pushButtonAdd_4.setSizePolicy(sizePolicy)
-        self.pushButtonAdd_4.setMinimumSize(QtCore.QSize(150, 35))
+        sizePolicy.setHeightForWidth(self.LaunchingConfig_button.sizePolicy().hasHeightForWidth())
+        self.LaunchingConfig_button.setSizePolicy(sizePolicy)
+        self.LaunchingConfig_button.setMinimumSize(QtCore.QSize(150, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButtonAdd_4.setFont(font)
-        self.pushButtonAdd_4.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButtonAdd_4.setStyleSheet("")
-        self.pushButtonAdd_4.setObjectName("pushButtonAdd_4")
-        self.horizontalLayout_5.addWidget(self.pushButtonAdd_4)
-        self.gridLayout.addLayout(self.horizontalLayout_5, 1, 0, 1, 1)
+        self.LaunchingConfig_button.setFont(font)
+        self.LaunchingConfig_button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.LaunchingConfig_button.setStyleSheet("")
+        self.LaunchingConfig_button.setObjectName("LaunchingConfig_button")
+        self.Configurations_horizontalLayout.addWidget(self.LaunchingConfig_button)
+        self.gridLayout.addLayout(self.Configurations_horizontalLayout, 1, 0, 1, 1)
 
-        self.retranslateUi(GroupBox)
-        QtCore.QMetaObject.connectSlotsByName(GroupBox)
+        self.retranslateUi(DesignBox)
+        QtCore.QMetaObject.connectSlotsByName(DesignBox)
 
-    def retranslateUi(self, GroupBox):
+    def retranslateUi(self, DesignBox):
         _translate = QtCore.QCoreApplication.translate
-        GroupBox.setWindowTitle(_translate("GroupBox", "GroupBox"))
-        GroupBox.setTitle(_translate("GroupBox", "Design"))
-        self.databaseLabel_2.setText(_translate("GroupBox", "Design Path"))
-        self.toolButtonBrowseDatabase_3.setText(_translate("GroupBox", "..."))
-        self.pushButtonAdd_3.setText(_translate("GroupBox", "Compilation configuration"))
-        self.pushButtonAdd_4.setText(_translate("GroupBox", "Launching Configuration"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    GroupBox = QtWidgets.QGroupBox()
-    ui = Ui_GroupBox()
-    ui.setupUi(GroupBox)
-    GroupBox.show()
-    sys.exit(app.exec_())
+        DesignBox.setWindowTitle(_translate("DesignBox", "GroupBox"))
+        DesignBox.setTitle(_translate("DesignBox", "Design"))
+        self.DesignPath_label.setText(_translate("DesignBox", "Design Path"))
+        self.BrowseDesignPath_button.setText(_translate("DesignBox", "..."))
+        self.CompilationConfig_button.setText(_translate("DesignBox", "Compilation configuration"))
+        self.LaunchingConfig_button.setText(_translate("DesignBox", "Launching Configuration"))

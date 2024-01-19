@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'DUT.ui'
+# Form implementation generated from reading ui file 'DUTBox.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_DUTConfiguration(object):
     def setupUi(self, DUTConfiguration):
         DUTConfiguration.setObjectName("DUTConfiguration")
-        DUTConfiguration.resize(943, 1676)
+        DUTConfiguration.resize(943, 1923)
         DUTConfiguration.setStyleSheet("\n"
 "/* QFrame */\n"
 "QWidget {\n"
@@ -122,6 +122,8 @@ class Ui_DUTConfiguration(object):
 "QGroupBox{\n"
 "    margin-top: 40px;\n"
 "    margin-left: 20px;\n"
+"margin-bottom: 40px;\n"
+"    margin-right: 20px;\n"
 "    border: 1px solid rgb(255, 255, 255);\n"
 "    padding-top: 20px;\n"
 "}\n"
@@ -357,8 +359,7 @@ class Ui_DUTConfiguration(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.RecordConf_Groupbox.sizePolicy().hasHeightForWidth())
         self.RecordConf_Groupbox.setSizePolicy(sizePolicy)
-        self.RecordConf_Groupbox.setStyleSheet("    border:none;\n"
-"")
+        self.RecordConf_Groupbox.setStyleSheet("")
         self.RecordConf_Groupbox.setObjectName("RecordConf_Groupbox")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.RecordConf_Groupbox)
         self.gridLayout_5.setObjectName("gridLayout_5")
@@ -481,8 +482,7 @@ class Ui_DUTConfiguration(object):
         self.gridLayout_5.addWidget(self.Snapshots_GroupBox_2, 1, 0, 1, 1)
         self.gridLayout_8.addWidget(self.RecordConf_Groupbox, 5, 0, 1, 1)
         self.ReplyConf_groupbox = QtWidgets.QGroupBox(DUTConfiguration)
-        self.ReplyConf_groupbox.setStyleSheet("    border:none;\n"
-"")
+        self.ReplyConf_groupbox.setStyleSheet("")
         self.ReplyConf_groupbox.setObjectName("ReplyConf_groupbox")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.ReplyConf_groupbox)
         self.verticalLayout_9.setObjectName("verticalLayout_9")
@@ -545,8 +545,7 @@ class Ui_DUTConfiguration(object):
         self.verticalLayout_9.addLayout(self.ReplySnapshotName_Hlayout_2)
         self.gridLayout_8.addWidget(self.ReplyConf_groupbox, 6, 0, 1, 1)
         self.DPIConf_groupbox = QtWidgets.QGroupBox(DUTConfiguration)
-        self.DPIConf_groupbox.setStyleSheet("    border:none;\n"
-"")
+        self.DPIConf_groupbox.setStyleSheet("")
         self.DPIConf_groupbox.setObjectName("DPIConf_groupbox")
         self.gridLayout = QtWidgets.QGridLayout(self.DPIConf_groupbox)
         self.gridLayout.setObjectName("gridLayout")
@@ -604,6 +603,7 @@ class Ui_DUTConfiguration(object):
         self.DPILaunchType_HLayout_2.addWidget(self.DPILaunchType_comboBox_2)
         self.gridLayout.addLayout(self.DPILaunchType_HLayout_2, 1, 0, 1, 1)
         self.DPIAdditionalArgGroupBox_2 = QtWidgets.QGroupBox(self.DPIConf_groupbox)
+        self.DPIAdditionalArgGroupBox_2.setStyleSheet("")
         self.DPIAdditionalArgGroupBox_2.setObjectName("DPIAdditionalArgGroupBox_2")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.DPIAdditionalArgGroupBox_2)
         self.gridLayout_6.setObjectName("gridLayout_6")
@@ -650,6 +650,7 @@ class Ui_DUTConfiguration(object):
         self.ArgValue_Hlayout_2.addWidget(self.ArgValue_lineEdit_2)
         self.gridLayout_6.addLayout(self.ArgValue_Hlayout_2, 1, 0, 1, 1)
         self.DPIAdditionalArg_2 = QtWidgets.QTextBrowser(self.DPIAdditionalArgGroupBox_2)
+        self.DPIAdditionalArg_2.setStyleSheet("border:none;")
         self.DPIAdditionalArg_2.setObjectName("DPIAdditionalArg_2")
         self.gridLayout_6.addWidget(self.DPIAdditionalArg_2, 2, 0, 1, 1)
         self.AddArgLayout_5 = QtWidgets.QHBoxLayout()
@@ -658,6 +659,8 @@ class Ui_DUTConfiguration(object):
         self.AddArgLayout_5.addItem(spacerItem)
         self.AddArgButton_2 = QtWidgets.QPushButton(self.DPIAdditionalArgGroupBox_2)
         self.AddArgButton_2.setMinimumSize(QtCore.QSize(111, 54))
+        self.AddArgButton_2.setStyleSheet("    background-color: rgb(33, 188, 180);\n"
+"")
         self.AddArgButton_2.setObjectName("AddArgButton_2")
         self.AddArgLayout_5.addWidget(self.AddArgButton_2)
         self.gridLayout_6.addLayout(self.AddArgLayout_5, 3, 0, 1, 1)
@@ -688,6 +691,8 @@ class Ui_DUTConfiguration(object):
         self.EnvVarName_Hlayout_2.addWidget(self.EnvVarName_HSpacer_mid_lineEdit_2)
         self.gridLayout_7.addLayout(self.EnvVarName_Hlayout_2, 1, 0, 1, 2)
         self.DPIAdditionalEnvValues_2 = QtWidgets.QTextBrowser(self.DPIAdditionalArg_groupBox_2)
+        self.DPIAdditionalEnvValues_2.setStyleSheet("    border:none;\n"
+"")
         self.DPIAdditionalEnvValues_2.setObjectName("DPIAdditionalEnvValues_2")
         self.gridLayout_7.addWidget(self.DPIAdditionalEnvValues_2, 5, 0, 1, 1)
         self.EnvVarValue_Hlayout_2 = QtWidgets.QHBoxLayout()
@@ -717,6 +722,8 @@ class Ui_DUTConfiguration(object):
         self.AddEnvLayout_6.addItem(spacerItem1)
         self.AddEnv_2 = QtWidgets.QPushButton(self.DPIAdditionalArg_groupBox_2)
         self.AddEnv_2.setMinimumSize(QtCore.QSize(111, 54))
+        self.AddEnv_2.setStyleSheet("    background-color: rgb(33, 188, 180);\n"
+"")
         self.AddEnv_2.setObjectName("AddEnv_2")
         self.AddEnvLayout_6.addWidget(self.AddEnv_2)
         self.gridLayout_7.addLayout(self.AddEnvLayout_6, 6, 0, 1, 1)

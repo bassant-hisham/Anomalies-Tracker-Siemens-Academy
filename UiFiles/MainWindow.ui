@@ -341,9 +341,9 @@ QSplitter::handle{
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QGridLayout" name="Sol_Plat_gridLayout">
       <item row="0" column="0" colspan="2">
-       <widget class="QFrame" name="config_frame_2">
+       <widget class="QFrame" name="Sol_Plat_frame">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -364,9 +364,9 @@ QSplitter::handle{
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="0" column="0">
-          <layout class="QFormLayout" name="formLayout_2">
+          <layout class="QFormLayout" name="Sol_Plat_formLayout">
            <item row="0" column="0">
-            <widget class="QLabel" name="directoryLabel_2">
+            <widget class="QLabel" name="Platform_label">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -391,7 +391,7 @@ QSplitter::handle{
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="comboBox_2">
+            <widget class="QComboBox" name="Platfrom_comboBox">
              <property name="font">
               <font>
                <pointsize>11</pointsize>
@@ -412,7 +412,7 @@ QSplitter::handle{
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="platformLabel_3">
+            <widget class="QLabel" name="Solution_label">
              <property name="font">
               <font>
                <family>MS Shell Dlg 2</family>
@@ -428,7 +428,7 @@ QSplitter::handle{
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QComboBox" name="platformComboBox_2">
+            <widget class="QComboBox" name="Solution_comboBox">
              <property name="font">
               <font>
                <family>Nirmala UI</family>
@@ -459,7 +459,7 @@ QSplitter::handle{
        </widget>
       </item>
       <item row="1" column="0">
-       <spacer name="horizontalSpacer">
+       <spacer name="CreateTask_horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -472,7 +472,7 @@ QSplitter::handle{
        </spacer>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="pushButtonCreate">
+       <widget class="QPushButton" name="CreateTask_button">
         <property name="minimumSize">
          <size>
           <width>150</width>
@@ -717,9 +717,9 @@ color:white;
      </widget>
     </item>
     <item row="2" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="CreateJobs_horizontalLayout">
       <item>
-       <spacer name="horizontalSpacer_2">
+       <spacer name="CreateJobs_horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -732,7 +732,7 @@ color:white;
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButtonCreate_2">
+       <widget class="QPushButton" name="CreateJobs_button">
         <property name="minimumSize">
          <size>
           <width>150</width>

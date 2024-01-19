@@ -1,5 +1,5 @@
 from PyQt5 import QtWidgets
-from UIs.RuntimeUI import Ui_MainWindow
+from UIs.RunningConfigUI import Ui_RunningConfiguration
 from UIs.CrashConfigUI import CrashConfigWindow
 from UIs.HangConfigUI import HangConfigWindow  # Import HangConfigWindow
 from PyQt5.QtWidgets import *
@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import *
 class CustomRuntimeWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
-        self.ui = Ui_MainWindow()
+        self.ui = Ui_RunningConfiguration()
         self.ui.setupUi(self)
         #self.widget_resize()
         #self.ui.groupBox.resizeEvent = lambda event: self.window_resize()
@@ -16,8 +16,8 @@ class CustomRuntimeWindow(QtWidgets.QWidget):
         self.ErrorL=self.ui.ErrorL_2
         self.ErrorC=self.ui.ErrorC_2
         self.ErrorConf=self.ui.ErrorConf_2
-        self.toolButtonBrowseOutput_2=self.ui.toolButtonBrowseDatabase_3 
-        self.lineEditOutputDirectory_2 = self.ui.lineEditDatabasePath_2
+        self.toolButtonBrowseOutput_2=self.ui.BrowseScriptPath_button 
+        self.lineEditOutputDirectory_2 = self.ui.ScriptPath_lineEdit
         self.ErrorConf.hide()
 
         self.ErrorC.currentTextChanged.connect(self.check_error_conf_visibility)

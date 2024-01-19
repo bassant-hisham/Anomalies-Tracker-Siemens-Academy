@@ -1,10 +1,10 @@
 from PyQt5.QtWidgets import *
-from UIs.RuntimeUI import Ui_MainWindow as Ui_Running_MainWindow
+from UIs.RunningConfigUI import Ui_RunningConfiguration
 from CustomRuntime import CustomRuntimeWindow
 from commonFunctions import *
 
 
-class MyRunningConfigurations(QWidget, Ui_Running_MainWindow):
+class MyRunningConfigurations(QWidget, Ui_RunningConfiguration):
 
     def __init__(self, scrollLayoutRunning: QVBoxLayout):
         super(MyRunningConfigurations, self).__init__()

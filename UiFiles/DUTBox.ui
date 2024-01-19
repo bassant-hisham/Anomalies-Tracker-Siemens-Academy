@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>943</width>
-    <height>1676</height>
+    <height>1923</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -121,6 +121,8 @@ QGroupBox::title{
 QGroupBox{
 	margin-top: 40px;
 	margin-left: 20px;
+margin-bottom: 40px;
+	margin-right: 20px;
     border: 1px solid rgb(255, 255, 255);
 	padding-top: 20px;
 }
@@ -584,8 +586,7 @@ border-radius:13px;
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">	border:none;
-</string>
+      <string notr="true"/>
      </property>
      <property name="title">
       <string>Record Configurations</string>
@@ -793,8 +794,7 @@ font:normal;
    <item row="6" column="0">
     <widget class="QGroupBox" name="ReplyConf_groupbox">
      <property name="styleSheet">
-      <string notr="true">	border:none;
-</string>
+      <string notr="true"/>
      </property>
      <property name="title">
       <string>Reply Configurations</string>
@@ -893,8 +893,7 @@ font:normal</string>
    <item row="7" column="0">
     <widget class="QGroupBox" name="DPIConf_groupbox">
      <property name="styleSheet">
-      <string notr="true">	border:none;
-</string>
+      <string notr="true"/>
      </property>
      <property name="title">
       <string>DPI Configurations</string>
@@ -1000,6 +999,9 @@ border-radius:7px;</string>
       </item>
       <item row="2" column="0">
        <widget class="QGroupBox" name="DPIAdditionalArgGroupBox_2">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="title">
          <string>DPI Additional Arguments</string>
         </property>
@@ -1067,7 +1069,11 @@ border-radius:7px;</string>
           </layout>
          </item>
          <item row="2" column="0">
-          <widget class="QTextBrowser" name="DPIAdditionalArg_2"/>
+          <widget class="QTextBrowser" name="DPIAdditionalArg_2">
+           <property name="styleSheet">
+            <string notr="true">border:none;</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <layout class="QHBoxLayout" name="AddArgLayout_5">
@@ -1091,6 +1097,10 @@ border-radius:7px;</string>
                <width>111</width>
                <height>54</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">	background-color: rgb(33, 188, 180);
+</string>
              </property>
              <property name="text">
               <string>Add</string>
@@ -1140,7 +1150,12 @@ border-radius:7px;</string>
           </layout>
          </item>
          <item row="5" column="0">
-          <widget class="QTextBrowser" name="DPIAdditionalEnvValues_2"/>
+          <widget class="QTextBrowser" name="DPIAdditionalEnvValues_2">
+           <property name="styleSheet">
+            <string notr="true">	border:none;
+</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0" colspan="2">
           <layout class="QHBoxLayout" name="EnvVarValue_Hlayout_2">
@@ -1195,6 +1210,10 @@ border-radius:7px;</string>
                <width>111</width>
                <height>54</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">	background-color: rgb(33, 188, 180);
+</string>
              </property>
              <property name="text">
               <string>Add</string>

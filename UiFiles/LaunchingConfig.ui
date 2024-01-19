@@ -194,6 +194,8 @@ QGroupBox::title{
 QGroupBox{
 	margin-top: 40px;
 margin-left:20px;
+	margin-bottom: 40px;
+margin-right:20px;
 	background-color: transparent;
     border: 1px solid rgb(255, 255, 255);
 	padding-top: 20px;
@@ -350,9 +352,9 @@ background-color:#2c313b;
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-494</y>
         <width>808</width>
-        <height>1277</height>
+        <height>1275</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -455,8 +457,7 @@ QPushButton:disabled {
             <item row="1" column="0">
              <widget class="QGroupBox" name="MasterToolGroupBox">
               <property name="styleSheet">
-               <string notr="true">border:none;
-margin-left:20px;</string>
+               <string notr="true"/>
               </property>
               <property name="title">
                <string>Master Tool Configuration</string>
@@ -486,7 +487,7 @@ margin-left:20px;</string>
                   <item row="5" column="0">
                    <widget class="QTextBrowser" name="ToolAdditionalEnvValues">
                     <property name="styleSheet">
-                     <string notr="true">border:1px solid white;
+                     <string notr="true">border:none;
 </string>
                     </property>
                    </widget>
@@ -773,7 +774,7 @@ border-radius:7px;</string>
                   <item row="3" column="0">
                    <widget class="QTextBrowser" name="AdditionalArg">
                     <property name="styleSheet">
-                     <string notr="true">border:1px solid white;
+                     <string notr="true">border:none;
 </string>
                     </property>
                    </widget>
