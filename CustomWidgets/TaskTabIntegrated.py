@@ -11,8 +11,14 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def __init__(self):
         super(MyTaskTab, self).__init__()
         self.setupUi(self)  # This sets up the UI components from the TaskTab section
-        self.Directory_widget.hide()
-        self.File_widget.hide()
+        
+        self.stacked_widget = QStackedWidget(self)
+        self.stacked_widget.addWidget(self.Directory_widget)
+        self.stacked_widget.addWidget(self.File_widget)
+        self.gridLayout_4.addWidget(self.stacked_widget)
+        self.gridLayout_4.removeWidget(self.Directory_widget) #.hide()
+        self.gridLayout_4.removeWidget(self.File_widget) #.hide()
+        
         self.AddDesign_button.clicked.connect(self.add_design)
         self.AddRunningConfig_button.clicked.connect(self.add_running_config)
         self.scrollLayout = QVBoxLayout(self.Designs_scrollAreaWidget)
@@ -28,14 +34,11 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.Builds = []
     
     def toggle_directory(self):
-        self.Directory_widget.show()
-        if self.File_widget.isVisible():
-            self.File_widget.hide()
+        self.stacked_widget.setCurrentIndex(0)
             
     def toggle_file(self):
-        self.File_widget.show()
-        if self.Directory_widget.isVisible():
-            self.Directory_widget.hide()
+       self.stacked_widget.setCurrentIndex(1)
+            
     def add_design(self):
         #self.scrollLayout.addWidget(MyDesignBox(self.scrollLayout.count()+1))
         new_design_box = MyDesignBox(self.scrollLayout.count() + 1)
@@ -50,28 +53,33 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def add_running_config(self):
         new_running_box = MyRunningConfigurations(self.scrollLayoutRunning)
         self.Running_data.append(new_running_box)  
+        
     def get_builds(self):
-        file_path = self.FilePath_lineEdit.text()
-        parent_dir = self.ParentDir_lineEdit.text()
-        StartRange = 0
-        EndRange = 0
-        if self.Range_radioButton.isChecked():
-            StartRange = self.RangeFrom_lineEdit.text()
-            EndRange = self.RangeTo_lineEdit.text()
+        current_index = self.stacked_widget.currentIndex() #use it to know which of dir or file is used (0->Dir , 1->File)
+        if current_index == 1:
+            file_path = self.FilePath_lineEdit.text()
+            self.Builds.append(file_path)
+        else:
+            parent_dir = self.ParentDir_lineEdit.text()
+            StartRange = 0
+            EndRange = 0
+            if self.Range_radioButton.isChecked():
+                StartRange = self.RangeFrom_lineEdit.text()
+                EndRange = self.RangeTo_lineEdit.text()
 
-        elif self.BinarySearch_radioButton.isChecked():
-            StartRange = self.BinarySearchFrom_lineEdit.text()
-            EndRange = self.BinarySearchTo_lineEdit.text()
+            elif self.BinarySearch_radioButton.isChecked():
+                StartRange = self.BinarySearchFrom_lineEdit.text()
+                EndRange = self.BinarySearchTo_lineEdit.text()
 
-        if self.All_radioButton.isChecked():
-            bash_files = [f for f in os.listdir(parent_dir) if f.endswith(".bash")]
-            for file_name in bash_files:
-                self.Builds.append(file_name)
-        else :
-            start_value = int(StartRange) 
-            end_value = int(EndRange) 
-            for i in range(start_value, end_value + 1):
-                file_name = f"vved{i}.bash"
-                if os.path.exists(os.path.join(parent_dir, file_name)):
+            if self.All_radioButton.isChecked():
+                bash_files = [f for f in os.listdir(parent_dir) if f.endswith(".bash")]
+                for file_name in bash_files:
                     self.Builds.append(file_name)
+            else :
+                start_value = int(StartRange) 
+                end_value = int(EndRange) 
+                for i in range(start_value, end_value + 1):
+                    file_name = f"vved{i}.bash"
+                    if os.path.exists(os.path.join(parent_dir, file_name)):
+                        self.Builds.append(file_name)
         return self.Builds

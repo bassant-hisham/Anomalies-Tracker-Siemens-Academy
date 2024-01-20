@@ -190,124 +190,10 @@ QPushButton:disabled {
       <attribute name="title">
        <string>Environments</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout_2">
-       <item row="1" column="0" colspan="2">
-        <widget class="QWidget" name="File_widget" native="true">
-         <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="FilePath_horizontalLayout">
-            <item>
-             <widget class="QLabel" name="FilePath_abel">
-              <property name="font">
-               <font>
-                <family>MS Shell Dlg 2</family>
-                <pointsize>11</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="lineWidth">
-               <number>0</number>
-              </property>
-              <property name="text">
-               <string>File Path</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="FilePath_lineEdit">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="BrowseFilePath_button">
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/icons/icons/folder_icon.png</normaloff>:/icons/icons/folder_icon.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="2">
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="2" column="0">
         <widget class="QWidget" name="Directory_widget" native="true">
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <layout class="QHBoxLayout" name="ParentDir_horizontalLayout">
-            <item>
-             <widget class="QLabel" name="ParentDir_label">
-              <property name="font">
-               <font>
-                <family>MS Shell Dlg 2</family>
-                <pointsize>11</pointsize>
-                <weight>50</weight>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="lineWidth">
-               <number>0</number>
-              </property>
-              <property name="text">
-               <string>Parent Directory</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="ParentDir_lineEdit">
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QToolButton" name="BrowseParentDir_button">
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <property name="text">
-               <string>...</string>
-              </property>
-              <property name="icon">
-               <iconset>
-                <normaloff>:/icons/icons/folder_icon.png</normaloff>:/icons/icons/folder_icon.png</iconset>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="All_radioButton">
-            <property name="font">
-             <font>
-              <pointsize>11</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>All</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <layout class="QHBoxLayout" name="Range_horizontalLayout">
             <item>
@@ -456,10 +342,150 @@ QPushButton:disabled {
             </item>
            </layout>
           </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="All_radioButton">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>All</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="ParentDir_horizontalLayout">
+            <item>
+             <widget class="QLabel" name="ParentDir_label">
+              <property name="font">
+               <font>
+                <family>MS Shell Dlg 2</family>
+                <pointsize>11</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>Parent Directory</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="ParentDir_lineEdit">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="BrowseParentDir_button">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>:/icons/icons/folder_icon.png</normaloff>:/icons/icons/folder_icon.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="4" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
          </layout>
         </widget>
        </item>
-       <item row="0" column="0" colspan="2">
+       <item row="1" column="0">
+        <widget class="QWidget" name="File_widget" native="true">
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <layout class="QHBoxLayout" name="FilePath_horizontalLayout">
+            <item>
+             <widget class="QLabel" name="FilePath_abel">
+              <property name="font">
+               <font>
+                <family>MS Shell Dlg 2</family>
+                <pointsize>11</pointsize>
+                <weight>50</weight>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
+              <property name="text">
+               <string>File Path</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="FilePath_lineEdit">
+              <property name="focusPolicy">
+               <enum>Qt::ClickFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="BrowseFilePath_button">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normaloff>:/icons/icons/folder_icon.png</normaloff>:/icons/icons/folder_icon.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item row="1" column="0">
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="0">
         <layout class="QHBoxLayout" name="Add_Dict_File_horizontalLayout">
          <item>
           <widget class="QPushButton" name="AddDirectory_button">
