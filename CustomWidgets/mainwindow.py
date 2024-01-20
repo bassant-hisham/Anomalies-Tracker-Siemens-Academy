@@ -36,7 +36,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             combinations = self.collectData()
             Job.Jobs_table.setRowCount(len(combinations))
             for row_index, (running_config, design, build) in enumerate(combinations):
-                # Add a checkbox to the first column (column index 0)
                 checkbox_item = QTableWidgetItem()
                 checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
                 checkbox_item.setCheckState(Qt.Unchecked)
@@ -45,14 +44,18 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
                 running_dict = running_config.custom_window.running_configurations
                 col_index = 2
+
                 for (num,(key,value)) in enumerate(running_dict.items()):
                     Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(value)))
                     col_index += 1
+
                 Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
                 col_index += 1
+
                 DesignPath = design.DesignPath_lineEdit.text()
                 Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
                 col_index += 1
+                
             current_widget.Task_tabWidget.addTab(Job,"Jobs")
             
 
