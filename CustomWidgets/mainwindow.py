@@ -1,6 +1,7 @@
 from itertools import product
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 from UIs.MainWindowUI import Ui_MainWindow
 from CompilationConfigurationWindow import MyCompilationConfigWindow
 from LaunchingConfigurationWindow import MyLaunchingConfigWindow
@@ -35,6 +36,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             combinations = self.collectData()
             Job.Jobs_table.setRowCount(len(combinations))
             for row_index, (running_config, design, build) in enumerate(combinations):
+                # Add a checkbox to the first column (column index 0)
+                checkbox_item = QTableWidgetItem()
+                checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
+                checkbox_item.setCheckState(Qt.Unchecked)
+                Job.Jobs_table.setItem(row_index, 0, checkbox_item)
+                
                 Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
                 running_dict = running_config.custom_window.running_configurations
                 col_index = 2
