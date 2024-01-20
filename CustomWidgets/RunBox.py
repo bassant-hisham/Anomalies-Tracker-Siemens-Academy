@@ -4,7 +4,7 @@ from UIs.CrashConfigUI import CrashConfigWindow
 from UIs.HangConfigUI import HangConfigWindow  # Import HangConfigWindow
 from PyQt5.QtWidgets import *
 
-class CustomRuntimeWindow(QtWidgets.QWidget):
+class MyRunBox(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.ui = Ui_RunningConfiguration()
@@ -68,7 +68,7 @@ class CustomRuntimeWindow(QtWidgets.QWidget):
 def run_custom_runtime():
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    window = CustomRuntimeWindow()
+    window = MyRunBox()
     window.show()
     sys.exit(app.exec_())
 

@@ -4,7 +4,7 @@ from PyQt5 import QtWidgets
 from UIs.TaskTabUI import Ui_Task_Tab
 from commonFunctions import *
 from DesignBox import MyDesignBox
-from AddRuntime import MyRunningConfigurations
+from RunningConfiguration import MyRunningConfigurations
 
 
 class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
@@ -15,9 +15,9 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.File_widget.hide()
         self.AddDesign_button.clicked.connect(self.add_design)
         self.AddRunningConfig_button.clicked.connect(self.add_running_config)
-        self.scrollLayout = QVBoxLayout(self.Designs_scrollArea)
+        self.scrollLayout = QVBoxLayout(self.Designs_scrollAreaWidget)
         self.scrollLayoutRunning = QVBoxLayout(self.RunningConfig_scroll)
-        self.Designs_scrollArea.setLayout(self.scrollLayout)
+        self.Designs_scrollAreaWidget.setLayout(self.scrollLayout)
         self.RunningConfig_scroll.setLayout(self.scrollLayoutRunning)
         self.AddDirectory_button.clicked.connect(self.toggle_directory)
         self.AddFile_button.clicked.connect(self.toggle_file)
