@@ -30,23 +30,23 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
-        if isinstance(current_widget, MyTaskTab) and current_widget.tabWidget.count() < 4:
+        if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
             Job = MyJobs()
             combinations = self.collectData()
-            Job.tableWidget.setRowCount(len(combinations))
+            Job.Jobs_table.setRowCount(len(combinations))
             for row_index, (running_config, design, build) in enumerate(combinations):
-                Job.tableWidget.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
+                Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
                 running_dict = running_config.custom_window.running_configurations
                 col_index = 2
                 for (num,(key,value)) in enumerate(running_dict.items()):
-                    Job.tableWidget.setItem(row_index, col_index , QTableWidgetItem(str(value)))
+                    Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(value)))
                     col_index += 1
-                Job.tableWidget.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+                Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
                 col_index += 1
-                DesignPath = design.lineEditDatabasePath_2.text()
-                Job.tableWidget.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
+                DesignPath = design.DesignPath_lineEdit.text()
+                Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
                 col_index += 1
-            current_widget.tabWidget.addTab(Job,"Jobs")
+            current_widget.Task_tabWidget.addTab(Job,"Jobs")
             
 
     def collectData(self):
