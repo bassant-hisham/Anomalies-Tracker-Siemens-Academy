@@ -1,392 +1,384 @@
+# Import libraries
 from abc import ABC, abstractmethod
-import xml.etree.ElementTree as ET
-from xml.dom import minidom
-from getpass import getpass
-from enum import Enum
 import jenkins
 import logging
-import json
 
 
-class ConcurrentBuilds(Enum):
-    enable = 0
-    disable = 1
-    disable_and_abort_previous = 2
+# Import modules
+import xml_handler
+import json_handler
+import script_handler
 
 
-class PipelineSpeed(Enum):
-    NONE = 'None'
-    PERFORMANCE_OPTIMIZED = 'PERFORMANCE_OPTIMIZED'
-    SURVIVABLE_NONATOMIC = 'SURVIVABLE_NONATOMIC'
-    MAX_SURVIVABILITY = 'MAX_SURVIVABILITY'
-
-
-class TimePeriod(Enum):
-    Second = 'second'
-    Minute = 'minute'
-    Hour = 'hour'
-    Day = 'day'
-    Week = 'week'
-    Month = 'month'
-    Year = 'year'
-
-
-class BuildAfter(Enum):
-    NONE = 'None'
-    stable = ["SUCCESS", "0", "BLUE", "true"]
-    unstable = ["UNSTABLE", "1", "YELLOW", "true"]
-    fails = ["FAILURE", "2", "RED", "true"]
-    always = ["ABORTED", "3", "ABORTED", "false"]
-
-
-def prettify(elem: ET.Element) -> str:
+# Functions
+def get_type_of_solution(json_object: dict) -> str:
     """
-    Return a pretty-printed XML string for the Element
-    :param elem:     root element of xml
+    Get type of solution
+    :param json_object:       jobs dictionary with all jobs
     """
     try:
-        rough_string = ET.tostring(elem, 'utf-8')
-        reparsed = minidom.parseString(rough_string)
-        return reparsed.toprettyxml(indent="  ")
-    except Exception as e:
-        logging.error(f"Error while prettifying XML: {e}")
-
-
-def get_type(json_file: str) -> str:
-    """
-    Get type of solution from json file
-    :param json_file:       full/relevant path of json file
-    """
-    try:
-        with open(json_file) as jf:
-            json_object = json.load(jf)
-            for key in json_object.keys():
-                return key
-    except FileNotFoundError:
-        logging.error(f"JSON file '{json_file}' not found.")
-    except json.JSONDecodeError:
-        logging.error(f"Error decoding JSON from file '{json_file}'. Check JSON syntax.")
+        for key in json_object.keys():
+            return key
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
+        return ""
 
 
-class Solution(ABC):
+def create_jobs(json_object: dict, server: jenkins.Jenkins) -> None:
+    solution_type = get_type_of_solution(json_object)
+    solution = SolutionHandlerFactory.create_solution_handler(solution_type)
+    if solution is not None:
+        job_ids = solution.generate_all_pipeline_job_xml(json_object)
+        for job_id in job_ids:
+            with open(f"job{job_id}.xml") as xmlFile:
+                config = xmlFile.read()
+                server.upsert_job(f"job{job_id}", config)
+
+
+def initialize_jenkins_server(url: str, username: str, password: str) -> jenkins.Jenkins:
+    """
+    Initialize Jenkins server with the provided URL, username, and password.
+    
+    :param url: Jenkins server URL
+    :param username: Jenkins username
+    :param password: Jenkins password
+    :return: Jenkins server instance
+    """
+    try:
+        server = jenkins.Jenkins(url, username=username, password=password)
+        # Check if the server is accessible by making a small request
+        print(server.get_whoami())
+        return server
+    except Exception as e:
+        logging.error(f"Failed to initialize Jenkins server. Error: {e}")
+
+
+#####################################################################################################################################################
+# Classes
+
+class SolutionHandler(ABC):
+
+    @staticmethod
+    def get_prerequisites(job: dict) -> tuple:
+        """
+        Get prerequisites of the job
+        :param job:      dictionary job
+        """
+        previous_task_id = job["prerequisites"]["previous_task_id"]
+        previous_job_id = job["prerequisites"]["previous_job_id"]
+        return previous_task_id, previous_job_id
 
     @abstractmethod
     def generate_script(self, job: dict) -> str:
         """
         Generate pipeline script for given job
-        :param job:      dictionary job extracted from json file
+        :param job:      dictionary job
         """
-
-    def generate_pipeline_job_xml(self, job: dict, job_num: str, description: str = "", display_name: str = "",
-                                  keep_dependencies: bool = False, days_to_keep_builds: int = -1, max_builds_to_keep: int = -1,
-                                  days_to_keep_artifacts: int = -1, max_builds_to_keep_with_artifacts: int = -1,
-                                  disable_concurrent_builds: ConcurrentBuilds = ConcurrentBuilds.enable, disable_resume: bool = False,
-                                  github_project_url: str = "", github_project_display_name: str = "",
-                                  pipeline_speed: PipelineSpeed = PipelineSpeed.NONE, preserve_stashes: int = -1,
-                                  throttle_builds: int = -1, time_period: TimePeriod = TimePeriod.Hour, user_boost: bool = False,
-                                  build_after_type: BuildAfter = BuildAfter.NONE, projects_to_watch: list = (),
-                                  github_hook_trigger: bool = False, sandbox_enabled: bool = True, quiet_period: int = -1,
-                                  build_remotely_auth_token: str = "", disable: bool = False) -> None:
-        """
-        Generate xml config files for given job with specific actions
-        :param job:                                 job details which is usually retrieved from a json file.
-        :param job_num:                             job name which is usually indicated by a number.
-        :param description:                         description about the job.
-        :param display_name:                        optional display name shown for the project throughout the Jenkins web GUI.
-        :param keep_dependencies:                   unclear; preferably keep as default.
-        :param days_to_keep_builds:                 build records are only kept up to this number of days.
-        :param max_builds_to_keep:                  only up to this number of build records are kept.
-        :param days_to_keep_artifacts:              artifacts from builds older than this number of days will be deleted, but the logs, history, reports, etc for the build will be kept.
-        :param max_builds_to_keep_with_artifacts:   only up to this number of builds have their artifacts retained.
-        :param disable_concurrent_builds:           do not allow concurrent builds.
-        :param disable_resume:                      do not allow the pipeline to resume if the controller restarts.
-        :param github_project_url:                  url for the GitHub hosted project (without the tree/master or tree/branch part).
-        :param github_project_display_name:         value will be used as context name for commit status if status builder or status publisher is defined for this project.
-        :param pipeline_speed:                      this setting allows users to change the default durability mode for running Pipelines. In most cases this is a trade-off between performance and the ability for running pipelines to resume after unplanned Jenkins outages.
-        :param preserve_stashes:                    keep this many of the most recent builds' stashes.
-        :param throttle_builds:                     the maximum number of builds allowed within the specified time period.
-        :param time_period:                         The time period within which the maximum number of builds will be enforced.
-        :param user_boost:                          enable this option to permit user triggered builds to skip the rate limit.
-        :param build_after_type:                    specify the condition on which the project being watched is done with to trigger a build for this job.
-        :param projects_to_watch:                   when some other projects finish building, a new build is scheduled for this project.
-        :param github_hook_trigger:                 GitHub Plugin triggers a one-time polling on GITScm if hook came from a GitHub repository which matches the Git repository defined in SCM/Git section of this job.
-        :param sandbox_enabled:                     run Groovy script in a sandbox with limited abilities.
-        :param quiet_period:                        jenkins will wait for the specified period of time (in seconds) before actually starting the build.
-        :param build_remotely_auth_token:           an authentication token used if you would like to trigger new builds by accessing a special predefined URL (convenient for scripts).
-        :param disable:                             disable the job.
-        """
-        try:
-            root = ET.Element('flow-definition', attrib={'plugin': 'workflow-job@1385.vb_58b_86ea_fff1'})
-
-            actions = ET.SubElement(root, 'actions')
-
-            if description != "":
-                describe = ET.SubElement(root, 'description')
-                describe.text = description
-
-            if display_name != "":
-                displayName = ET.SubElement(root, 'displayName')
-                displayName.text = display_name
-
-            declarative_job_action = ET.SubElement(actions, 'org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction',
-                                                   attrib={'plugin': 'pipeline-model-definition@2.2151.ve32c9d209a_3f'})
-            declarative_job_property_tracker_action = ET.SubElement(actions,
-                                                                    'org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction',
-                                                                    attrib={'plugin': 'pipeline-model-definition@2.2151.ve32c9d209a_3f'})
-            job_properties = ET.SubElement(declarative_job_property_tracker_action, 'jobProperties')
-            triggers = ET.SubElement(declarative_job_property_tracker_action, 'triggers')
-            parameters = ET.SubElement(declarative_job_property_tracker_action, 'parameters')
-            options = ET.SubElement(declarative_job_property_tracker_action, 'options')
-            declarative_job_property_tracker = ET.SubElement(declarative_job_property_tracker_action,
-                                                             'org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction')
-            description = ET.SubElement(root, 'description')
-
-            keepDependencies = ET.SubElement(root, 'keepDependencies')
-            if keep_dependencies:
-                keepDependencies.text = 'true'
-            else:
-                keepDependencies.text = 'false'
-
-            properties = ET.SubElement(root, 'properties')
-
-            if days_to_keep_builds > 0 or max_builds_to_keep > 0 or days_to_keep_artifacts > 0 or max_builds_to_keep_with_artifacts > 0:
-                discard_build = ET.SubElement(properties, 'jenkins.model.BuildDiscarderProperty')
-                strategy = ET.SubElement(discard_build, 'strategy class="hudson.tasks.LogRotator', attrib={'class': 'hudson.tasks.LogRotator'})
-                daysToKeep = ET.SubElement(strategy, 'daysToKeep')
-                daysToKeep.text = str(days_to_keep_builds)
-                numToKeep = ET.SubElement(strategy, 'numToKeep')
-                numToKeep.text = str(max_builds_to_keep)
-                artifactDaysToKeep = ET.SubElement(strategy, 'artifactDaysToKeep')
-                artifactDaysToKeep.text = str(days_to_keep_artifacts)
-                artifactNumToKeep = ET.SubElement(strategy, 'artifactNumToKeep')
-                artifactNumToKeep.text = str(max_builds_to_keep_with_artifacts)
-
-            if 1 <= disable_concurrent_builds.value <= 2:
-                DisableConcurrentBuilds = ET.SubElement(properties, 'org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty')
-                abortPrevious = ET.SubElement(DisableConcurrentBuilds, 'abortPrevious')
-                if disable_concurrent_builds == ConcurrentBuilds.disable:
-                    abortPrevious.text = 'false'
-                else:
-                    abortPrevious.text = 'true'
-
-            if disable_resume:
-                DisableResume = ET.SubElement(properties, 'org.jenkinsci.plugins.workflow.job.properties.DisableResumeJobProperty')
-
-            if github_project_url != "":
-                GithubProject = ET.SubElement(properties, 'com.coravy.hudson.plugins.github.GithubProjectProperty', attrib={'plugin': 'github@1.37.3.1'})
-                projectUrl = ET.SubElement(GithubProject, 'projectUrl')
-                projectUrl.text = github_project_url
-                displayName = ET.SubElement(GithubProject, 'displayName')
-                if github_project_display_name != "":
-                    displayName.text = github_project_display_name
-
-            if pipeline_speed != PipelineSpeed.NONE:
-                DurabilityHint = ET.SubElement(properties, 'org.jenkinsci.plugins.workflow.job.properties.DurabilityHintJobProperty')
-                hint = ET.SubElement(DurabilityHint, 'hint')
-                hint.text = pipeline_speed.value
-
-            if preserve_stashes >= 0:
-                PreserveStashes = ET.SubElement(properties, 'org.jenkinsci.plugins.pipeline.modeldefinition.properties.PreserveStashesJobProperty',
-                                                attrib={'plugin': 'pipeline-model-definition@2.2151.ve32c9d209a_3f'})
-                buildCount = ET.SubElement(PreserveStashes, 'buildCount')
-                buildCount.text = str(preserve_stashes)
-
-            if throttle_builds > 0:
-                RateLimit = ET.SubElement(properties, 'jenkins.branch.RateLimitBranchProperty_-JobPropertyImpl',
-                                          attrib={'plugin': 'branch-api@2.1135.v8de8e7899051'})
-                durationName = ET.SubElement(RateLimit, "durationName")
-                durationName.text = time_period.value
-                count = ET.SubElement(properties, 'count')
-                count.text = throttle_builds
-                userBoost = ET.SubElement(properties, 'userBoost')
-                if user_boost:
-                    userBoost.text = 'true'
-                else:
-                    userBoost.text = 'false'
-
-            PipelineTriggers = ET.SubElement(properties, 'org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty')
-            triggers = ET.SubElement(PipelineTriggers, 'triggers')
-
-            if build_after_type != BuildAfter.NONE:
-                BuildTrigger = ET.SubElement(triggers, 'jenkins.triggers.ReverseBuildTrigger')
-                spec = ET.SubElement(BuildTrigger, 'spec')
-                upstreamProjects = ET.SubElement(BuildTrigger, 'upstreamProjects')
-                projects = ""
-                if len(projects_to_watch):
-                    for project in projects_to_watch:
-                        projects += f"{project},"
-                else:
-                    pass
-                upstreamProjects.text = projects
-                threshold = ET.SubElement(BuildTrigger, 'threshold')
-                name = ET.SubElement(threshold, 'name')
-                name.text = build_after_type.value[0]
-                ordinal = ET.SubElement(threshold, 'ordinal')
-                ordinal.text = build_after_type.value[1]
-                color = ET.SubElement(threshold, 'color')
-                color.text = build_after_type.value[2]
-                completeBuild = ET.SubElement(threshold, 'completeBuild')
-                completeBuild.text = build_after_type.value[3]
-
-            if github_hook_trigger:
-                GitHubPushTrigger = ET.SubElement(triggers, 'com.cloudbees.jenkins.GitHubPushTrigger', attrib={'plugin': 'github@1.37.3.1'})
-                spec = ET.SubElement(GitHubPushTrigger, 'spec')
-
-            definition = ET.SubElement(root, 'definition', attrib={'class': 'org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition',
-                                                                   'plugin': 'workflow-cps@3826.v3b_5707fe44da_'})
-
-            script = ET.SubElement(definition, 'script')
-            script.text = self.generate_script(job)
-
-            sandbox = ET.SubElement(definition, 'sandbox')
-            if sandbox_enabled:
-                sandbox.text = 'true'
-            else:
-                sandbox.text = 'false'
-
-            triggers = ET.SubElement(root, 'triggers')
-
-            if quiet_period >= 0:
-                quietPeriod = ET.SubElement(root, 'quietPeriod')
-                quietPeriod.text = quiet_period
-
-            if build_remotely_auth_token != "":
-                authToken = ET.SubElement(root, 'authToken')
-                authToken.text = build_remotely_auth_token
-
-            disabled = ET.SubElement(root, 'disabled')
-            if disable:
-                disabled.text = 'true'
-            else:
-                disabled.text = 'false'
-
-            xml_tree = ET.ElementTree(root)
-            xml_string = prettify(root)
-            with open(f"job{job_num}.xml", "w") as new_job:
-                new_job.write(xml_string)
-        except Exception as e:
-            logging.error(f"Error while generating XML configuration: {e}")
 
     @abstractmethod
-    def generate_all_pipeline_job_xml(self, json_file: str) -> None:
-        """Generate xml config files for all jobs in given json file"""
+    def generate_all_pipeline_job_xml(self, json_object: dict) -> list:
+        """
+        Generate xml config files for all jobs in given json file
+        :param json_object:       jobs dictionary with all jobs
+        """
 
 
-class Ethernet(Solution):
+class SolutionHandlerFactory:
+    @staticmethod
+    def create_solution_handler(solution_type: str) -> SolutionHandler:
+        if solution_type == "Ethernet":
+            return EthernetHandler()
+        elif solution_type == "5G":
+            # Add 5G solution handler implementation
+            return None
+        else:
+            raise ValueError(f"Unsupported solution type: {solution_type}")
+
+
+class EthernetHandler(SolutionHandler):
 
     def __int__(self):
         pass
 
-    def generate_script(self, job: dict) -> str:
+    @staticmethod
+    def get_compilation_configurations(job: dict, script: str) -> str:
+        """"
+        Get compilation configurations of the job
+        :param job:       details about the job in dictionary format
+        :param script:    groovy script to be filled
+        """
         try:
-            prerequisites = job["prerequisites"]["previous_job_id"]
-            compiling = job["compilation_configurations"]["compile_design"]
-            compile_path = job["compilation_configurations"]["source_design_path"]
-            compiling_command = f"sh 'sudo g++ -g  /home/vmarwan/Documents/JB/script.c++ -o /home/vmarwan/Documents/JB/script.out'"
-            launching_dut = job["launching_configurations"]["dut_configuration"][0]["launch_dpi"]
-            terminating_dut = job["launching_configurations"]["dut_configuration"][0]["terminate_dpi"]
-            launching_dut = []
-            terminating_dut = []
-            for dut_config in job["launching_configurations"]["dut_configuration"]:
-                launching_dut.append(dut_config["launch_dpi"])
-                terminating_dut.append(dut_config["terminate_dpi"])
-            launching_tools = job["launching_configurations"]["tools_configuration"]["launch_tool"]
-            terminating_master_tool = job["launching_configurations"]["tools_configuration"]["master_tool_configuration"]["terminate_tool"]
-            terminating_slave_tool = job["launching_configurations"]["tools_configuration"]["slave_tool_configuration"]["terminate_tool"]
-            launching_dut_command = "echo 'launching dut'"
-            terminating_dut_command = "echo 'terminating dut'"
-            launching_tools_command = "echo 'launching tools'"
-            terminating_master_command = "echo 'terminating master'"
-            terminating_slave_command = "echo 'terminating slave'"
-            running = job["running_configurations"]["run_script"]
+            compilation_configurations = job["compilation_configurations"]
+            compile_design = compilation_configurations["compile_design"]
+            source_design_path = compilation_configurations["source_design_path"]
+            output_directory = compilation_configurations["output_directory"]
+            machine = compilation_configurations["machine"]
+            force = compilation_configurations["force"]
+            timeout = compilation_configurations["timeout"]
+            compiling_command = "sh 'g++ -g  /home/vmarwan/Documents/JB/script.c++ -o /home/vmarwan/Documents/JB/script.out'"
+            if compile_design:
+                script += script_handler.start_stage("Compiling")
+                script += script_handler.write_step(f"echo 'compile_design: {compile_design}'")
+                script += script_handler.write_step(f"echo 'source_design_path: {source_design_path}'")
+                script += script_handler.write_step(f"echo 'output_directory: {output_directory}'")
+                script += script_handler.write_step(f"echo 'machine: {machine}'")
+                script += script_handler.write_step(f"echo 'force: {force}'")
+                script += script_handler.write_step(f"echo 'timeout: {timeout}'")
+                script += script_handler.write_step(compiling_command)
+                script += script_handler.end_stage()
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting compilation configurations: {e}")
+            return ""
+
+    @staticmethod
+    def get_basic_launch_configuration(launching_configurations: dict, script: str) -> str:
+        """"
+       Get basic launch configurations of the job
+       :param launching_configurations:       details about the job launching configuration in dictionary format
+       :param script:                         groovy script to be filled
+       """
+        try:
+            schema = launching_configurations["$schema"]
+            platform = launching_configurations["platform"]
+            solution = launching_configurations["solution"]
+            src_file = launching_configurations["src_file"]
+            script += script_handler.start_stage("Launching")
+            script += script_handler.write_step(f"echo 'schema: {schema}'")
+            script += script_handler.write_step(f"echo 'platform: {platform}'")
+            script += script_handler.write_step(f"echo 'solution: {solution}'")
+            script += script_handler.write_step(f"echo 'src_file: {src_file}'")
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting basic launch configuration: {e}")
+            return ""
+
+    @staticmethod
+    def get_dut_configurations(dut_configuration: dict, script: str) -> str:
+        """
+        Get dut configurations of the launching stage
+        :param dut_configuration:             design under test configuration details in dictionary format
+        :param script:                        groovy script to be filled
+        """
+        try:
+            launch_dpi = dut_configuration["launch_dpi"]
+            # terminate_dpi = dut_configuration["terminate_dpi"]
+            # terminate_dpi_onerror = dut_configuration["terminate_dpi_onerror"]
+            avb_list = dut_configuration["avb_list"]
+            design_path = dut_configuration["design_path"]
+            # dpi_launch_mode = dut_configuration["dpi_launch_mode"]
+            dpi_launch_type = dut_configuration["dpi_launch_type"]
+            # dpi_additional_args = dut_configuration["dpi_additional_args"]
+            # ENABLE_BACKUP_LOG = dut_configuration["dpi_additional_env_variables"]["ENABLE_BACKUP_LOG"]
+            # use_custom_comodels_config = dut_configuration["use_custom_comodels_config"]
+            host_name = dut_configuration["custom_comodels_config"][0]["host_name"]
+            domain_id = dut_configuration["custom_comodels_config"][0]["domain_id"]
+            script += script_handler.write_step(f"echo '#####################DUT CONFIG#####################'")
+            script += script_handler.write_step(f"echo 'launch_dpi: {launch_dpi}'")
+            script += script_handler.write_step(f"echo 'avb_list: {avb_list}'")
+            script += script_handler.write_step(f"echo 'design_path: {design_path}'")
+            script += script_handler.write_step(f"echo 'dpi_launch_type: {dpi_launch_type}'")
+            script += script_handler.write_step(f"echo 'host_name: {host_name}'")
+            script += script_handler.write_step(f"echo 'domain_id: {domain_id}'")
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting dut configurations: {e}")
+            return ""
+
+    @staticmethod
+    def get_record_configurations(record_replay_configurations: dict, script: str) -> str:
+        """
+        Get record configurations of launch stage
+        :param record_replay_configurations:             configuration details of record and replay
+        :param script:                                   groovy script to be filled
+        """
+        try:
+            record_configurations = record_replay_configurations["record_configurations"]
+            record_dir = record_configurations["record_dir"]
+            config_type = record_configurations["snapshots_number"]["config_type"]
+            config_value = record_configurations["snapshots_number"]["config_value"]
+            script += script_handler.write_step(f"echo '#####################Record Config#####################'")
+            script += script_handler.write_step(f"echo 'record_dir: {record_dir}'")
+            script += script_handler.write_step(f"echo 'config_type: {config_type}'")
+            script += script_handler.write_step(f"echo 'config_value: {config_value}'")
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting record configurations: {e}")
+            return ""
+
+    @staticmethod
+    def get_replay_configurations(record_replay_configurations: dict, script: str) -> str:
+        """
+        Get replay configurations of launch stage
+        :param record_replay_configurations:             configuration details of record and replay
+        :param script:                                   groovy script to be filled
+        """
+        try:
+            record_configurations = record_replay_configurations["replay_configurations"]
+            replay_dir = record_configurations["replay_dir"]
+            replay_snapshot_name = record_configurations["replay_snapshot_name"]
+            script += script_handler.write_step("echo '#####################Replay Config#####################'")
+            script += script_handler.write_step(f"echo 'replay_dir: {replay_dir}'")
+            script += script_handler.write_step(f"echo 'replay_snapshot_name: {replay_snapshot_name}'")
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting replay configurations: {e}")
+            return ""
+
+    @staticmethod
+    def get_master_tool_configuration(tools_configuration: dict, script: str) -> str:
+        """
+        Get master tool configurations
+        :param tools_configuration:             configuration details of the tools
+        :param script:                          groovy script to be filled
+        """
+        try:
+            master_tool_configuration = tools_configuration["master_tool_configuration"]
+            tool_name = master_tool_configuration["tool_name"]
+            master_tool_launch_mode = master_tool_configuration["tool_launch_mode"]
+            master_additional_args = master_tool_configuration["additional_args"]
+            master_terminate_tool = master_tool_configuration["terminate_tool"]
+            master_terminate_tool_onerror = master_tool_configuration["terminate_tool_onerror"]
+            master_tool_additional_env_variables = master_tool_configuration["tool_additional_env_variables"]
+            VE_ENABLE_BUFFERS_STATISTICS = master_tool_additional_env_variables["VE_ENABLE_BUFFERS_STATISTICS"]
+            ENABLE_BACKUP_LOG = master_tool_additional_env_variables["VE_ENABLE_BUFFERS_STATISTICS"]
+            script += script_handler.write_step(f"echo '#####################Master Tool#####################'")
+            script += script_handler.write_step(f"echo 'tool_name: {tool_name}'")
+            script += script_handler.write_step(f"echo 'master_tool_launch_mode: {master_tool_launch_mode}'")
+            script += script_handler.write_step(f"echo 'master_additional_args: {master_additional_args}'")
+            script += script_handler.write_step(f"echo 'master_terminate_tool: {master_terminate_tool}'")
+            script += script_handler.write_step(f"echo 'master_terminate_tool_onerror: {master_terminate_tool_onerror}'")
+            script += script_handler.write_step(f"echo 'VE_ENABLE_BUFFERS_STATISTICS: {VE_ENABLE_BUFFERS_STATISTICS}'")
+            script += script_handler.write_step(f"echo 'ENABLE_BACKUP_LOG: {ENABLE_BACKUP_LOG}'")
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting master tool configuration: {e}")
+            return ""
+
+    @staticmethod
+    def get_slave_tool_configuration(tools_configuration: dict, script: str) -> str:
+        """
+        Get slave tool configurations
+        :param tools_configuration:             configuration details of the tools
+        :param script:                          groovy script to be filled
+        """
+        try:
+            slave_tool_configuration = tools_configuration["slave_tool_configuration"]
+            launch_behavior = slave_tool_configuration["launch_behavior"]
+            slave_tool_launch_mode = slave_tool_configuration["tool_launch_mode"]
+            slave_additional_args = slave_tool_configuration["additional_args"]
+            slave_terminate_tool = slave_tool_configuration["terminate_tool"]
+            slave_terminate_tool_onerror = slave_tool_configuration["terminate_tool_onerror"]
+            slave_tool_additional_env_variables = slave_tool_configuration["tool_additional_env_variables"]
+            script += script_handler.write_step(f"echo '#####################Slave Tool#####################'")
+            script += script_handler.write_step(f"echo 'launch_behavior: {launch_behavior}'")
+            script += script_handler.write_step(f"echo 'slave_tool_launch_mode: {slave_tool_launch_mode}'")
+            script += script_handler.write_step(f"echo 'slave_additional_args: {slave_additional_args}'")
+            script += script_handler.write_step(f"echo 'slave_terminate_tool: {slave_terminate_tool}'")
+            script += script_handler.write_step(f"echo 'slave_terminate_tool_onerror: {slave_terminate_tool_onerror}'")
+            script += script_handler.write_step(f"echo 'slave_tool_additional_env_variables: {slave_tool_additional_env_variables}'")
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting slave tool configuration: {e}")
+            return ""
+
+    def get_launching_configurations(self, job: dict, script: str) -> str:
+        """
+         Get launching configurations of the job
+        :param job:                             dictionary job
+        :param script:                          groovy script to be filled
+        """
+        try:
+            launching_configurations = job["launching_configurations"]
+            dut_configuration = launching_configurations["dut_configuration"][0]
+            launch_dpi = dut_configuration["launch_dpi"]
+            if launch_dpi:
+                script = self.get_basic_launch_configuration(launching_configurations, script)
+                script = self.get_dut_configurations(dut_configuration, script)
+                record_replay_configurations = dut_configuration["record_replay_configurations"]
+                script = self.get_record_configurations(record_replay_configurations, script)
+                script = self.get_replay_configurations(record_replay_configurations, script)
+                tools_configuration = launching_configurations["tools_configuration"]
+                launch_tool = tools_configuration["launch_tool"]
+                if launch_tool:
+                    script = self.get_master_tool_configuration(tools_configuration, script)
+                    script = self.get_slave_tool_configuration(tools_configuration, script)
+                script += script_handler.end_stage()
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting launching configurations: {e}")
+            return ""
+
+    @staticmethod
+    def get_running_configurations(job: dict, script: str) -> str:
+        """
+        Get running configurations of the job
+        :param job:                             dictionary job
+        :param script:                          groovy script to be filled
+        """
+        try:
+            run_script = job["running_configurations"]["run_script"]
+            error_type = job["running_configurations"]["error_type"]
+            crashed_process = job["running_configurations"]["crash_configurations"]["crashed_process"]
             attach_gdb = job["running_configurations"]["crash_configurations"]["attach_gdb"]
             script_path = job["running_configurations"]["script_path"]
-            running_command = f"sh 'sudo /home/vmarwan/Documents/JB/script.out'"
-            running_command_with_gdb = f"sh 'sudo gdb -ex=r --args /home/vmarwan/Documents/JB/script.out'"
-            script = "pipeline{\n\tagent any\n\tstages{"
-            if compiling:
-                script += "\n\t\tstage('Compiling'){\n\t\t\tsteps{"
-                script += "\n\t\t\t\techo 'compiling'"
-                script += "\n\t\t\t\t" + compiling_command
-                script += "\n\t\t\t}\n\t\t}"
-            else:
-                pass
-            if True in launching_dut or launching_tools:
-                script += "\n\t\tstage('Launching'){\n\t\t\tsteps{"
-                for launchable in launching_dut:
-                    if launchable:
-                        script += "\n\t\t\t\t" + launching_dut_command
-                        if terminating_dut:
-                            script += "\n\t\t\t\t" + terminating_dut_command
-                        else:
-                            pass
-                    else:
-                        pass
-                if launching_tools:
-                    script += "\n\t\t\t\t" + launching_tools_command
-                    if terminating_master_tool:
-                        script += "\n\t\t\t\t" + terminating_master_command
-                    else:
-                        pass
-                    if terminating_slave_tool:
-                        script += "\n\t\t\t\t" + terminating_slave_command
-                    else:
-                        pass
-                else:
-                    pass
-                script += "\n\t\t\t}\n\t\t}"
-            else:
-                pass
-            if running:
-                script += "\n\t\tstage('Running'){\n\t\t\tsteps{"
-                script += "\n\t\t\t\techo 'running'"
-                script += "\n\t\t\t\tscript{"
+            running_command = "sh '/home/vmarwan/Documents/JB/script.out'"
+            running_command_with_gdb = "sh 'sudo gdb -ex=r --args /home/vmarwan/Documents/JB/script.out'"
+            if run_script:
+                script += script_handler.start_stage("Running")
+                script += script_handler.write_step(f"echo 'run_script: {run_script}'")
+                script += script_handler.write_step(f"echo 'error_type: {error_type}'")
+                script += script_handler.write_step(f"echo 'crashed_process: {crashed_process}'")
+                script += script_handler.write_step(f"echo 'attach_gdb: {attach_gdb}'")
+                script += script_handler.write_step(f"echo 'script_path: {script_path}'")
                 if attach_gdb:
-                    script += "\n\t\t\t\t\techo 'attaching'"
-                    script += "\n\t\t\t\t\t" + running_command_with_gdb
+                    script += script_handler.write_step("echo '#####################Run With GDB#####################'")
+                    script += script_handler.write_step(running_command_with_gdb)
                 else:
-                    script += "\n\t\t\t\t\techo 'no attaching'"
-                    script += "\n\t\t\t\t\t" + running_command 
-                script += "\n\t\t\t\t}\n\t\t\t}\n\t\t}"
-            else:
-                pass
-            script += "\n\t}\n}"
+                    script += script_handler.write_step("echo '#####################Run Without GDB#####################'")
+                    script += script_handler.write_step(running_command)
+                script += script_handler.end_stage()
+            return script
+        except Exception as e:
+            logging.error(f"Error while getting running configurations: {e}")
+            return ""
+
+    def generate_script(self, job: dict) -> str:
+        try:
+            script = script_handler.start_script()
+            script = self.get_compilation_configurations(job, script)
+            script = self.get_launching_configurations(job, script)
+            script = self.get_running_configurations(job, script)
+            script += script_handler.end_script()
             return script
         except Exception as e:
             logging.error(f"Error while generating script: {e}")
+            return ""
 
-    def generate_all_pipeline_job_xml(self, json_file: str) -> None:
+    def generate_all_pipeline_job_xml(self, json_object: dict) -> list:
         try:
-            with open(json_file) as jf:
-                json_object = json.load(jf)
-                jobs = json_object["Ethernet"]["task1"]["jobs"]
+            job_ids = []
+            task = list(json_object["Ethernet"].keys())[0]
+            jobs = json_object["Ethernet"][task]["jobs"]
             for job_num, job in jobs.items():
-                pre = job["prerequisites"]["previous_job_id"]
-                self.generate_pipeline_job_xml(job, job_num, build_after_type=BuildAfter.stable, projects_to_watch=[f"job{pre}"])
+                job_ids.append(job_num)
+                previous_task_id, previous_job_id = self.get_prerequisites(job)
+                script_text = self.generate_script(job)
+                xml_handler.generate_pipeline_job_xml(script_text, job_num, projects_to_watch=[f"job{previous_job_id}"])
             logging.info("XML configuration files generated successfully.")
-        except FileNotFoundError:
-            logging.error(f"JSON file '{json_file}' not found.")
-        except json.JSONDecodeError:
-            logging.error(f"Error decoding JSON from file '{json_file}'. Check JSON syntax.")
+            return job_ids
         except Exception as e:
-            logging.error(f"An unexpected error occurred: {e}")
+            logging.error(f"Error while generating pipeline jobs: {e}")
+            return []
 
 
+#####################################################################################################################################################
+# Main
 def main():
-    json_file = "front_end.json"
-    solution_type = get_type(json_file)
-    solution_types = {"Ethernet": Ethernet(), "5G": ""}
-    solution = solution_types[solution_type]
-    solution.generate_all_pipeline_job_xml(json_file)
-    username = input("Input Username:  ")
-    password = getpass("Input Password: ")
-    server = jenkins.Jenkins('http://localhost:8080', username=username, password=password)
-    for i in range(1, 4):
-        with open(f"job{i}.xml") as xmlFile:
-            config = xmlFile.read()
-            server.upsert_job(f"job{i}", config)
+    server = initialize_jenkins_server('http://localhost:8080', username="marwansallam88", password="1738")
+    from_front_end = "front_end.json"
+    json_object = json_handler.handle_data_from_front_end(from_front_end)
+    create_jobs(json_object, server)
 
 
 if __name__ == "__main__":
