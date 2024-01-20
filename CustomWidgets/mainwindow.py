@@ -15,6 +15,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Tasks.hide()
         self.CreateJobs_button.hide()
         self.CreateTask_button.clicked.connect(self.createTaskTabWidget)
+        
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
         self.CreateJobs_button.clicked.connect(self.createJobs)
@@ -74,7 +75,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 dut.collect_data()
 
         combinations = list(product(RunningConfigs , Designs, Builds))
-        
+
         return combinations
     
         
