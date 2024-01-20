@@ -36,6 +36,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             combinations = self.collectData()
             Job.Jobs_table.setRowCount(len(combinations))
             for row_index, (running_config, design, build) in enumerate(combinations):
+
                 checkbox_item = QTableWidgetItem()
                 checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
                 checkbox_item.setCheckState(Qt.Unchecked)
@@ -55,7 +56,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 DesignPath = design.DesignPath_lineEdit.text()
                 Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
                 col_index += 1
-                
+
             current_widget.Task_tabWidget.addTab(Job,"Jobs")
             
 
@@ -63,13 +64,17 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         Designs = self.Tasks.TaskTab.get_design()
         RunningConfigs = self.Tasks.TaskTab.get_running()
         Builds  = self.Tasks.TaskTab.get_builds()
+
         for running in RunningConfigs:
            running.custom_window.collect_running_config()
+
         for designs in Designs:
             Duts = designs.get_Duts()
             for dut in Duts:
                 dut.collect_data()
+
         combinations = list(product(RunningConfigs , Designs, Builds))
+        
         return combinations
     
         
