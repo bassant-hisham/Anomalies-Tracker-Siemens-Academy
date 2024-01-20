@@ -23,8 +23,10 @@ class MyRunBox(QtWidgets.QWidget):
         self.ErrorC.currentTextChanged.connect(self.check_error_conf_visibility)
         self.ErrorConf.clicked.connect(self.show_error_config)  # Modified connection
 
-        self.config_window_crash = CrashConfigWindow(self)
-        self.config_window_hang = HangConfigWindow(self)  # Create an instance of HangConfigWindow
+        self.config_window_crash = CrashConfigWindow()
+        self.config_window_hang = HangConfigWindow()  # Create an instance of HangConfigWindow
+        self.config_window_crash.closed_signal.connect(self.handle_another_window_closed)
+        self.config_window_hang.closed_signal.connect(self.handle_another_window_closed)
         self.running_configurations = {}
 
     def check_error_conf_visibility(self, selected_text):
@@ -37,15 +39,22 @@ class MyRunBox(QtWidgets.QWidget):
         selected_text = self.ErrorC.currentText()
         if selected_text == "Crash":
             self.config_window_crash.show_window()
+            self.config_window_crash.center_on_parent()
         elif selected_text == "Hang":  # Check for Hang error type
             self.config_window_hang.show_window()
-
-    # def window_resize(self):
-    #     self.ui.groupBox.resize(self.centralWidget().size())
-
-    # def widget_resize(self):
-    #     self.ui.groupBox.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-    #     self.window_resize()
+            self.config_window_hang.center_on_parent()
+        grandparent = self.get_grandparent(self)
+        grandparent.setEnabled(False)
+    
+    def get_grandparent(self, widget):
+        grandparent = widget.parent()
+        while grandparent and grandparent.parent():
+            grandparent = grandparent.parent()
+        return grandparent
+    
+    def handle_another_window_closed(self):
+        grandparent = self.get_grandparent(self)
+        grandparent.setEnabled(True)
     
     def collect_running_config(self):
         self.running_configurations['script_path'] = self.lineEditOutputDirectory_2.text()
@@ -64,7 +73,7 @@ class MyRunBox(QtWidgets.QWidget):
                 
         #print(self.running_configurations)
 
-            
+                
 def run_custom_runtime():
     import sys
     app = QtWidgets.QApplication(sys.argv)

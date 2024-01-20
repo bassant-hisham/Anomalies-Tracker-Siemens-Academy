@@ -1,9 +1,12 @@
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QCheckBox, QPushButton, QWidget, QComboBox, QLabel, QHBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QCheckBox, QPushButton, QWidget, QComboBox, QLabel, QHBoxLayout,QDesktopWidget
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import QPoint
 
 class CrashConfigWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle('Crash Configuration')
+    closed_signal = QtCore.pyqtSignal()
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle('CrashConfig')
 
         layout = QVBoxLayout()
 
@@ -15,6 +18,7 @@ class CrashConfigWindow(QMainWindow):
         tool_layout.addWidget(tool_label)
         tool_layout.addWidget(self.tool_combo_box)
         layout.addLayout(tool_layout)
+        # self.parent = parent
 
         # Create Checkboxes
         self.checkbox1 = QCheckBox('Attach GDB', self)
@@ -32,7 +36,9 @@ class CrashConfigWindow(QMainWindow):
                 font-size: 11pt;
             }
             QPushButton {
-	background-color: rgb(33, 188, 180);
+	    background-color: rgb(33, 188, 180);
+        color:rgb(255, 255, 255);
+        border-radius: 10px;
 }
 
 QPushButton:hover {
@@ -119,6 +125,19 @@ QLineEdit:disabled {
         central_widget = QWidget()
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
+        self.setMinimumSize(300, 200)
+        
+    def center_on_parent(self):       
+        screen = QDesktopWidget().screenGeometry()
+        center_x = screen.width() // 2  
+        center_y = screen.height() // 2
+        popup_geometry = self.frameGeometry()
+        popup_geometry.moveCenter(QPoint(center_x, center_y))
+        self.move(popup_geometry.topLeft())
 
     def show_window(self):
         self.show()
+        
+    def closeEvent(self, event):
+        self.closed_signal.emit()
+        event.accept()
