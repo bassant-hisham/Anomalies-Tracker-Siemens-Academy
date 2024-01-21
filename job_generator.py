@@ -25,17 +25,21 @@ def get_type_of_solution(json_object: dict) -> str:
         return ""
 
 
-def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> None:
+def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> list:
     json_object = json_handler.handle_data_from_front_end(from_front_end)
     solution_type = get_type_of_solution(json_object)
+    task = list(json_object[solution_type].keys())[0]
     solution = SolutionHandlerFactory.create_solution_handler(solution_type)
+    job_names = []
     if solution is not None:
         job_ids, job_xmls = solution.generate_all_pipeline_job_xml(json_object)
         for job_index, job_id in enumerate(job_ids):
+            job_names.append(f"{solution_type}-{task}-{job_id}")
             job_xml = job_xmls[job_index]
-            # with open(f"job{job_id}.xml") as xmlFile:
+            # with open(f"{solution_type}-{task}-{job_id}.xml") as xmlFile:
             #     config = xmlFile.read()
-            server.upsert_job(f"job{job_id}", job_xml)
+            server.upsert_job(f"{solution_type}-{task}-{job_id}", job_xml)
+    return job_names
 
 
 def initialize_jenkins_server(url: str, username: str, password: str) -> jenkins.Jenkins:
@@ -79,10 +83,11 @@ class SolutionHandler(ABC):
         """
 
     @abstractmethod
-    def generate_all_pipeline_job_xml(self, json_object: dict) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = False) -> tuple:
         """
         Generate xml config files for all jobs in given json file
         :param json_object:       jobs dictionary with all jobs
+        :param debug:             write xml file
         """
 
 
@@ -359,7 +364,7 @@ class EthernetHandler(SolutionHandler):
             logging.error(f"Error while generating script: {e}")
             return ""
 
-    def generate_all_pipeline_job_xml(self, json_object: dict) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = False) -> tuple:
         try:
             job_ids = []
             job_xmls = []
@@ -370,6 +375,9 @@ class EthernetHandler(SolutionHandler):
                 previous_task_id, previous_job_id = self.get_prerequisites(job)
                 script_text = self.generate_script(job)
                 job_xml = xml_handler.generate_pipeline_job_xml(script_text, job_num, projects_to_watch=[f"job{previous_job_id}"])
+                if debug:
+                    with open(f"Ethernet-{task}-{job_num}.xml", "w") as new_job:
+                        new_job.write(job_xml)
                 job_xmls.append(job_xml)
             logging.info("XML configuration files generated successfully.")
             return job_ids, job_xmls
@@ -384,7 +392,7 @@ def main():
     server = initialize_jenkins_server('http://localhost:8080', username="marwansallam88", password="1738")
     # can be a file name or a dictionary object
     from_front_end = "front_end.json"
-    create_jobs(from_front_end, server)
+    print(create_jobs(from_front_end, server))
 
 
 if __name__ == "__main__":
