@@ -71,7 +71,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         for designs in Designs:
             Duts = designs.get_Duts()
-            designs.get_ToolConfig()
+            print(designs.get_ToolConfig())
             for dut in Duts:
                 dut.collect_data()
 
