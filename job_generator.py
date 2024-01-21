@@ -1,5 +1,6 @@
 # Import libraries
 from abc import ABC, abstractmethod
+from typing import Union
 import jenkins
 import logging
 
@@ -24,15 +25,17 @@ def get_type_of_solution(json_object: dict) -> str:
         return ""
 
 
-def create_jobs(json_object: dict, server: jenkins.Jenkins) -> None:
+def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> None:
+    json_object = json_handler.handle_data_from_front_end(from_front_end)
     solution_type = get_type_of_solution(json_object)
     solution = SolutionHandlerFactory.create_solution_handler(solution_type)
     if solution is not None:
-        job_ids = solution.generate_all_pipeline_job_xml(json_object)
-        for job_id in job_ids:
-            with open(f"job{job_id}.xml") as xmlFile:
-                config = xmlFile.read()
-                server.upsert_job(f"job{job_id}", config)
+        job_ids, job_xmls = solution.generate_all_pipeline_job_xml(json_object)
+        for job_index, job_id in enumerate(job_ids):
+            job_xml = job_xmls[job_index]
+            # with open(f"job{job_id}.xml") as xmlFile:
+            #     config = xmlFile.read()
+            server.upsert_job(f"job{job_id}", job_xml)
 
 
 def initialize_jenkins_server(url: str, username: str, password: str) -> jenkins.Jenkins:
@@ -76,7 +79,7 @@ class SolutionHandler(ABC):
         """
 
     @abstractmethod
-    def generate_all_pipeline_job_xml(self, json_object: dict) -> list:
+    def generate_all_pipeline_job_xml(self, json_object: dict) -> tuple:
         """
         Generate xml config files for all jobs in given json file
         :param json_object:       jobs dictionary with all jobs
@@ -88,9 +91,9 @@ class SolutionHandlerFactory:
     def create_solution_handler(solution_type: str) -> SolutionHandler:
         if solution_type == "Ethernet":
             return EthernetHandler()
-        elif solution_type == "5G":
-            # Add 5G solution handler implementation
-            return None
+        # elif solution_type == "5G":
+        #     # Add 5G solution handler implementation
+        #     # return None
         else:
             raise ValueError(f"Unsupported solution type: {solution_type}")
 
@@ -173,7 +176,7 @@ class EthernetHandler(SolutionHandler):
             # use_custom_comodels_config = dut_configuration["use_custom_comodels_config"]
             host_name = dut_configuration["custom_comodels_config"][0]["host_name"]
             domain_id = dut_configuration["custom_comodels_config"][0]["domain_id"]
-            script += script_handler.write_step(f"echo '#####################DUT CONFIG#####################'")
+            script += script_handler.write_step(f"echo '##################### DUT CONFIG #####################'")
             script += script_handler.write_step(f"echo 'launch_dpi: {launch_dpi}'")
             script += script_handler.write_step(f"echo 'avb_list: {avb_list}'")
             script += script_handler.write_step(f"echo 'design_path: {design_path}'")
@@ -197,7 +200,7 @@ class EthernetHandler(SolutionHandler):
             record_dir = record_configurations["record_dir"]
             config_type = record_configurations["snapshots_number"]["config_type"]
             config_value = record_configurations["snapshots_number"]["config_value"]
-            script += script_handler.write_step(f"echo '#####################Record Config#####################'")
+            script += script_handler.write_step(f"echo '##################### Record Config #####################'")
             script += script_handler.write_step(f"echo 'record_dir: {record_dir}'")
             script += script_handler.write_step(f"echo 'config_type: {config_type}'")
             script += script_handler.write_step(f"echo 'config_value: {config_value}'")
@@ -217,7 +220,7 @@ class EthernetHandler(SolutionHandler):
             record_configurations = record_replay_configurations["replay_configurations"]
             replay_dir = record_configurations["replay_dir"]
             replay_snapshot_name = record_configurations["replay_snapshot_name"]
-            script += script_handler.write_step("echo '#####################Replay Config#####################'")
+            script += script_handler.write_step("echo '##################### Replay Config #####################'")
             script += script_handler.write_step(f"echo 'replay_dir: {replay_dir}'")
             script += script_handler.write_step(f"echo 'replay_snapshot_name: {replay_snapshot_name}'")
             return script
@@ -242,7 +245,7 @@ class EthernetHandler(SolutionHandler):
             master_tool_additional_env_variables = master_tool_configuration["tool_additional_env_variables"]
             VE_ENABLE_BUFFERS_STATISTICS = master_tool_additional_env_variables["VE_ENABLE_BUFFERS_STATISTICS"]
             ENABLE_BACKUP_LOG = master_tool_additional_env_variables["VE_ENABLE_BUFFERS_STATISTICS"]
-            script += script_handler.write_step(f"echo '#####################Master Tool#####################'")
+            script += script_handler.write_step(f"echo '##################### Master Tool #####################'")
             script += script_handler.write_step(f"echo 'tool_name: {tool_name}'")
             script += script_handler.write_step(f"echo 'master_tool_launch_mode: {master_tool_launch_mode}'")
             script += script_handler.write_step(f"echo 'master_additional_args: {master_additional_args}'")
@@ -270,7 +273,7 @@ class EthernetHandler(SolutionHandler):
             slave_terminate_tool = slave_tool_configuration["terminate_tool"]
             slave_terminate_tool_onerror = slave_tool_configuration["terminate_tool_onerror"]
             slave_tool_additional_env_variables = slave_tool_configuration["tool_additional_env_variables"]
-            script += script_handler.write_step(f"echo '#####################Slave Tool#####################'")
+            script += script_handler.write_step(f"echo '##################### Slave Tool #####################'")
             script += script_handler.write_step(f"echo 'launch_behavior: {launch_behavior}'")
             script += script_handler.write_step(f"echo 'slave_tool_launch_mode: {slave_tool_launch_mode}'")
             script += script_handler.write_step(f"echo 'slave_additional_args: {slave_additional_args}'")
@@ -296,13 +299,14 @@ class EthernetHandler(SolutionHandler):
                 script = self.get_basic_launch_configuration(launching_configurations, script)
                 script = self.get_dut_configurations(dut_configuration, script)
                 record_replay_configurations = dut_configuration["record_replay_configurations"]
-                script = self.get_record_configurations(record_replay_configurations, script)
-                script = self.get_replay_configurations(record_replay_configurations, script)
+                # script = self.get_record_configurations(record_replay_configurations, script)
+                # script = self.get_replay_configurations(record_replay_configurations, script)
                 tools_configuration = launching_configurations["tools_configuration"]
                 launch_tool = tools_configuration["launch_tool"]
                 if launch_tool:
-                    script = self.get_master_tool_configuration(tools_configuration, script)
-                    script = self.get_slave_tool_configuration(tools_configuration, script)
+                    # script = self.get_master_tool_configuration(tools_configuration, script)
+                    # script = self.get_slave_tool_configuration(tools_configuration, script)
+                    pass
                 script += script_handler.end_stage()
             return script
         except Exception as e:
@@ -332,10 +336,10 @@ class EthernetHandler(SolutionHandler):
                 script += script_handler.write_step(f"echo 'attach_gdb: {attach_gdb}'")
                 script += script_handler.write_step(f"echo 'script_path: {script_path}'")
                 if attach_gdb:
-                    script += script_handler.write_step("echo '#####################Run With GDB#####################'")
+                    script += script_handler.write_step("echo '##################### Run With GDB #####################'")
                     script += script_handler.write_step(running_command_with_gdb)
                 else:
-                    script += script_handler.write_step("echo '#####################Run Without GDB#####################'")
+                    script += script_handler.write_step("echo '##################### Run Without GDB #####################'")
                     script += script_handler.write_step(running_command)
                 script += script_handler.end_stage()
             return script
@@ -355,30 +359,32 @@ class EthernetHandler(SolutionHandler):
             logging.error(f"Error while generating script: {e}")
             return ""
 
-    def generate_all_pipeline_job_xml(self, json_object: dict) -> list:
+    def generate_all_pipeline_job_xml(self, json_object: dict) -> tuple:
         try:
             job_ids = []
+            job_xmls = []
             task = list(json_object["Ethernet"].keys())[0]
             jobs = json_object["Ethernet"][task]["jobs"]
             for job_num, job in jobs.items():
                 job_ids.append(job_num)
                 previous_task_id, previous_job_id = self.get_prerequisites(job)
                 script_text = self.generate_script(job)
-                xml_handler.generate_pipeline_job_xml(script_text, job_num, projects_to_watch=[f"job{previous_job_id}"])
+                job_xml = xml_handler.generate_pipeline_job_xml(script_text, job_num, projects_to_watch=[f"job{previous_job_id}"])
+                job_xmls.append(job_xml)
             logging.info("XML configuration files generated successfully.")
-            return job_ids
+            return job_ids, job_xmls
         except Exception as e:
             logging.error(f"Error while generating pipeline jobs: {e}")
-            return []
+            return ()
 
 
 #####################################################################################################################################################
 # Main
 def main():
     server = initialize_jenkins_server('http://localhost:8080', username="marwansallam88", password="1738")
+    # can be a file name or a dictionary object
     from_front_end = "front_end.json"
-    json_object = json_handler.handle_data_from_front_end(from_front_end)
-    create_jobs(json_object, server)
+    create_jobs(from_front_end, server)
 
 
 if __name__ == "__main__":

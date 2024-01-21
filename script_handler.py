@@ -8,7 +8,7 @@ def end_script() -> str:
 
 def start_stage(stage_name: str) -> str:
     return (f"\n\t\tstage('{stage_name}')" + "{\n\t\t\tsteps{\n\t\t\t\t"
-            + f"echo '#####################{stage_name} Stage#####################'")
+            + f"echo '##################### {stage_name} Stage #####################'")
 
 
 def end_stage() -> str:

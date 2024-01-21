@@ -57,7 +57,7 @@ def generate_pipeline_job_xml(script_text: str, job_num: str, description: str =
                               throttle_builds: int = -1, time_period: TimePeriod = TimePeriod.Hour, user_boost: bool = False,
                               build_after_type: BuildAfter = BuildAfter.stable, projects_to_watch: list = (),
                               github_hook_trigger: bool = False, sandbox_enabled: bool = True, quiet_period: int = -1,
-                              build_remotely_auth_token: str = "", disable: bool = False) -> None:
+                              build_remotely_auth_token: str = "", disable: bool = False, debug: bool = False) -> str:
     """
     Generate xml config files for given job with specific actions
     :param script_text:                         jenkins groovy script
@@ -85,6 +85,7 @@ def generate_pipeline_job_xml(script_text: str, job_num: str, description: str =
     :param quiet_period:                        jenkins will wait for the specified period of time (in seconds) before actually starting the build.
     :param build_remotely_auth_token:           an authentication token used if you would like to trigger new builds by accessing a special predefined URL (convenient for scripts).
     :param disable:                             disable the job.
+    :param debug:                               makes a xml file for the job
     """
     try:
         root = ET.Element('flow-definition', attrib={'plugin': 'workflow-job@1385.vb_58b_86ea_fff1'})
@@ -231,7 +232,10 @@ def generate_pipeline_job_xml(script_text: str, job_num: str, description: str =
 
         xml_tree = ET.ElementTree(root)
         xml_string = prettify(root)
-        with open(f"job{job_num}.xml", "w") as new_job:
-            new_job.write(xml_string)
+        if debug:
+            with open(f"job{job_num}.xml", "w") as new_job:
+                new_job.write(xml_string)
+        return xml_string
     except Exception as e:
         logging.error(f"Error while generating XML configuration: {e}")
+        return ""
