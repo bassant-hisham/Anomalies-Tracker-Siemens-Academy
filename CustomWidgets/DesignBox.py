@@ -49,4 +49,6 @@ class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
            
     def get_Duts(self):
         return self.launching_configurations.get_Duts()
+    def get_ToolConfig(self):
+        return self.launching_configurations.get_ToolConfig()
    
