@@ -9,3 +9,5 @@ class MyJobs(QtWidgets.QWidget,Ui_Jobs):
         self.setupUi(self)
         self.Jobs_table.resizeColumnsToContents()
         self.Jobs_table.resizeRowsToContents()
+        
+        

@@ -34,33 +34,33 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
         if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
-            Job = MyJobs()
-            combinations = self.collectData()
-            self.GenerateJason()
-            Job.Jobs_table.setRowCount(len(combinations))
-            for row_index, (running_config, design, build) in enumerate(combinations):
+            self.Job = MyJobs()
+            self.Job.Run_pushButton.clicked.connect(self.GenerateJason)
+            self.combinations = self.collectData()
+            self.Job.Jobs_table.setRowCount(len(self.combinations))
+            for row_index, (running_config, design, build) in enumerate(self.combinations):
 
                 checkbox_item = QTableWidgetItem()
                 checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
                 checkbox_item.setCheckState(Qt.Unchecked)
-                Job.Jobs_table.setItem(row_index, 0, checkbox_item)
+                self.Job.Jobs_table.setItem(row_index, 0, checkbox_item)
                 
-                Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
+                self.Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
                 running_dict = running_config.custom_window.running_configurations
                 col_index = 2
 
                 for (num,(key,value)) in enumerate(running_dict.items()):
-                    Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(value)))
+                    self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(value)))
                     col_index += 1
 
-                Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+                self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
                 col_index += 1
 
                 DesignPath = design.DesignPath_lineEdit.text()
-                Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
+                self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
                 col_index += 1
 
-            current_widget.Task_tabWidget.addTab(Job,"Jobs")
+            current_widget.Task_tabWidget.addTab(self.Job,"Jobs")
             
 
     def collectData(self):
@@ -69,15 +69,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         Builds  = self.Tasks.TaskTab.get_builds()
         for running in RunningConfigs:
            running.custom_window.collect_running_config()
-
-        
-
         combinations = list(product(RunningConfigs , Designs, Builds))
-
         return combinations
-    
+
     def GenerateJason(self):
-        combinations=self.collectData()
         file_path = "./frontEnd.json"
         platform=self.Platfrom_comboBox.currentText()
         solution=self.Solution_comboBox.currentText()
@@ -93,14 +88,16 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                        } 
                     }
         with open(file_path, 'w') as json_file:
-            for currentJobIndex,(running_config, design, build) in enumerate(combinations):
+            for currentJobIndex,(running_config, design, build) in enumerate(self.combinations):
+                    if(self.Job.Jobs_table.item(currentJobIndex,0).checkState() != 2):
+                        continue
                     running_dict = running_config.custom_window.running_configurations
                     compilationConfigData = design.compilation_config.compilation_configurationsdict
-                    ToolConfigData = design.launching_configurations.ToolConfig
+                    ToolConfigData = design.launching_configurations.get_ToolConfig()
                     DutConfigData=[]
                     buildPath=str(build)
-                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
-                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)]={}
+                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(compilationConfigData)
                     
                     prerequistes={  #############to be changed
                         "prerequisites": {
@@ -108,7 +105,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                         "previous_job_id": 0
                         },
                     }
-                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
+                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(prerequistes)
                     Duts = design.get_Duts()
                     for dut in Duts:
                        DutConfigData.append(dut.collect_data())
@@ -124,8 +121,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                               }
                               }
                     
-                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
-                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(launching_configurations)
+                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(running_dict)
             json.dump(JasonData,json_file, indent=2)
             json_file.write("\n")
                     

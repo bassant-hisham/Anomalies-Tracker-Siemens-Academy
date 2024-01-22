@@ -125,11 +125,12 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                          Host_name=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().HostName_comboBox.currentText()
                          Domain_id=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().DomainId_comboBox.currentText()
                          data["custom_comodels_config"].append({"host_name":Host_name,"domain_id":Domain_id})
-                if (self.ConfigType_comboBox.currentText()=="Range"):
+                data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[]
+                if (self.ConfigType_comboBox.currentText()=="Range"  and self.FromConfigValue_lineEdit.text()!='' and self.ToConfigValue_lineEdit.text()!=''):
                     data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[int(self.FromConfigValue_lineEdit.text()),int(self.ToConfigValue_lineEdit.text())]
-                elif (self.ConfigType_comboBox.currentText()=="Value"):
+                elif (self.ConfigType_comboBox.currentText()=="Value" and self.Configvalue_lineEdit.text()!='' ):
                     data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=int(self.Configvalue_lineEdit.text())
-                else:  
+                elif(self.ConfigType_comboBox.currentText()=="List" and self.ConfigValueList_lineEdit.text()!='' ):  
                     data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[]
                     for num in self.ConfigValueList_lineEdit.text().split(','):
                         data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"].append(int(num)) 

@@ -60,7 +60,6 @@ class MyRunBox(QtWidgets.QWidget):
         self.running_configurations['running_configurations']={}
         self.running_configurations['running_configurations']['run_script'] = self.RunC.isChecked()
         self.running_configurations['running_configurations']['error_type'] = self.ErrorC.currentText()
-        self.running_configurations['running_configurations']['crashed_process'] = ""
         self.running_configurations['running_configurations']['crash_configurations']={}
         self.running_configurations['running_configurations']['crash_configurations']['attach_gdb'] = ""
         self.running_configurations['running_configurations']['crash_configurations']['crashed_process']=""

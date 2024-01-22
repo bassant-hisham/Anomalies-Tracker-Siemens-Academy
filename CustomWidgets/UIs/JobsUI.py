@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Jobs(object):
     def setupUi(self, Jobs):
         Jobs.setObjectName("Jobs")
-        Jobs.resize(796, 527)
+        Jobs.resize(796, 606)
         Jobs.setStyleSheet("QWidget{\n"
 "background-color:rgb(37, 40, 50);\n"
 "    color: white;\n"
@@ -105,7 +105,7 @@ class Ui_Jobs(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.Jobs_scrollArea = QtWidgets.QWidget()
-        self.Jobs_scrollArea.setGeometry(QtCore.QRect(0, 0, 772, 503))
+        self.Jobs_scrollArea.setGeometry(QtCore.QRect(0, 0, 776, 586))
         self.Jobs_scrollArea.setStyleSheet("QWidget::pane{\n"
 "border-color:none;\n"
 "\n"
@@ -181,6 +181,31 @@ class Ui_Jobs(object):
         item = QtWidgets.QTableWidgetItem()
         self.Jobs_table.setHorizontalHeaderItem(27, item)
         self.gridLayout_2.addWidget(self.Jobs_table, 0, 0, 1, 1)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem = QtWidgets.QSpacerItem(580, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.Run_pushButton = QtWidgets.QPushButton(self.Jobs_scrollArea)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Run_pushButton.sizePolicy().hasHeightForWidth())
+        self.Run_pushButton.setSizePolicy(sizePolicy)
+        self.Run_pushButton.setMinimumSize(QtCore.QSize(100, 35))
+        self.Run_pushButton.setStyleSheet("QPushButton {\n"
+"    background-color: red;\n"
+"    color:White;\n"
+"    margin-right:5px;\n"
+"    border-radius: 10px;\n"
+"    border: 0px solid rgb(52, 59, 72);\n"
+"    font-size:16px;\n"
+"    font-weight:bold;\n"
+"\n"
+"}\n"
+"")
+        self.Run_pushButton.setObjectName("Run_pushButton")
+        self.horizontalLayout.addWidget(self.Run_pushButton)
+        self.gridLayout_2.addLayout(self.horizontalLayout, 1, 0, 1, 1)
         self.scrollArea.setWidget(self.Jobs_scrollArea)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -246,3 +271,14 @@ class Ui_Jobs(object):
         item.setText(_translate("Jobs", "Use Custom Comodel Config"))
         item = self.Jobs_table.horizontalHeaderItem(27)
         item.setText(_translate("Jobs", "Custom Comodel Config"))
+        self.Run_pushButton.setText(_translate("Jobs", "Run"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Jobs = QtWidgets.QWidget()
+    ui = Ui_Jobs()
+    ui.setupUi(Jobs)
+    Jobs.show()
+    sys.exit(app.exec_())

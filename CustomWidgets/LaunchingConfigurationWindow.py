@@ -19,7 +19,10 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.AddEnv.clicked.connect(self.add_additional_env_variables)
 
         self.ToolConfig = {}
+        self.ToolConfig["launch_tool"]=False
         self.ToolConfig['master_tool_configuration'] = {}
+        self.ToolConfig["master_tool_configuration"]["tool_name"]=""
+        self.ToolConfig["master_tool_configuration"]["tool_launch_mode"]="" 
         self.ToolConfig["master_tool_configuration"]["additional_args"] = {}
         self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"] = {}
         self.Duts = []
