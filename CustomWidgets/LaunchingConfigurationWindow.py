@@ -17,6 +17,8 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.Add_PushButton.clicked.connect(self.add_dut_config)
         self.AddArgButton.clicked.connect(self.add_additional_arguments)
         self.AddEnv.clicked.connect(self.add_additional_env_variables)
+        self.AddArgButton_2.clicked.connect(self.add_additional_arguments_slave)
+        self.AddEnv_2.clicked.connect(self.add_additional_env_variables_slave)
 
         self.ToolConfig = {}
         self.ToolConfig["launch_tool"]=False
@@ -25,6 +27,13 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.ToolConfig["master_tool_configuration"]["tool_launch_mode"]="" 
         self.ToolConfig["master_tool_configuration"]["additional_args"] = {}
         self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"] = {}
+
+        self.ToolConfig["slave_tool_configuration"]={}
+        self.ToolConfig["slave_tool_configuration"]['launch_behavior'] =""
+        self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"]=""
+        self.ToolConfig["slave_tool_configuration"]["additional_args"]={} 
+        self.ToolConfig["slave_tool_configuration"]["additional_args"] = {}
+        self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"] = {}
         self.Duts = []
 
     def toggle_content(self):
@@ -37,6 +46,16 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         argument_key = self.ArgName_HSpacer_mid_lineEdit.text()
         argument_value = self.ArgValue_lineEdit.text()
         self.ToolConfig["master_tool_configuration"]["additional_args"][argument_key] = argument_value
+    
+    def add_additional_env_variables_slave(self):
+        VE_ENABLE_BUFFERS_STATISTICS = self.EnvVarName_HSpacer_mid_lineEdit_2.text()
+        ENABLE_BACKUP_LOG = self.EnvVarValue_lineEdit_2.text()
+        self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
+
+    def add_additional_arguments_slave(self):
+        argument_key = self.ArgName_HSpacer_mid_lineEdit_2.text()
+        argument_value = self.ArgValue_lineEdit_2.text()
+        self.ToolConfig["slave_tool_configuration"]["additional_args"][argument_key] = argument_value
     
     def add_additional_env_variables(self):
         VE_ENABLE_BUFFERS_STATISTICS = self.EnvVarName_HSpacer_mid_lineEdit.text()
@@ -63,6 +82,11 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         #self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"]["ENABLE_BACKUP_LOG"] = self.EnvVarValue_lineEdit.text()
         self.ToolConfig["master_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox.isChecked()
         self.ToolConfig["master_tool_configuration"]["terminate_tool_onerror"] = self.TerminateTool_checkBox.isChecked()
+
+        self.ToolConfig["slave_tool_configuration"]["launch_behavior"] = self.ToolName_comboBox_2.currentText()
+        self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"] = self.ToolLaunch_comboBox_2.currentText()
+        self.ToolConfig["slave_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox_2.isChecked()
+        self.ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"] = self.TerminateTool_checkBox_2.isChecked()
         return self.ToolConfig
     def closeEvent(self, event):
         self.closed_signal.emit()

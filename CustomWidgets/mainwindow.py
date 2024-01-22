@@ -20,6 +20,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
         self.CreateJobs_button.clicked.connect(self.createJobs)
+        self.JasonData={}
+        self.JasonData[self.Solution_comboBox.currentText()]={}
+        
         #self.CreateJobs_button.clicked.connect(self.collectData)
 
     def createTaskTabWidget(self):
@@ -77,16 +80,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         platform=self.Platfrom_comboBox.currentText()
         solution=self.Solution_comboBox.currentText()
         taskNu=self.Tasks.currentIndex()
-        JasonData={
-                       solution:{
-                       "task"+str(taskNu+1):{
-                        "id": taskNu+1,  ################to be changed
-                        "jobs":{
-                        }
-                       }    
-                           
-                       } 
-                    }
+        
+        self.JasonData[solution]["task"+str(taskNu+1)]={}
+        self.JasonData[solution]["task"+str(taskNu+1)]["id"]=taskNu+1
+        self.JasonData[solution]["task"+str(taskNu+1)]["jobs"]={}
+
+                       
         with open(file_path, 'w') as json_file:
             for currentJobIndex,(running_config, design, build) in enumerate(self.combinations):
                     if(self.Job.Jobs_table.item(currentJobIndex,0).checkState() != 2):
@@ -96,8 +95,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     ToolConfigData = design.launching_configurations.get_ToolConfig()
                     DutConfigData=[]
                     buildPath=str(build)
-                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)]={}
-                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(compilationConfigData)
+                    self.JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)]={}
+                    self.JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(compilationConfigData)
                     
                     prerequistes={  #############to be changed
                         "prerequisites": {
@@ -105,7 +104,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                         "previous_job_id": 0
                         },
                     }
-                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(prerequistes)
+                    self.JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(prerequistes)
                     Duts = design.get_Duts()
                     for dut in Duts:
                        DutConfigData.append(dut.collect_data())
@@ -121,9 +120,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                               }
                               }
                     
-                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(launching_configurations)
-                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(running_dict)
-            json.dump(JasonData,json_file, indent=2)
+                    self.JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(launching_configurations)
+                    self.JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex)].update(running_dict)
+            json.dump(self.JasonData,json_file, indent=2)
             json_file.write("\n")
                     
                     
