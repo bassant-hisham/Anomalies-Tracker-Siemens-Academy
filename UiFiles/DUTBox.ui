@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>943</width>
-    <height>1923</height>
+    <width>764</width>
+    <height>1930</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -451,9 +451,6 @@ padding:5px;
         <property name="checkState">
          <enum>Unchecked</enum>
         </property>
-        <property name="flags">
-         <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsEnabled</set>
-        </property>
        </item>
        <item>
         <property name="text">
@@ -646,13 +643,13 @@ border-radius:13px;
        </layout>
       </item>
       <item row="1" column="0">
-       <widget class="QGroupBox" name="Snapshots_GroupBox_2">
+       <widget class="QGroupBox" name="Snapshots_GroupBox">
         <property name="title">
          <string>SnapShots Number</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_12">
          <item>
-          <layout class="QHBoxLayout" name="ConfigType_Hlayout_2">
+          <layout class="QHBoxLayout" name="ConfigType_Hlayout">
            <property name="topMargin">
             <number>5</number>
            </property>
@@ -660,7 +657,7 @@ border-radius:13px;
             <number>5</number>
            </property>
            <item>
-            <widget class="QLabel" name="ConfigType_label_2">
+            <widget class="QLabel" name="ConfigType_label">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                <horstretch>20</horstretch>
@@ -677,7 +674,7 @@ font:normal</string>
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="ConfigType_comboBox_2">
+            <widget class="QComboBox" name="ConfigType_comboBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                <horstretch>56</horstretch>
@@ -713,11 +710,11 @@ border-radius:7px;</string>
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="ConfigValue_Vlayout_2">
+          <layout class="QVBoxLayout" name="ConfigValue_Vlayout">
            <item>
-            <layout class="QHBoxLayout" name="FromConfigValue_Hlayout_2">
+            <layout class="QHBoxLayout" name="FromConfigValue_Hlayout">
              <item>
-              <widget class="QLabel" name="FromConfigValue_label_2">
+              <widget class="QLabel" name="FromConfigValue_label">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>20</horstretch>
@@ -734,7 +731,7 @@ font:normal</string>
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="FromConfigValue_lineEdit_2">
+              <widget class="QLineEdit" name="FromConfigValue_lineEdit">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                  <horstretch>55</horstretch>
@@ -751,9 +748,9 @@ font:normal;
             </layout>
            </item>
            <item>
-            <layout class="QHBoxLayout" name="ToConfigValue_Hlayout_2">
+            <layout class="QHBoxLayout" name="ToConfigValue_Hlayout">
              <item>
-              <widget class="QLabel" name="ToConfigValue_label_2">
+              <widget class="QLabel" name="ToConfigValue_label">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>20</horstretch>
@@ -772,7 +769,7 @@ font:normal;
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="ToConfigValue_lineEdit_2">
+              <widget class="QLineEdit" name="ToConfigValue_lineEdit">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                  <horstretch>55</horstretch>
@@ -782,6 +779,60 @@ font:normal;
               </widget>
              </item>
             </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="Configvalue_horizontalLayout">
+           <item>
+            <widget class="QLabel" name="Configvalue_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>20</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Value</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="Configvalue_lineEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>55</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="ConfigValueList_horizontalLayout">
+           <item>
+            <widget class="QLabel" name="ConfigValueList_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>20</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Value</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>55</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>

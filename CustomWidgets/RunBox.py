@@ -57,20 +57,22 @@ class MyRunBox(QtWidgets.QWidget):
         grandparent.setEnabled(True)
     
     def collect_running_config(self):
-        self.running_configurations['script_path'] = self.lineEditOutputDirectory_2.text()
-        self.running_configurations['run_script'] = self.RunC.isChecked()
-        self.running_configurations['error_type'] = self.ErrorC.currentText()
-        self.running_configurations['crashed_process'] = ""
-        self.running_configurations['attach_gdb'] = ""
-        if self.running_configurations['error_type'] == "Crash":
-            self.running_configurations['crashed_process'] = self.config_window_crash.tool_combo_box.currentText()
-            self.running_configurations['attach_gdb'] = self.config_window_crash.checkbox1.isChecked()
+        self.running_configurations['running_configurations']={}
+        self.running_configurations['running_configurations']['run_script'] = self.RunC.isChecked()
+        self.running_configurations['running_configurations']['error_type'] = self.ErrorC.currentText()
+        self.running_configurations['running_configurations']['crashed_process'] = ""
+        self.running_configurations['running_configurations']['crash_configurations']={}
+        self.running_configurations['running_configurations']['crash_configurations']['attach_gdb'] = ""
+        self.running_configurations['running_configurations']['crash_configurations']['crashed_process']=""
+        if self.running_configurations['running_configurations']['error_type'] == "Crash":
+            self.running_configurations['running_configurations']['crash_configurations']['crashed_process'] = self.config_window_crash.tool_combo_box.currentText()
+            self.running_configurations['running_configurations']['crash_configurations']['attach_gdb'] = self.config_window_crash.checkbox1.isChecked()
         
-        if self.running_configurations['error_type'] == "Hang":
+        if self.running_configurations['running_configurations']['error_type'] == "Hang":
             selected_button = self.config_window_hang.button_group.checkedButton()
             if selected_button:
-                self.running_configurations['crashed_process'] = selected_button.text()
-                
+                self.running_configurations['running_configurations']['crash_configurations']['crashed_process'] = selected_button.text()
+        self.running_configurations['running_configurations']['script_path'] = self.lineEditOutputDirectory_2.text()        
         #print(self.running_configurations)
 
                 

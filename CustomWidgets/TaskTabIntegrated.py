@@ -47,6 +47,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
 
     def get_design(self):
         return self.Design_data
+    
     def get_running(self):
         return self.Running_data
         

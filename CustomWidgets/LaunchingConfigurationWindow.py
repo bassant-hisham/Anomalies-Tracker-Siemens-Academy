@@ -39,11 +39,6 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         VE_ENABLE_BUFFERS_STATISTICS = self.EnvVarName_HSpacer_mid_lineEdit.text()
         ENABLE_BACKUP_LOG = self.EnvVarValue_lineEdit.text()
         self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
-    
-
-
-
-
 
     def add_dut_config(self):
         #self.scrollLayout.addWidget(MyDesignBox(self.scrollLayout.count()+1))
@@ -51,8 +46,10 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.lanch_conf_VLayout.addWidget(new_dut_box)
         # self.Design_data.append(new_design_box)
         self.Duts.append(new_dut_box)
+
     def get_Duts(self):
         return self.Duts
+    
     def get_ToolConfig(self):
         self.ToolConfig["launch_tool"] = self.LaunchToolCheckBox.isChecked()
         self.ToolConfig["master_tool_configuration"]["tool_name"] = self.ToolName_comboBox.currentText()

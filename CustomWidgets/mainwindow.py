@@ -7,6 +7,7 @@ from CompilationConfigurationWindow import MyCompilationConfigWindow
 from LaunchingConfigurationWindow import MyLaunchingConfigWindow
 from TaskTabIntegrated import MyTaskTab
 from Jobs import MyJobs
+import json
 
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
@@ -35,6 +36,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
             Job = MyJobs()
             combinations = self.collectData()
+            self.GenerateJason()
             Job.Jobs_table.setRowCount(len(combinations))
             for row_index, (running_config, design, build) in enumerate(combinations):
 
@@ -65,19 +67,70 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         Designs = self.Tasks.TaskTab.get_design()
         RunningConfigs = self.Tasks.TaskTab.get_running()
         Builds  = self.Tasks.TaskTab.get_builds()
-
         for running in RunningConfigs:
            running.custom_window.collect_running_config()
 
-        for designs in Designs:
-            Duts = designs.get_Duts()
-            print(designs.get_ToolConfig())
-            for dut in Duts:
-                dut.collect_data()
+        
 
         combinations = list(product(RunningConfigs , Designs, Builds))
 
         return combinations
+    
+    def GenerateJason(self):
+        combinations=self.collectData()
+        file_path = "./frontEnd.json"
+        platform=self.Platfrom_comboBox.currentText()
+        solution=self.Solution_comboBox.currentText()
+        taskNu=self.Tasks.currentIndex()
+        JasonData={
+                       solution:{
+                       "task"+str(taskNu+1):{
+                        "id": taskNu+1,  ################to be changed
+                        "jobs":{
+                        }
+                       }    
+                           
+                       } 
+                    }
+        with open(file_path, 'w') as json_file:
+            for currentJobIndex,(running_config, design, build) in enumerate(combinations):
+                    running_dict = running_config.custom_window.running_configurations
+                    compilationConfigData = design.compilation_config.compilation_configurationsdict
+                    ToolConfigData = design.launching_configurations.ToolConfig
+                    DutConfigData=[]
+                    buildPath=str(build)
+                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
+                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                    
+                    prerequistes={  #############to be changed
+                        "prerequisites": {
+                        "previous_task_id": 0,
+                        "previous_job_id": 0
+                        },
+                    }
+                    JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
+                    Duts = design.get_Duts()
+                    for dut in Duts:
+                       DutConfigData.append(dut.collect_data())
+                     
+                    launching_configurations={
+                        "launching_configurations": {
+                                    "$schema": "../schemas/launching_configuration.schema.json",
+                                    "platform": platform,
+                                    "solution": solution, 
+                                    "src_file": buildPath,
+                                    "dut_configuration":DutConfigData,
+                                    "tools_configuration":ToolConfigData,
+                              }
+                              }
+                    
+                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
+                    JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+            json.dump(JasonData,json_file, indent=2)
+            json_file.write("\n")
+                    
+                    
+
     
         
         
