@@ -116,6 +116,76 @@ class Ui_Jobs(object):
         self.Jobs_scrollArea.setObjectName("Jobs_scrollArea")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.Jobs_scrollArea)
         self.gridLayout_2.setObjectName("gridLayout_2")
+        self.selectall_widget = QtWidgets.QWidget(self.Jobs_scrollArea)
+        self.selectall_widget.setObjectName("selectall_widget")
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.selectall_widget)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.selectall_horizontalLayout = QtWidgets.QHBoxLayout()
+        self.selectall_horizontalLayout.setObjectName("selectall_horizontalLayout")
+        spacerItem = QtWidgets.QSpacerItem(500, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.selectall_horizontalLayout.addItem(spacerItem)
+        self.selectall_pushButton = QtWidgets.QPushButton(self.selectall_widget)
+        self.selectall_pushButton.setMinimumSize(QtCore.QSize(143, 54))
+        self.selectall_pushButton.setStyleSheet("QPushButton {\n"
+"    border: 0px solid rgb(52, 59, 72);\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(33, 188, 180);\n"
+"    color: rgb(255, 255, 255);\n"
+"    margin:10px;\n"
+"    padding:5px;\n"
+"font:bold 20px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(57, 65, 80);\n"
+"    border: 5px solid transparent;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(35, 40, 49);\n"
+"    border: 7px solid transparent;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: rgb(102, 109, 122);\n"
+"    color: rgb(168, 168, 168);\n"
+"}")
+        self.selectall_pushButton.setObjectName("selectall_pushButton")
+        self.selectall_horizontalLayout.addWidget(self.selectall_pushButton)
+        self.horizontalLayout_2.addLayout(self.selectall_horizontalLayout)
+        self.gridLayout_2.addWidget(self.selectall_widget, 0, 0, 1, 1)
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        spacerItem1 = QtWidgets.QSpacerItem(580, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
+        self.Run_pushButton = QtWidgets.QPushButton(self.Jobs_scrollArea)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Run_pushButton.sizePolicy().hasHeightForWidth())
+        self.Run_pushButton.setSizePolicy(sizePolicy)
+        self.Run_pushButton.setMinimumSize(QtCore.QSize(100, 35))
+        self.Run_pushButton.setStyleSheet("QPushButton {\n"
+"    background-color: red;\n"
+"    color:White;\n"
+"    margin-right:5px;\n"
+"    border-radius: 10px;\n"
+"    border: 0px solid rgb(52, 59, 72);\n"
+"    font-size:16px;\n"
+"    font-weight:bold;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(230, 96, 96);\n"
+"    border: 5px solid transparent;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(35, 40, 49);\n"
+"    border: 7px solid transparent;\n"
+"}\n"
+"\n"
+"\n"
+"")
+        self.Run_pushButton.setObjectName("Run_pushButton")
+        self.horizontalLayout.addWidget(self.Run_pushButton)
+        self.gridLayout_2.addLayout(self.horizontalLayout, 2, 0, 1, 1)
         self.Jobs_table = QtWidgets.QTableWidget(self.Jobs_scrollArea)
         self.Jobs_table.setStyleSheet("QTableWidget::item {\n"
 "background-color:rgb(37, 40, 50);\n"
@@ -180,32 +250,7 @@ class Ui_Jobs(object):
         self.Jobs_table.setHorizontalHeaderItem(26, item)
         item = QtWidgets.QTableWidgetItem()
         self.Jobs_table.setHorizontalHeaderItem(27, item)
-        self.gridLayout_2.addWidget(self.Jobs_table, 0, 0, 1, 1)
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(580, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
-        self.Run_pushButton = QtWidgets.QPushButton(self.Jobs_scrollArea)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Run_pushButton.sizePolicy().hasHeightForWidth())
-        self.Run_pushButton.setSizePolicy(sizePolicy)
-        self.Run_pushButton.setMinimumSize(QtCore.QSize(100, 35))
-        self.Run_pushButton.setStyleSheet("QPushButton {\n"
-"    background-color: red;\n"
-"    color:White;\n"
-"    margin-right:5px;\n"
-"    border-radius: 10px;\n"
-"    border: 0px solid rgb(52, 59, 72);\n"
-"    font-size:16px;\n"
-"    font-weight:bold;\n"
-"\n"
-"}\n"
-"")
-        self.Run_pushButton.setObjectName("Run_pushButton")
-        self.horizontalLayout.addWidget(self.Run_pushButton)
-        self.gridLayout_2.addLayout(self.horizontalLayout, 1, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.Jobs_table, 1, 0, 1, 1)
         self.scrollArea.setWidget(self.Jobs_scrollArea)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -215,6 +260,8 @@ class Ui_Jobs(object):
     def retranslateUi(self, Jobs):
         _translate = QtCore.QCoreApplication.translate
         Jobs.setWindowTitle(_translate("Jobs", "Form"))
+        self.selectall_pushButton.setText(_translate("Jobs", "Select All"))
+        self.Run_pushButton.setText(_translate("Jobs", "Run"))
         item = self.Jobs_table.horizontalHeaderItem(0)
         item.setText(_translate("Jobs", "Include"))
         item = self.Jobs_table.horizontalHeaderItem(1)
@@ -271,7 +318,6 @@ class Ui_Jobs(object):
         item.setText(_translate("Jobs", "Use Custom Comodel Config"))
         item = self.Jobs_table.horizontalHeaderItem(27)
         item.setText(_translate("Jobs", "Custom Comodel Config"))
-        self.Run_pushButton.setText(_translate("Jobs", "Run"))
 
 
 if __name__ == "__main__":

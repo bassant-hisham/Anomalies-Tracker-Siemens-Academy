@@ -11,12 +11,47 @@ class HangConfigWindow(QMainWindow):
         layout = QVBoxLayout()
 
         # Create Checkboxes
+
         self.radiobutton1 = QRadioButton('EPGM', self)
+
         self.radiobutton2 = QRadioButton('Controller', self)
         self.button_group = QButtonGroup(self)
         self.button_group.addButton(self.radiobutton1)
         self.button_group.addButton(self.radiobutton2)
         # Apply styles
+        
+        self.verticalSpacer=QtWidgets.QSpacerItem(0, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        layout.addItem(self.verticalSpacer)
+        layout.addWidget(self.radiobutton1)
+        layout.addItem(self.verticalSpacer)
+        layout.addWidget(self.radiobutton2)
+        self.verticalSpacer=QtWidgets.QSpacerItem(0, 15, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        layout.addItem(self.verticalSpacer)
+
+        # Close button
+        self.closebtnLayout=QtWidgets.QHBoxLayout()
+        self.HorizontalSpacer=QtWidgets.QSpacerItem(55, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.closebtnLayout.addItem(self.HorizontalSpacer)
+        self.close_button = QPushButton('Done', self)
+        self.close_button.clicked.connect(self.close)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(10)
+        sizePolicy.setVerticalStretch(0)
+        self.close_button.setSizePolicy(sizePolicy)
+        self.closebtnLayout.addWidget(self.close_button)
+        self.closebtnLayout.addItem(self.HorizontalSpacer)
+
+
+        layout.addLayout(self.closebtnLayout)
+        self.verticalSpacer=QtWidgets.QSpacerItem(0, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        layout.addItem(self.verticalSpacer)
+
+        # Central widget setup
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
+        self.setMinimumSize(300, 200)
+
         self.setStyleSheet(
             """
             QMainWindow {
@@ -31,7 +66,9 @@ class HangConfigWindow(QMainWindow):
                 border: 0px solid rgb(52, 59, 72);
                 background-color: rgb(33, 188, 180);
                 color:rgb(255, 255, 255);
-                border-radius: 50px;
+                border-radius: 10px;
+                font:18px;
+                font-weight:bold;
                 }
 
             QPushButton:hover {
@@ -48,21 +85,6 @@ class HangConfigWindow(QMainWindow):
             }
             """
         )
-
-        layout.addWidget(self.radiobutton1)
-        layout.addWidget(self.radiobutton2)
-
-        # Close button
-        close_button = QPushButton('Done', self)
-        close_button.clicked.connect(self.close)
-
-        layout.addWidget(close_button)
-
-        # Central widget setup
-        central_widget = QWidget()
-        central_widget.setLayout(layout)
-        self.setCentralWidget(central_widget)
-        self.setMinimumSize(300, 200)
 
     def center_on_parent(self):       
         screen = QDesktopWidget().screenGeometry()

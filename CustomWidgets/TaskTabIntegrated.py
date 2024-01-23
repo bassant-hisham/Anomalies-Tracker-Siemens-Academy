@@ -29,9 +29,13 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.AddFile_button.clicked.connect(self.toggle_file)
         self.BrowseParentDir_button.clicked.connect(lambda: showDirectoryDialog(self,self.ParentDir_lineEdit))
         self.BrowseFilePath_button.clicked.connect(lambda: showFileDialog(self,self.FilePath_lineEdit))
-        self.Running_data=[]
-        self.Design_data = []
-        self.Builds = []
+        self.RunningDelete_pushButton.clicked.connect(self.deleteRunningWidget)
+        self.DesignDelete_pushButton.clicked.connect(self.deleteDesignWidget)
+
+
+        self.Running_data=list()
+        self.Design_data = list()
+        self.Builds = list()
     
     def toggle_directory(self):
         self.stacked_widget.setCurrentIndex(0)
@@ -57,6 +61,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         
     def get_builds(self):
         current_index = self.stacked_widget.currentIndex() #use it to know which of dir or file is used (0->Dir , 1->File)
+        self.Builds = [] 
+
         if current_index == 1:
             file_path = self.FilePath_lineEdit.text()
             self.Builds.append(file_path)
@@ -84,3 +90,18 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
                     if os.path.exists(os.path.join(parent_dir, file_name)):
                         self.Builds.append(file_name)
         return self.Builds
+    
+    def getBinarySearchValue(self):
+        return self.BinarySearch_radioButton.isChecked()
+    
+    def deleteRunningWidget(self):
+        if(len(self.Running_data)!=0):
+            WidgteToBeRemoved=self.Running_data.pop()
+            self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved)
+            WidgteToBeRemoved.deleteLater()
+
+    def deleteDesignWidget(self):
+        if(len(self.Design_data)!=0):
+            WidgteToBeRemoved=self.Design_data.pop()
+            self.scrollLayout.removeWidget(WidgteToBeRemoved)
+            WidgteToBeRemoved.deleteLater()

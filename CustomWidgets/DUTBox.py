@@ -6,9 +6,10 @@ from commonFunctions import *
 import ast  # Import the ast module for safer evaluation
 
 class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
-    def __init__(self,id):
+    def __init__(self, Dutconfig_Vlayout:QVBoxLayout, Duts:list,id):
         super(MyDUTGroupBox, self).__init__()
         self.setupUi(self)
+        self.id=id
         self.setTitle("DUT Configuration " + str(id))
         self.setCheckable(True)
         self.setChecked(True)
@@ -17,6 +18,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.DesignPath_toolButton_2.clicked.connect(lambda: showFileDialog(self,self.DesignPath_lineEdit_2))
         self.RecordDir_toolButton_2.clicked.connect(lambda: showDirectoryDialog(self,self.RecordDir_lineEdit_2))
         self.ReplyDir_toolButton_2.clicked.connect(lambda: showDirectoryDialog(self,self.ReplyDir_lineEdit_2))
+        self.Dut_pushButton.clicked.connect(self.deleteDutWidget)
         self.AddArgButton_2.clicked.connect(self.add_arguments)
         self.AddEnv_2.clicked.connect(self.add_additional_env_variables)
         self.ConfigType_comboBox.currentIndexChanged.connect(self.handleSnapshotsNu)
@@ -24,6 +26,8 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.Configvalue_lineEdit.hide()
         self.ConfigValueList_label.hide()
         self.ConfigValueList_lineEdit.hide()
+        self.Dutconfig_Vlayout=Dutconfig_Vlayout
+        self.Duts=Duts
         
 
     def toggle_content(self):
@@ -59,6 +63,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
             self.DPIAdditionalEnvValues_2.clear()
         self.additionalEnv[self.EnvVarName_HSpacer_mid_lineEdit_2.text()] = self.EnvVarValue_lineEdit_2.text()
         self.DPIAdditionalEnvValues_2.append(str(self.additionalEnv))
+
     def handleSnapshotsNu(self) -> None:
         if (self.ConfigType_comboBox.currentIndex()==0):  #range
             self.FromConfigValue_lineEdit.show()
@@ -88,6 +93,15 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
             self.Configvalue_lineEdit.show()
             self.ConfigValueList_label.hide()
             self.ConfigValueList_lineEdit.hide()
+
+    def deleteDutWidget(self):
+        self.Duts.remove(self)
+        self.Dutconfig_Vlayout.removeWidget(self)
+        self.deleteLater()
+        
+        for index,widget in enumerate(self.Duts):
+            self.Duts[index].id=index+1
+            self.Duts[index].setTitle("DUT Configuration " + str(index+1))
 
     def collect_data(self):
                 data = {
@@ -121,7 +135,6 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                     data["custom_comodels_config"]=[]
                     customGroupBoxesCount=self.CustomCoModels.ConfigVLayout.count() #nu of groupBoxes
                     for CustomgroupBoxIndex in range(customGroupBoxesCount):
-                         temp=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex)
                          Host_name=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().HostName_comboBox.currentText()
                          Domain_id=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().DomainId_comboBox.currentText()
                          data["custom_comodels_config"].append({"host_name":Host_name,"domain_id":Domain_id})
@@ -140,6 +153,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                      data["dpi_additional_args"]=eval(self.DPIAdditionalArg_2.toPlainText())
             
                 return data
+    
     
 
             

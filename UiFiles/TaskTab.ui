@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>759</width>
-    <height>449</height>
+    <height>456</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,6 @@ background-color:rgb(37, 40, 50);
      <property name="font">
       <font>
        <pointsize>8</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -108,7 +107,7 @@ QPushButton:disabled {
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="RunningConfig">
       <attribute name="title">
@@ -129,6 +128,33 @@ QPushButton:disabled {
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="RunningDelete_pushButton">
+           <property name="styleSheet">
+            <string notr="true">background:none;
+</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../IconsImages/delete.png</normaloff>
+             <normalon>../IconsImages/delete.png</normalon>
+             <disabledoff>../IconsImages/delete.png</disabledoff>
+             <activeoff>../IconsImages/delete.png</activeoff>
+             <activeon>../IconsImages/delete.png</activeon>
+             <selectedoff>../IconsImages/delete.png</selectedoff>
+             <selectedon>../IconsImages/delete.png</selectedon>../IconsImages/delete.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>29</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="AddRunningConfig_button">
@@ -153,7 +179,6 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>13</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -174,8 +199,8 @@ QPushButton:disabled {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>713</width>
-            <height>329</height>
+            <width>721</width>
+            <height>346</height>
            </rect>
           </property>
          </widget>
@@ -214,7 +239,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -243,7 +267,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -288,7 +311,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -317,7 +339,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -347,7 +368,6 @@ QPushButton:disabled {
             <property name="font">
              <font>
               <pointsize>11</pointsize>
-              <weight>50</weight>
               <bold>false</bold>
              </font>
             </property>
@@ -364,7 +384,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -430,7 +449,6 @@ QPushButton:disabled {
                <font>
                 <family>MS Shell Dlg 2</family>
                 <pointsize>11</pointsize>
-                <weight>50</weight>
                 <italic>false</italic>
                 <bold>false</bold>
                </font>
@@ -498,7 +516,6 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>10</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -518,7 +535,6 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>10</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -555,6 +571,26 @@ QPushButton:disabled {
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="DesignDelete_pushButton">
+           <property name="styleSheet">
+            <string notr="true">background:none;</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../IconsImages/delete.png</normaloff>../IconsImages/delete.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>30</width>
+             <height>25</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="AddDesign_button">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -577,12 +613,17 @@ QPushButton:disabled {
            <property name="font">
             <font>
              <pointsize>13</pointsize>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
            <property name="text">
             <string>+</string>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -598,8 +639,8 @@ QPushButton:disabled {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>713</width>
-            <height>85</height>
+            <width>721</width>
+            <height>346</height>
            </rect>
           </property>
          </widget>

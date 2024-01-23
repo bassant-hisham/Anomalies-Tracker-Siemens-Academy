@@ -326,17 +326,13 @@ class Ui_launching_config(object):
 "}\n"
 "QSpinBox\n"
 "{\n"
-"\n"
 "background-color:#1b1d23;\n"
 "border-radius:7px;\n"
 "font:normal;\n"
 "font-size:22px;\n"
 "padding-left:8px\n"
 "}\n"
-"QTextBrowser{\n"
-"border:1px solid white;\n"
-"\n"
-"}")
+"")
         self.gridLayout = QtWidgets.QGridLayout(launching_config)
         self.gridLayout.setObjectName("gridLayout")
         self.lanch_conf_scrollArea = QtWidgets.QScrollArea(launching_config)
@@ -346,7 +342,7 @@ class Ui_launching_config(object):
         self.lanch_conf_scrollArea.setWidgetResizable(True)
         self.lanch_conf_scrollArea.setObjectName("lanch_conf_scrollArea")
         self.lanch_conf_Hlayout = QtWidgets.QWidget()
-        self.lanch_conf_Hlayout.setGeometry(QtCore.QRect(0, -1135, 812, 2345))
+        self.lanch_conf_Hlayout.setGeometry(QtCore.QRect(0, 0, 812, 2421))
         self.lanch_conf_Hlayout.setObjectName("lanch_conf_Hlayout")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.lanch_conf_Hlayout)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
@@ -399,6 +395,14 @@ class Ui_launching_config(object):
         self.ToolConfigGroupBox.setObjectName("ToolConfigGroupBox")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.ToolConfigGroupBox)
         self.gridLayout_4.setObjectName("gridLayout_4")
+        self.LaunchToolCheckBox = QtWidgets.QCheckBox(self.ToolConfigGroupBox)
+        font = QtGui.QFont()
+        font.setPointSize(-1)
+        font.setBold(False)
+        font.setItalic(False)
+        self.LaunchToolCheckBox.setFont(font)
+        self.LaunchToolCheckBox.setObjectName("LaunchToolCheckBox")
+        self.gridLayout_4.addWidget(self.LaunchToolCheckBox, 0, 0, 1, 1)
         self.MasterToolGroupBox = QtWidgets.QGroupBox(self.ToolConfigGroupBox)
         self.MasterToolGroupBox.setStyleSheet("")
         self.MasterToolGroupBox.setObjectName("MasterToolGroupBox")
@@ -417,8 +421,7 @@ class Ui_launching_config(object):
         self.gridLayout_5 = QtWidgets.QGridLayout(self.AdditionalArg_groupBox)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.ToolAdditionalEnvValues = QtWidgets.QTextBrowser(self.AdditionalArg_groupBox)
-        self.ToolAdditionalEnvValues.setStyleSheet("border:none;\n"
-"")
+        self.ToolAdditionalEnvValues.setStyleSheet("background-color:#252832;")
         self.ToolAdditionalEnvValues.setObjectName("ToolAdditionalEnvValues")
         self.gridLayout_5.addWidget(self.ToolAdditionalEnvValues, 5, 0, 1, 1)
         self.EnvVarName_Hlayout = QtWidgets.QHBoxLayout()
@@ -469,6 +472,8 @@ class Ui_launching_config(object):
         self.AddEnvLayout.addItem(spacerItem1)
         self.AddEnv = QtWidgets.QPushButton(self.AdditionalArg_groupBox)
         self.AddEnv.setMinimumSize(QtCore.QSize(111, 54))
+        self.AddEnv.setStyleSheet("    background-color: rgb(33, 188, 180);\n"
+"")
         self.AddEnv.setObjectName("AddEnv")
         self.AddEnvLayout.addWidget(self.AddEnv)
         self.gridLayout_5.addLayout(self.AddEnvLayout, 6, 0, 1, 1)
@@ -563,12 +568,16 @@ class Ui_launching_config(object):
         self.AddArgLayout.addItem(spacerItem2)
         self.AddArgButton = QtWidgets.QPushButton(self.AdditionalArgGroupBox)
         self.AddArgButton.setMinimumSize(QtCore.QSize(111, 54))
+        self.AddArgButton.setStyleSheet("    background-color: rgb(33, 188, 180);\n"
+"")
         self.AddArgButton.setObjectName("AddArgButton")
         self.AddArgLayout.addWidget(self.AddArgButton)
         self.gridLayout_3.addLayout(self.AddArgLayout, 4, 0, 1, 1)
         self.AdditionalArg = QtWidgets.QTextBrowser(self.AdditionalArgGroupBox)
-        self.AdditionalArg.setStyleSheet("border:none;\n"
-"")
+        self.AdditionalArg.setStyleSheet("QTextBrowser{\n"
+"background-color: #252832;\n"
+"\n"
+"}")
         self.AdditionalArg.setObjectName("AdditionalArg")
         self.gridLayout_3.addWidget(self.AdditionalArg, 3, 0, 1, 1)
         self.ArgValue_Hlayout = QtWidgets.QHBoxLayout()
@@ -602,14 +611,6 @@ class Ui_launching_config(object):
         self.TerminateTool_checkBox.setObjectName("TerminateTool_checkBox")
         self.gridLayout_2.addWidget(self.TerminateTool_checkBox, 3, 0, 1, 1)
         self.gridLayout_4.addWidget(self.MasterToolGroupBox, 1, 0, 1, 1)
-        self.LaunchToolCheckBox = QtWidgets.QCheckBox(self.ToolConfigGroupBox)
-        font = QtGui.QFont()
-        font.setPointSize(-1)
-        font.setBold(False)
-        font.setItalic(False)
-        self.LaunchToolCheckBox.setFont(font)
-        self.LaunchToolCheckBox.setObjectName("LaunchToolCheckBox")
-        self.gridLayout_4.addWidget(self.LaunchToolCheckBox, 0, 0, 1, 1)
         self.Slavewidget = QtWidgets.QWidget(self.ToolConfigGroupBox)
         self.Slavewidget.setObjectName("Slavewidget")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.Slavewidget)
@@ -658,8 +659,7 @@ class Ui_launching_config(object):
         self.gridLayout_8 = QtWidgets.QGridLayout(self.AdditionalArg_groupBox_2)
         self.gridLayout_8.setObjectName("gridLayout_8")
         self.ToolAdditionalEnvValues_2 = QtWidgets.QTextBrowser(self.AdditionalArg_groupBox_2)
-        self.ToolAdditionalEnvValues_2.setStyleSheet("border:none;\n"
-"")
+        self.ToolAdditionalEnvValues_2.setStyleSheet("background-color:#252832;")
         self.ToolAdditionalEnvValues_2.setObjectName("ToolAdditionalEnvValues_2")
         self.gridLayout_8.addWidget(self.ToolAdditionalEnvValues_2, 5, 0, 1, 1)
         self.EnvVarName_Hlayout_2 = QtWidgets.QHBoxLayout()
@@ -710,6 +710,8 @@ class Ui_launching_config(object):
         self.AddEnvLayout_2.addItem(spacerItem3)
         self.AddEnv_2 = QtWidgets.QPushButton(self.AdditionalArg_groupBox_2)
         self.AddEnv_2.setMinimumSize(QtCore.QSize(111, 54))
+        self.AddEnv_2.setStyleSheet("    background-color: rgb(33, 188, 180);\n"
+"")
         self.AddEnv_2.setObjectName("AddEnv_2")
         self.AddEnvLayout_2.addWidget(self.AddEnv_2)
         self.gridLayout_8.addLayout(self.AddEnvLayout_2, 6, 0, 1, 1)
@@ -804,12 +806,13 @@ class Ui_launching_config(object):
         self.AddArgLayout_2.addItem(spacerItem4)
         self.AddArgButton_2 = QtWidgets.QPushButton(self.AdditionalArgGroupBox_2)
         self.AddArgButton_2.setMinimumSize(QtCore.QSize(111, 54))
+        self.AddArgButton_2.setStyleSheet("    background-color: rgb(33, 188, 180);\n"
+"")
         self.AddArgButton_2.setObjectName("AddArgButton_2")
         self.AddArgLayout_2.addWidget(self.AddArgButton_2)
         self.gridLayout_9.addLayout(self.AddArgLayout_2, 4, 0, 1, 1)
         self.AdditionalArg_2 = QtWidgets.QTextBrowser(self.AdditionalArgGroupBox_2)
-        self.AdditionalArg_2.setStyleSheet("border:none;\n"
-"")
+        self.AdditionalArg_2.setStyleSheet("background-color:#252832;")
         self.AdditionalArg_2.setObjectName("AdditionalArg_2")
         self.gridLayout_9.addWidget(self.AdditionalArg_2, 3, 0, 1, 1)
         self.ArgValue_Hlayout_2 = QtWidgets.QHBoxLayout()
@@ -851,6 +854,15 @@ class Ui_launching_config(object):
         self.Add_Hlayout.setObjectName("Add_Hlayout")
         spacerItem5 = QtWidgets.QSpacerItem(652, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.Add_Hlayout.addItem(spacerItem5)
+        self.Delete_pushButton = QtWidgets.QPushButton(self.lanch_conf_Hlayout)
+        self.Delete_pushButton.setAutoFillBackground(False)
+        self.Delete_pushButton.setText("")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../IconsImages/delete.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Delete_pushButton.setIcon(icon)
+        self.Delete_pushButton.setIconSize(QtCore.QSize(24, 30))
+        self.Delete_pushButton.setObjectName("Delete_pushButton")
+        self.Add_Hlayout.addWidget(self.Delete_pushButton)
         self.Add_PushButton = QtWidgets.QPushButton(self.lanch_conf_Hlayout)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(1)
@@ -866,8 +878,26 @@ class Ui_launching_config(object):
         self.Add_Hlayout.addWidget(self.Add_PushButton)
         self.lanch_conf_VLayout.addLayout(self.Add_Hlayout)
         self.verticalLayout_3.addLayout(self.lanch_conf_VLayout)
+        self.Dutconfig_Vlayout = QtWidgets.QVBoxLayout()
+        self.Dutconfig_Vlayout.setObjectName("Dutconfig_Vlayout")
+        self.verticalLayout_3.addLayout(self.Dutconfig_Vlayout)
+        self.Done_HLayout = QtWidgets.QHBoxLayout()
+        self.Done_HLayout.setObjectName("Done_HLayout")
+        spacerItem6 = QtWidgets.QSpacerItem(624, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.Done_HLayout.addItem(spacerItem6)
+        self.Done_pushButton = QtWidgets.QPushButton(self.lanch_conf_Hlayout)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Done_pushButton.sizePolicy().hasHeightForWidth())
+        self.Done_pushButton.setSizePolicy(sizePolicy)
+        self.Done_pushButton.setStyleSheet("    background-color: rgb(33, 188, 180);\n"
+"")
+        self.Done_pushButton.setObjectName("Done_pushButton")
+        self.Done_HLayout.addWidget(self.Done_pushButton)
+        self.verticalLayout_3.addLayout(self.Done_HLayout)
         self.lanch_conf_scrollArea.setWidget(self.lanch_conf_Hlayout)
-        self.gridLayout.addWidget(self.lanch_conf_scrollArea, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.lanch_conf_scrollArea, 0, 0, 1, 1)
 
         self.retranslateUi(launching_config)
         QtCore.QMetaObject.connectSlotsByName(launching_config)
@@ -877,6 +907,7 @@ class Ui_launching_config(object):
         launching_config.setWindowTitle(_translate("launching_config", "Form"))
         self.Title.setText(_translate("launching_config", "Launching Configurations :"))
         self.ToolConfigGroupBox.setTitle(_translate("launching_config", "Tools Configuration"))
+        self.LaunchToolCheckBox.setText(_translate("launching_config", "Launch Tool"))
         self.MasterToolGroupBox.setTitle(_translate("launching_config", "Master Tool Configuration"))
         self.TerminateOnErr_checkBox.setText(_translate("launching_config", "Terminate Tool"))
         self.AdditionalArg_groupBox.setTitle(_translate("launching_config", "Tools Additional Env Variables"))
@@ -895,7 +926,6 @@ class Ui_launching_config(object):
         self.AddArgButton.setText(_translate("launching_config", "Add"))
         self.ArgValue_label.setText(_translate("launching_config", "Argument Value"))
         self.TerminateTool_checkBox.setText(_translate("launching_config", "Terminate Tool on Error"))
-        self.LaunchToolCheckBox.setText(_translate("launching_config", "Launch Tool"))
         self.ToolConfigGroupBox_2.setTitle(_translate("launching_config", "Slave Tool Configuration"))
         self.MasterToolGroupBox_2.setTitle(_translate("launching_config", "Master Tool Configuration"))
         self.TerminateOnErr_checkBox_2.setText(_translate("launching_config", "Terminate Tool"))
@@ -916,6 +946,7 @@ class Ui_launching_config(object):
         self.ArgValue_label_2.setText(_translate("launching_config", "Argument Value"))
         self.TerminateTool_checkBox_2.setText(_translate("launching_config", "Terminate Tool on Error"))
         self.Add_PushButton.setText(_translate("launching_config", "+"))
+        self.Done_pushButton.setText(_translate("launching_config", "Done"))
 
 
 if __name__ == "__main__":

@@ -325,20 +325,16 @@ QCheckBox
 }
 QSpinBox
 {
-
 background-color:#1b1d23;
 border-radius:7px;
 font:normal;
 font-size:22px;
 padding-left:8px
 }
-QTextBrowser{
-border:1px solid white;
-
-}</string>
+</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
+   <item row="0" column="0">
     <widget class="QScrollArea" name="lanch_conf_scrollArea">
      <property name="styleSheet">
       <string notr="true">color:white;
@@ -352,9 +348,9 @@ background-color:#2c313b;
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1135</y>
+        <y>0</y>
         <width>812</width>
-        <height>2345</height>
+        <height>2421</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -439,6 +435,20 @@ QPushButton:disabled {
             <string>Tools Configuration</string>
            </property>
            <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <widget class="QCheckBox" name="LaunchToolCheckBox">
+              <property name="font">
+               <font>
+                <pointsize>-1</pointsize>
+                <italic>false</italic>
+                <bold>false</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Launch Tool</string>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="0">
              <widget class="QGroupBox" name="MasterToolGroupBox">
               <property name="styleSheet">
@@ -471,8 +481,7 @@ QPushButton:disabled {
                   <item row="5" column="0">
                    <widget class="QTextBrowser" name="ToolAdditionalEnvValues">
                     <property name="styleSheet">
-                     <string notr="true">border:none;
-</string>
+                     <string notr="true">background-color:#252832;</string>
                     </property>
                    </widget>
                   </item>
@@ -560,6 +569,10 @@ QPushButton:disabled {
                         <width>111</width>
                         <height>54</height>
                        </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">	background-color: rgb(33, 188, 180);
+</string>
                       </property>
                       <property name="text">
                        <string>Add</string>
@@ -748,6 +761,10 @@ border-radius:7px;</string>
                         <height>54</height>
                        </size>
                       </property>
+                      <property name="styleSheet">
+                       <string notr="true">	background-color: rgb(33, 188, 180);
+</string>
+                      </property>
                       <property name="text">
                        <string>Add</string>
                       </property>
@@ -758,8 +775,10 @@ border-radius:7px;</string>
                   <item row="3" column="0">
                    <widget class="QTextBrowser" name="AdditionalArg">
                     <property name="styleSheet">
-                     <string notr="true">border:none;
-</string>
+                     <string notr="true">QTextBrowser{
+background-color: #252832;
+
+}</string>
                     </property>
                    </widget>
                   </item>
@@ -812,20 +831,6 @@ border-radius:7px;</string>
                 </widget>
                </item>
               </layout>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QCheckBox" name="LaunchToolCheckBox">
-              <property name="font">
-               <font>
-                <pointsize>-1</pointsize>
-                <italic>false</italic>
-                <bold>false</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Launch Tool</string>
-              </property>
              </widget>
             </item>
             <item row="2" column="0">
@@ -893,8 +898,7 @@ QPushButton:disabled {
                         <item row="5" column="0">
                          <widget class="QTextBrowser" name="ToolAdditionalEnvValues_2">
                           <property name="styleSheet">
-                           <string notr="true">border:none;
-</string>
+                           <string notr="true">background-color:#252832;</string>
                           </property>
                          </widget>
                         </item>
@@ -982,6 +986,10 @@ QPushButton:disabled {
                               <width>111</width>
                               <height>54</height>
                              </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">	background-color: rgb(33, 188, 180);
+</string>
                             </property>
                             <property name="text">
                              <string>Add</string>
@@ -1170,6 +1178,10 @@ border-radius:7px;</string>
                               <height>54</height>
                              </size>
                             </property>
+                            <property name="styleSheet">
+                             <string notr="true">	background-color: rgb(33, 188, 180);
+</string>
+                            </property>
                             <property name="text">
                              <string>Add</string>
                             </property>
@@ -1180,8 +1192,7 @@ border-radius:7px;</string>
                         <item row="3" column="0">
                          <widget class="QTextBrowser" name="AdditionalArg_2">
                           <property name="styleSheet">
-                           <string notr="true">border:none;
-</string>
+                           <string notr="true">background-color:#252832;</string>
                           </property>
                          </widget>
                         </item>
@@ -1267,6 +1278,26 @@ border-radius:7px;</string>
             </spacer>
            </item>
            <item>
+            <widget class="QPushButton" name="Delete_pushButton">
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../IconsImages/delete.png</normaloff>../IconsImages/delete.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>30</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QPushButton" name="Add_PushButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1289,6 +1320,43 @@ padding-left:10px;
             </widget>
            </item>
           </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="Dutconfig_Vlayout"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="Done_HLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>624</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="Done_pushButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">	background-color: rgb(33, 188, 180);
+</string>
+           </property>
+           <property name="text">
+            <string>Done</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

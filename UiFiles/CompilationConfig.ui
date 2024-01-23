@@ -135,7 +135,6 @@ QPushButton:disabled {
          <widget class="QCheckBox" name="CompileDesign_checkBox">
           <property name="font">
            <font>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -155,7 +154,6 @@ QPushButton:disabled {
              <widget class="QLabel" name="Source_label">
               <property name="font">
                <font>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -172,7 +170,6 @@ QPushButton:disabled {
              <widget class="QLabel" name="Output_label">
               <property name="font">
                <font>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -202,14 +199,14 @@ QPushButton:disabled {
             <item>
              <widget class="QToolButton" name="BrowseSource_button">
               <property name="text">
-               <string/>
+               <string>...</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QToolButton" name="BrowseOutput_button">
               <property name="text">
-               <string/>
+               <string>...</string>
               </property>
              </widget>
             </item>
@@ -223,7 +220,6 @@ QPushButton:disabled {
            <widget class="QLabel" name="Machine_label">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -278,7 +274,6 @@ QPushButton:disabled {
          <widget class="QCheckBox" name="Force_checkBox">
           <property name="font">
            <font>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -296,7 +291,6 @@ QPushButton:disabled {
            <widget class="QLabel" name="Timeout_label">
             <property name="font">
              <font>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -356,7 +350,6 @@ QPushButton:disabled {
             <property name="font">
              <font>
               <pointsize>12</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>

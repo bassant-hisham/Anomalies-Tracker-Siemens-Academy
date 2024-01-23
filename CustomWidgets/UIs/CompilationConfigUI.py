@@ -134,7 +134,6 @@ class Ui_CompilationConfig_Form(object):
         self.CompileDesign_checkBox = QtWidgets.QCheckBox(self.CompilationConfig_widget)
         font = QtGui.QFont()
         font.setBold(True)
-        font.setWeight(75)
         self.CompileDesign_checkBox.setFont(font)
         self.CompileDesign_checkBox.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.CompileDesign_checkBox.setObjectName("CompileDesign_checkBox")
@@ -146,7 +145,6 @@ class Ui_CompilationConfig_Form(object):
         self.Source_label = QtWidgets.QLabel(self.CompilationConfig_widget)
         font = QtGui.QFont()
         font.setBold(True)
-        font.setWeight(75)
         self.Source_label.setFont(font)
         self.Source_label.setStyleSheet("background:none\n"
 "")
@@ -155,7 +153,6 @@ class Ui_CompilationConfig_Form(object):
         self.Output_label = QtWidgets.QLabel(self.CompilationConfig_widget)
         font = QtGui.QFont()
         font.setBold(True)
-        font.setWeight(75)
         self.Output_label.setFont(font)
         self.Output_label.setStyleSheet("background:none\n"
 "")
@@ -174,11 +171,9 @@ class Ui_CompilationConfig_Form(object):
         self.Browse_verticalLayout = QtWidgets.QVBoxLayout()
         self.Browse_verticalLayout.setObjectName("Browse_verticalLayout")
         self.BrowseSource_button = QtWidgets.QToolButton(self.CompilationConfig_widget)
-        self.BrowseSource_button.setText("")
         self.BrowseSource_button.setObjectName("BrowseSource_button")
         self.Browse_verticalLayout.addWidget(self.BrowseSource_button)
         self.BrowseOutput_button = QtWidgets.QToolButton(self.CompilationConfig_widget)
-        self.BrowseOutput_button.setText("")
         self.BrowseOutput_button.setObjectName("BrowseOutput_button")
         self.Browse_verticalLayout.addWidget(self.BrowseOutput_button)
         self.Source_Output_horizontalLayout.addLayout(self.Browse_verticalLayout)
@@ -188,7 +183,6 @@ class Ui_CompilationConfig_Form(object):
         self.Machine_label = QtWidgets.QLabel(self.CompilationConfig_widget)
         font = QtGui.QFont()
         font.setBold(True)
-        font.setWeight(75)
         self.Machine_label.setFont(font)
         self.Machine_label.setStyleSheet("background:none")
         self.Machine_label.setObjectName("Machine_label")
@@ -206,7 +200,6 @@ class Ui_CompilationConfig_Form(object):
         self.Force_checkBox = QtWidgets.QCheckBox(self.CompilationConfig_widget)
         font = QtGui.QFont()
         font.setBold(True)
-        font.setWeight(75)
         self.Force_checkBox.setFont(font)
         self.Force_checkBox.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.Force_checkBox.setObjectName("Force_checkBox")
@@ -216,7 +209,6 @@ class Ui_CompilationConfig_Form(object):
         self.Timeout_label = QtWidgets.QLabel(self.CompilationConfig_widget)
         font = QtGui.QFont()
         font.setBold(True)
-        font.setWeight(75)
         self.Timeout_label.setFont(font)
         self.Timeout_label.setStyleSheet("background:none")
         self.Timeout_label.setObjectName("Timeout_label")
@@ -236,7 +228,6 @@ class Ui_CompilationConfig_Form(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
-        font.setWeight(75)
         self.Done_button.setFont(font)
         self.Done_button.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(33, 188, 180);\n"
@@ -270,6 +261,8 @@ class Ui_CompilationConfig_Form(object):
         self.CompileDesign_checkBox.setText(_translate("CompilationConfig_Form", "Compile Design"))
         self.Source_label.setText(_translate("CompilationConfig_Form", "Source Design Path"))
         self.Output_label.setText(_translate("CompilationConfig_Form", "Output Directory"))
+        self.BrowseSource_button.setText(_translate("CompilationConfig_Form", "..."))
+        self.BrowseOutput_button.setText(_translate("CompilationConfig_Form", "..."))
         self.Machine_label.setText(_translate("CompilationConfig_Form", "Machine"))
         self.Machine_comboBox.setItemText(0, _translate("CompilationConfig_Form", "Auto"))
         self.Machine_comboBox.setItemText(1, _translate("CompilationConfig_Form", "egc-med-bell"))
@@ -279,3 +272,13 @@ class Ui_CompilationConfig_Form(object):
         self.Timeout_label.setText(_translate("CompilationConfig_Form", "TimeOut"))
         self.Timeout_lineEdit.setPlaceholderText(_translate("CompilationConfig_Form", "0"))
         self.Done_button.setText(_translate("CompilationConfig_Form", "Done"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    CompilationConfig_Form = QtWidgets.QWidget()
+    ui = Ui_CompilationConfig_Form()
+    ui.setupUi(CompilationConfig_Form)
+    CompilationConfig_Form.show()
+    sys.exit(app.exec_())
