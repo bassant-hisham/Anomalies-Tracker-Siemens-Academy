@@ -25,21 +25,27 @@ def get_type_of_solution(json_object: dict) -> str:
         return ""
 
 
-def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> list:
-    json_object = json_handler.handle_data_from_front_end(from_front_end)
-    solution_type = get_type_of_solution(json_object)
-    task = list(json_object[solution_type].keys())[0]
-    solution = SolutionHandlerFactory.create_solution_handler(solution_type)
-    job_names = []
-    if solution is not None:
-        job_ids, job_xmls = solution.generate_all_pipeline_job_xml(json_object)
-        for job_index, job_id in enumerate(job_ids):
-            job_names.append(f"{solution_type}-{task}-{job_id}")
-            job_xml = job_xmls[job_index]
-            # with open(f"{solution_type}-{task}-{job_id}.xml") as xmlFile:
-            #     config = xmlFile.read()
-            server.upsert_job(f"{solution_type}-{task}-{job_id}", job_xml)
-    return job_names
+def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> dict:
+    try:
+        json_object = json_handler.handle_data_from_front_end(from_front_end)
+        solution_type = get_type_of_solution(json_object)
+        task = list(json_object[solution_type].keys())[0]
+        task_id = json_object["Ethernet"][task]["id"]
+        solution = SolutionHandlerFactory.create_solution_handler(solution_type)
+        job_names = {}
+        if solution is not None:
+            job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object)
+            for job_index, job_id in enumerate(job_ids):
+                # job_names.append(f"{solution_type}-{task_id}-{job_id}")
+                job_names[f"{solution_type}-Task{task_id}-Job{job_id}"] = job_prerequisites[job_index]
+                job_xml = job_xmls[job_index]
+                # with open(f"{solution_type}-Task{task_id}-Job{job_id}.xml") as xmlFile:
+                #     config = xmlFile.read()
+                server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
+        return job_names
+    except Exception as e:
+        logging.error(f"Error while creating jobs. Error: {e}")
+        return {}
 
 
 def initialize_jenkins_server(url: str, username: str, password: str) -> jenkins.Jenkins:
@@ -364,23 +370,31 @@ class EthernetHandler(SolutionHandler):
             logging.error(f"Error while generating script: {e}")
             return ""
 
-    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = False) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = True) -> tuple:
         try:
             job_ids = []
             job_xmls = []
+            job_prerequisites = []
             task = list(json_object["Ethernet"].keys())[0]
+            task_id = json_object["Ethernet"][task]["id"]
             jobs = json_object["Ethernet"][task]["jobs"]
             for job_num, job in jobs.items():
                 job_ids.append(job_num)
                 previous_task_id, previous_job_id = self.get_prerequisites(job)
                 script_text = self.generate_script(job)
-                job_xml = xml_handler.generate_pipeline_job_xml(script_text, job_num, projects_to_watch=[f"job{previous_job_id}"])
+                if previous_job_id == "" or previous_job_id == 0:
+                    job_prerequisites.append([])
+                    job_xml = xml_handler.generate_pipeline_job_xml(script_text, job_num)
+                else:
+                    job_prerequisites.append([f"Ethernet-Task{previous_task_id}-Job{previous_job_id}"])
+                    job_xml = xml_handler.generate_pipeline_job_xml(script_text, job_num,
+                                                                    projects_to_watch=[f"Ethernet-Task{previous_task_id}-Job{previous_job_id}"])
                 if debug:
-                    with open(f"Ethernet-{task}-{job_num}.xml", "w") as new_job:
+                    with open(f"Ethernet-Task{task_id}-Job{job_num}.xml", "w") as new_job:
                         new_job.write(job_xml)
                 job_xmls.append(job_xml)
             logging.info("XML configuration files generated successfully.")
-            return job_ids, job_xmls
+            return job_ids, job_xmls, job_prerequisites
         except Exception as e:
             logging.error(f"Error while generating pipeline jobs: {e}")
             return ()
