@@ -1,0 +1,13 @@
+# Ignore compiled Python files
+__pycache__/
+
+# Ignore generated output files
+generated/
+
+# Ignore logs files
+logs/
+
+# Ignore virtual environment
+env/
+
+.vscode/
