@@ -70,7 +70,7 @@ class MyRunBox(QtWidgets.QWidget):
             self.ui.BrowseScriptPath_button.hide()
             self.ui.ScriptPath_label.hide()
             self.ui.ScriptPath_lineEdit.hide()
-
+    
     def collect_running_config(self):
         self.running_configurations['running_configurations']={}
         self.running_configurations['running_configurations']['run_script'] = self.RunC.isChecked()
@@ -87,9 +87,9 @@ class MyRunBox(QtWidgets.QWidget):
             if selected_button:
                 self.running_configurations['running_configurations']['crash_configurations']['crashed_process'] = selected_button.text()
         self.running_configurations['running_configurations']['script_path'] = self.lineEditOutputDirectory_2.text()        
-        #print(self.running_configurations)
+        
+
     def show_crash_data(self,running_dict):
-        #self.config_window_crash.closed_signal.disconnect(self.handle_another_window_closed)
         self.config_window_crash.tool_combo_box.setCurrentText(running_dict['running_configurations']['crash_configurations']['crashed_process'] )
         self.config_window_crash.tool_combo_box.setDisabled(True)
         self.config_window_crash.checkbox1.setCheckState(running_dict['running_configurations']['crash_configurations']['attach_gdb'])
@@ -97,7 +97,17 @@ class MyRunBox(QtWidgets.QWidget):
         self.config_window_crash.show_window()
         self.config_window_crash.center_on_parent()
     
+    def show_hang_data(self,running_dict):
+        selected = running_dict['running_configurations']['crash_configurations']['crashed_process']
+        for radio_button in self.config_window_hang.button_group.buttons():
+            if radio_button.text() == selected:
+                radio_button.setChecked(True)
+                break
+            radio_button.setEnabled(False)
+        self.config_window_hang.show_window()
+        self.config_window_hang.center_on_parent()
 
+        
 
 
     def show_data(self,running_dict):
@@ -112,7 +122,10 @@ class MyRunBox(QtWidgets.QWidget):
        
         if running_dict['running_configurations']['error_type'] == "Crash":
             self.ErrorConf.clicked.disconnect(self.show_error_config)
-            self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_crash_data(rd))    
+            self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_crash_data(rd))  
+        if running_dict['running_configurations']['error_type'] == "Hang":  
+            self.ErrorConf.clicked.disconnect(self.show_error_config)
+            self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_hang_data(rd))  
         
                 
                 

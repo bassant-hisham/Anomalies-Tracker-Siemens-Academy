@@ -77,25 +77,18 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job.Jobs_table.setItem(row_index, col_index, QTableWidgetItem(str(scriptPath)))
             col_index += 1
 
-            # Create a QPushButton with the desired text (scriptPath)
+            
             ShowRunningConfigB = QPushButton("Show")
-
+            ShowRunningConfigB.setStyleSheet("color: white;")
             ShowRunningConfigB.clicked.connect(lambda _, rd=running_dict: self.show_running(rd))
-            # Create a custom widget item and set the button as its widget
             widget_item = QTableWidgetItem()
             widget_item.setData(Qt.DisplayRole, scriptPath)
             widget_item.setFlags(Qt.ItemIsEnabled)
             self.Job.Jobs_table.setItem(row_index, col_index, widget_item)
-            # Set the button as the cell widget for the table cell
             self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
             col_index += 1
-
-             # for (num,(key,value)) in enumerate(running_dict.items()):
-             #   self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(value)))
-             #   col_index += 1
-
-            #self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
-           # col_index += 1
+            self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+            col_index += 1
 
            # DesignPath = design.DesignPath_lineEdit.text()
            # self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
