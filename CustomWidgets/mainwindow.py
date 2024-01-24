@@ -84,8 +84,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         RunningConfigs = self.Tasks.TaskTab.get_running()
         Builds  = self.Tasks.TaskTab.get_builds()
 
-        # for running in RunningConfigs:
-        #    running.custom_window.collect_running_config()
+        for running in RunningConfigs:
+            running.custom_window.collect_running_config()
 
         self.BinarySearhState=self.Tasks.TaskTab.getBinarySearchValue()
 
