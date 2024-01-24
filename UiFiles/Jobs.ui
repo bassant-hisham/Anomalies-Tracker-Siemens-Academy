@@ -112,8 +112,8 @@ background-color:rgb(37, 40, 50);
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>776</width>
-        <height>586</height>
+        <width>772</width>
+        <height>582</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -269,22 +269,7 @@ color:white;
          </column>
          <column>
           <property name="text">
-           <string>Run Script</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Error Type</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Crashed Process</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Attach GDB</string>
+           <string>Show Running Configurations</string>
           </property>
          </column>
          <column>
@@ -295,101 +280,6 @@ color:white;
          <column>
           <property name="text">
            <string>Design Path</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Environment Path</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Compile Design</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Source Design Path</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Output Directory</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Force</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Timeout</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Launch DPI</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Terminate DPI</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Terminate DPI on Error</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Design Path (Launch)</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Design Path</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Record Directory</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Configuration Value</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Replay Directory</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Reply Directory</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>DPI Launch Mode</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>DPI Launch Type</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Use Custom Comodel Config</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Custom Comodel Config</string>
           </property>
          </column>
         </widget>

@@ -34,6 +34,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         else:
             self.Tasks.addTab(self.Tasks.TaskTab , f"Task {self.Tasks.count() + 1}")
     
+    def show_running(self, running_dict):
+        print(running_dict['running_configurations']['script_path'])
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
         
@@ -63,17 +65,33 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
             running_dict = running_config.custom_window.running_configurations
             col_index = 2
-
-            for (num,(key,value)) in enumerate(running_dict.items()):
-                self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(value)))
-                col_index += 1
-
-            self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+            scriptPath = running_dict['running_configurations']['script_path']
+        
+            self.Job.Jobs_table.setItem(row_index, col_index, QTableWidgetItem(str(scriptPath)))
             col_index += 1
 
-            DesignPath = design.DesignPath_lineEdit.text()
-            self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
+            # Create a QPushButton with the desired text (scriptPath)
+            ShowRunningConfigB = QPushButton("Show")
+            ShowRunningConfigB.clicked.connect(lambda: self.show_running(running_dict))
+            # Create a custom widget item and set the button as its widget
+            widget_item = QTableWidgetItem()
+            widget_item.setData(Qt.DisplayRole, scriptPath)
+            widget_item.setFlags(Qt.ItemIsEnabled)
+            self.Job.Jobs_table.setItem(row_index, col_index, widget_item)
+            # Set the button as the cell widget for the table cell
+            self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
             col_index += 1
+
+             # for (num,(key,value)) in enumerate(running_dict.items()):
+             #   self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(value)))
+             #   col_index += 1
+
+            #self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+           # col_index += 1
+
+           # DesignPath = design.DesignPath_lineEdit.text()
+           # self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
+            #col_index += 1
 
            
             
