@@ -88,14 +88,37 @@ class MyRunBox(QtWidgets.QWidget):
                 self.running_configurations['running_configurations']['crash_configurations']['crashed_process'] = selected_button.text()
         self.running_configurations['running_configurations']['script_path'] = self.lineEditOutputDirectory_2.text()        
         #print(self.running_configurations)
+    def show_crash_data(self,running_dict):
+        #self.config_window_crash.closed_signal.disconnect(self.handle_another_window_closed)
+        self.config_window_crash.tool_combo_box.setCurrentText(running_dict['running_configurations']['crash_configurations']['crashed_process'] )
+        self.config_window_crash.tool_combo_box.setDisabled(True)
+        self.config_window_crash.checkbox1.setCheckState(running_dict['running_configurations']['crash_configurations']['attach_gdb'])
+        self.config_window_crash.checkbox1.setDisabled(True)
+        self.config_window_crash.show_window()
+        self.config_window_crash.center_on_parent()
+    
+
+
+
     def show_data(self,running_dict):
         self.RunC.setCheckState(True)
+        self.RunC.setDisabled(True)
         self.ui.ScriptPath_label.show()
         self.ui.ScriptPath_lineEdit.show()
         self.lineEditOutputDirectory_2.setText(running_dict['running_configurations']['script_path'])
         self.lineEditOutputDirectory_2.setReadOnly(True)
         self.ErrorC.setCurrentText(running_dict['running_configurations']['error_type'])
         self.ErrorC.setDisabled(True)
+       
+        if running_dict['running_configurations']['error_type'] == "Crash":
+            self.ErrorConf.clicked.disconnect(self.show_error_config)
+            self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_crash_data(rd))    
+        
+                
+                
+
+
+
     
 
                 
