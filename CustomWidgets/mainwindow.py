@@ -40,6 +40,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
             self.Job = MyJobs()
             current_widget.Task_tabWidget.addTab(self.Job,"Jobs")
+        else:
+            # Remove the existing MyJobs instance
+            current_widget.Task_tabWidget.removeTab(3) 
+            # Create a new instance of MyJobs
+            self.Job = MyJobs()
+            current_widget.Task_tabWidget.insertTab(3, self.Job, "Jobs")
 
         self.Job.Run_pushButton.clicked.connect(self.GenerateJason)
         self.Job.selectall_pushButton.clicked.connect(self.selectallrows)
