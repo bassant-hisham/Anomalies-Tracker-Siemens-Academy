@@ -88,6 +88,15 @@ class MyRunBox(QtWidgets.QWidget):
                 self.running_configurations['running_configurations']['crash_configurations']['crashed_process'] = selected_button.text()
         self.running_configurations['running_configurations']['script_path'] = self.lineEditOutputDirectory_2.text()        
         #print(self.running_configurations)
+    def show_data(self,running_dict):
+        self.RunC.setCheckState(True)
+        self.ui.ScriptPath_label.show()
+        self.ui.ScriptPath_lineEdit.show()
+        self.lineEditOutputDirectory_2.setText(running_dict['running_configurations']['script_path'])
+        self.lineEditOutputDirectory_2.setReadOnly(True)
+        self.ErrorC.setCurrentText(running_dict['running_configurations']['error_type'])
+        self.ErrorC.setDisabled(True)
+    
 
                 
 def run_custom_runtime():

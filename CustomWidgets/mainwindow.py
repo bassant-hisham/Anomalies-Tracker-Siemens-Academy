@@ -2,11 +2,13 @@ from itertools import product
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
+from UIs.RunningConfigUI import Ui_RunningConfiguration
 from UIs.MainWindowUI import Ui_MainWindow
 from CompilationConfigurationWindow import MyCompilationConfigWindow
 from LaunchingConfigurationWindow import MyLaunchingConfigWindow
 from TaskTabIntegrated import MyTaskTab
 from Jobs import MyJobs
+from RunBox import MyRunBox
 import json
 
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
@@ -19,6 +21,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
+        self.ShowRun = MyRunBox()
         self.CreateJobs_button.clicked.connect(self.createJobs)
         self.JasonData={}
         self.JasonData[self.Solution_comboBox.currentText()]={}
@@ -35,7 +38,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Tasks.addTab(self.Tasks.TaskTab , f"Task {self.Tasks.count() + 1}")
     
     def show_running(self, running_dict):
-        print(running_dict['running_configurations']['script_path'])
+        self.ShowRun.ui.groupBox.setTitle("Running Configuration " )
+        self.ShowRun.show_data(running_dict)
+        self.ShowRun.show()
+
+
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
         
@@ -72,7 +79,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
             # Create a QPushButton with the desired text (scriptPath)
             ShowRunningConfigB = QPushButton("Show")
-            ShowRunningConfigB.clicked.connect(lambda: self.show_running(running_dict))
+
+            ShowRunningConfigB.clicked.connect(lambda _, rd=running_dict: self.show_running(rd))
             # Create a custom widget item and set the button as its widget
             widget_item = QTableWidgetItem()
             widget_item.setData(Qt.DisplayRole, scriptPath)
