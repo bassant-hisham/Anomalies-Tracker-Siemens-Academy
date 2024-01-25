@@ -33,6 +33,7 @@ class MyRunBox(QtWidgets.QWidget):
         self.config_window_hang.closed_signal.connect(self.handle_another_window_closed)
         self.ui.RunC_2.clicked.connect(self.showScriptPath)
         self.running_configurations = {}
+        self.isconnected = False
 
     def check_error_conf_visibility(self, selected_text):
         if selected_text in ["Crash", "Hang"]:
@@ -42,6 +43,7 @@ class MyRunBox(QtWidgets.QWidget):
 
     def show_error_config(self):
         selected_text = self.ErrorC.currentText()
+        self.isconnected = True
         if selected_text == "Crash":
             self.config_window_crash.show_window()
             self.config_window_crash.center_on_parent()
@@ -96,6 +98,7 @@ class MyRunBox(QtWidgets.QWidget):
         self.config_window_crash.checkbox1.setDisabled(True)
         self.config_window_crash.show_window()
         self.config_window_crash.center_on_parent()
+        
     
     def show_hang_data(self,running_dict):
         selected = running_dict['running_configurations']['crash_configurations']['crashed_process']
@@ -106,6 +109,7 @@ class MyRunBox(QtWidgets.QWidget):
             radio_button.setEnabled(False)
         self.config_window_hang.show_window()
         self.config_window_hang.center_on_parent()
+       
 
         
     def show_data(self,running_dict):
@@ -117,13 +121,14 @@ class MyRunBox(QtWidgets.QWidget):
         self.lineEditOutputDirectory_2.setReadOnly(True)
         self.ErrorC.setCurrentText(running_dict['running_configurations']['error_type'])
         self.ErrorC.setDisabled(True)
-       
         if running_dict['running_configurations']['error_type'] == "Crash":
-            self.ErrorConf.clicked.disconnect(self.show_error_config)
+            self.config_window_crash.closed_signal.disconnect(self.handle_another_window_closed) 
             self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_crash_data(rd))  
-        if running_dict['running_configurations']['error_type'] == "Hang":  
-            self.ErrorConf.clicked.disconnect(self.show_error_config)
+        if running_dict['running_configurations']['error_type'] == "Hang": 
+            self.config_window_hang.closed_signal.disconnect(self.handle_another_window_closed) 
             self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_hang_data(rd))  
+
+        
         
                        
 def run_custom_runtime():
