@@ -58,6 +58,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.design.setParent(None)
         self.design.showdesign()
         self.design.show()
+        self.design.center_on_parent()
         
 
     def createJobs(self):
@@ -79,6 +80,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         self.combinations = self.collectData()
         self.Job.Jobs_table.setRowCount(len(self.combinations))
+        self.Job.Jobs_table.verticalHeader().setVisible(False)
 
         for row_index, (running_config, design, build) in enumerate(self.combinations):
 
