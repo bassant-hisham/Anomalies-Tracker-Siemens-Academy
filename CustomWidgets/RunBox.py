@@ -34,6 +34,7 @@ class MyRunBox(QtWidgets.QWidget):
         self.ui.RunC_2.clicked.connect(self.showScriptPath)
         self.running_configurations = {}
         self.isconnected = False
+        self.myparent=self.parent()
 
     def check_error_conf_visibility(self, selected_text):
         if selected_text in ["Crash", "Hang"]:
@@ -54,7 +55,8 @@ class MyRunBox(QtWidgets.QWidget):
         grandparent.setEnabled(False)
     
     def get_grandparent(self, widget):
-        grandparent = widget.parent()
+        grandparent = widget.myparent
+        temp=type(grandparent)
         while grandparent and grandparent.parent():
             grandparent = grandparent.parent()
         return grandparent
@@ -122,10 +124,10 @@ class MyRunBox(QtWidgets.QWidget):
         self.ErrorC.setCurrentText(running_dict['running_configurations']['error_type'])
         self.ErrorC.setDisabled(True)
         if running_dict['running_configurations']['error_type'] == "Crash":
-            self.config_window_crash.closed_signal.disconnect(self.handle_another_window_closed) 
+            #self.config_window_crash.closed_signal.disconnect(self.handle_another_window_closed) 
             self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_crash_data(rd))  
         if running_dict['running_configurations']['error_type'] == "Hang": 
-            self.config_window_hang.closed_signal.disconnect(self.handle_another_window_closed) 
+            #self.config_window_hang.closed_signal.disconnect(self.handle_another_window_closed) 
             self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_hang_data(rd))  
 
         

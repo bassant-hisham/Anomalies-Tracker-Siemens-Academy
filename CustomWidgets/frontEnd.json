@@ -3,72 +3,7 @@
     "task1": {
       "id": 1,
       "binary_search": false,
-      "jobs": {
-        "1": {
-          "prerequisites": {
-            "previous_task_id": 0,
-            "previous_job_id": 0
-          },
-          "launching_configurations": {
-            "$schema": "../schemas/launching_configuration.schema.json",
-            "platform": "Velos",
-            "solution": "Ethernet",
-            "src_file": "D:/Siemens diploma/Anomalies-Tracker-Siemens-Academy/Builds/vved1101.bash",
-            "dut_configuration": [],
-            "tools_configuration": {
-              "launch_tool": false,
-              "master_tool_configuration": {
-                "tool_name": "EPGM",
-                "tool_launch_mode": "Normal",
-                "additional_args": {},
-                "tool_additional_env_variables": {},
-                "terminate_tool": false,
-                "terminate_tool_onerror": false
-              },
-              "slave_tool_configuration": {
-                "launch_behavior": "EPGM",
-                "tool_launch_mode": "Normal",
-                "additional_args": {},
-                "tool_additional_env_variables": {},
-                "terminate_tool": false,
-                "terminate_tool_onerror": false
-              }
-            }
-          }
-        },
-        "4": {
-          "prerequisites": {
-            "previous_task_id": 0,
-            "previous_job_id": 0
-          },
-          "launching_configurations": {
-            "$schema": "../schemas/launching_configuration.schema.json",
-            "platform": "Velos",
-            "solution": "Ethernet",
-            "src_file": "D:/Siemens diploma/Anomalies-Tracker-Siemens-Academy/Builds/vved1101.bash",
-            "dut_configuration": [],
-            "tools_configuration": {
-              "launch_tool": false,
-              "master_tool_configuration": {
-                "tool_name": "EPGM",
-                "tool_launch_mode": "Normal",
-                "additional_args": {},
-                "tool_additional_env_variables": {},
-                "terminate_tool": false,
-                "terminate_tool_onerror": false
-              },
-              "slave_tool_configuration": {
-                "launch_behavior": "EPGM",
-                "tool_launch_mode": "Normal",
-                "additional_args": {},
-                "tool_additional_env_variables": {},
-                "terminate_tool": false,
-                "terminate_tool_onerror": false
-              }
-            }
-          }
-        }
-      }
+      "jobs": {}
     }
   }
 }

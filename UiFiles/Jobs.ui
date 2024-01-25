@@ -269,12 +269,12 @@ color:white;
          </column>
          <column>
           <property name="text">
-           <string>Show Running Configurations</string>
+           <string>Running Configurations</string>
           </property>
          </column>
          <column>
           <property name="text">
-           <string>Build</string>
+           <string>Build Path</string>
           </property>
          </column>
          <column>

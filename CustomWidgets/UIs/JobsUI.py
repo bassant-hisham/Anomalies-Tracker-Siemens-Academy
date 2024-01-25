@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'jobs.ui'
+# Form implementation generated from reading ui file 'Jobs.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -227,9 +227,9 @@ class Ui_Jobs(object):
         item = self.Jobs_table.horizontalHeaderItem(2)
         item.setText(_translate("Jobs", "Script Path"))
         item = self.Jobs_table.horizontalHeaderItem(3)
-        item.setText(_translate("Jobs", "Show Running Configurations"))
+        item.setText(_translate("Jobs", "Running Configurations"))
         item = self.Jobs_table.horizontalHeaderItem(4)
-        item.setText(_translate("Jobs", "Build"))
+        item.setText(_translate("Jobs", "Build Path"))
         item = self.Jobs_table.horizontalHeaderItem(5)
         item.setText(_translate("Jobs", "Design Path"))
         item = self.Jobs_table.horizontalHeaderItem(6)

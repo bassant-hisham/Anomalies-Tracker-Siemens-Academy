@@ -22,7 +22,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
-        self.ShowRun = MyRunBox()
+        
         self.design=MyDesignBox("")
         #self.ShowDesign = MyDesignBox()
         self.CreateJobs_button.clicked.connect(self.createJobs)
@@ -44,22 +44,23 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         else:
             self.Tasks.addTab(self.Tasks.TaskTab , f"Task {self.Tasks.count() + 1}")
     
-    def show_running(self, running_dict):
-        self.ShowRun.ui.groupBox.setTitle("Running Configuration " )
-        self.ShowRun.show_data(running_dict)
-        self.ShowRun.show()
+    def show_running(self,ShowRun,running, running_dict):
+        ShowRun.ui.groupBox.setTitle("Running Configuration " )
+        ShowRun.show_data(running_dict)
+        ShowRun.myparent=running.custom_window.myparent
+        ShowRun.show()
 
-    def show_design(self,compilation_dict,tool_dict,dut_dict,design_path):
+    def show_design(self,design):
 
-        self.new_window.setCentralWidget(self.design)
-        self.new_window.resize(586, 272)
-        self.design.showdata(compilation_dict,tool_dict,dut_dict,design_path)
-        self.new_window.show()
-
+        self.design=design
+        self.design.setParent(None)
+        self.design.showdesign()
+        self.design.show()
+        
 
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
-        self.DesignItems=[]
+        self.runningwindows=[]
         
         if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
             self.Job = MyJobs()
@@ -92,43 +93,26 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job.Jobs_table.setItem(row_index, col_index, QTableWidgetItem(str(scriptPath)))
             col_index += 1
 
-            
             ShowRunningConfigB = QPushButton("Show")
             ShowRunningConfigB.setStyleSheet("color: white;")
-            ShowRunningConfigB.clicked.connect(lambda _, rd=running_dict: self.show_running(rd))
-            widget_item = QTableWidgetItem()
-            widget_item.setData(Qt.DisplayRole, scriptPath)
-            widget_item.setFlags(Qt.ItemIsEnabled)
-            self.Job.Jobs_table.setItem(row_index, col_index, widget_item)
+            self.ShowRun = MyRunBox()
+            self.runningwindows.append(self.ShowRun)
+            ShowRunningConfigB.clicked.connect(lambda _, ShowRun=self.ShowRun,r=running_config,rd=running_dict: self.show_running(ShowRun,r,rd))
             self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
             col_index += 1
 
             self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
             col_index += 1
 
+            DesignPath = design.DesignPath_lineEdit.text()
+            self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
             col_index += 1
-
-            compilation_dict=design.get_compilation_dict()
-            toolconfig_dict=design.get_ToolConfig()
-            dut_dict=design.get_Dut_dict()
-            design_path=design.get_design_path()
 
             ShowDesignConfigB = QPushButton("Show")
             ShowDesignConfigB.setStyleSheet("color: white;")
-            self.DesignItems.append(design)
-            ShowDesignConfigB.clicked.connect(lambda _, cd=compilation_dict,td=toolconfig_dict,dd=dut_dict,design_p=design_path: self.show_design(cd,td,dd,design_p))
-            # widget_item = QTableWidgetItem()
-            # widget_item.setData(Qt.DisplayRole, scriptPath)
-            # widget_item.setFlags(Qt.ItemIsEnabled)
-            #self.Job.Jobs_table.setItem(row_index, col_index, widget_item)
+            ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
             self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
-            col_index += 1
-
-           # DesignPath = design.DesignPath_lineEdit.text()
-           # self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
-            #col_index += 1
-
-           
+            col_index += 1           
 
 
     def collectData(self):
@@ -155,6 +139,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         else:
             combinations = list(product(RunningConfigs , Designs, Builds))
         return combinations
+    
     
     def selectallrows(self):
         for row in  range(len(self.combinations)):

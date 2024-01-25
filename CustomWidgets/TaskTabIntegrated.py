@@ -31,6 +31,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.BrowseFilePath_button.clicked.connect(lambda: showFileDialog(self,self.FilePath_lineEdit))
         self.RunningDelete_pushButton.clicked.connect(self.deleteRunningWidget)
         self.DesignDelete_pushButton.clicked.connect(self.deleteDesignWidget)
+        self.Task_tabWidget.currentChanged.connect(self.DesignTabEntered)
 
 
         self.Running_data=list()
@@ -47,6 +48,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         #self.scrollLayout.addWidget(MyDesignBox(self.scrollLayout.count()+1))
         new_design_box = MyDesignBox(self.scrollLayout.count() + 1)
         self.scrollLayout.addWidget(new_design_box)
+        new_design_box.myparent=new_design_box.parent()
         self.Design_data.append(new_design_box)
 
     def get_design(self):
@@ -57,6 +59,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         
     def add_running_config(self):
         new_running_box = MyRunningConfigurations(self.scrollLayoutRunning)
+        new_running_box.custom_window.myparent=self.parent()
         self.Running_data.append(new_running_box)  
         
     def get_builds(self):
@@ -105,3 +108,15 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
             WidgteToBeRemoved=self.Design_data.pop()
             self.scrollLayout.removeWidget(WidgteToBeRemoved)
             WidgteToBeRemoved.deleteLater()
+
+    def DesignTabEntered(self):
+        self.scrollLayout.setEnabled(True)
+        for  design in self.Design_data:
+                design.setParent(design.myparent)
+                design.show()
+                self.scrollLayout.addWidget(design)
+               
+                
+
+
+ 
