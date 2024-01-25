@@ -52,4 +52,50 @@ class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
     
     def get_ToolConfig(self):
         return self.launching_configurations.get_ToolConfig()
+    
+    def get_design_path(self):
+        return self.DesignPath_lineEdit.text()
+    
+    def get_compilation_dict(self):
+        return self.compilation_config.saveConfiguration()
+    
+    def get_ToolConfig_dict(self):
+        return self.launching_configurations.get_ToolConfig()
+    
+    def get_Dut_dict(self):
+        dutsdict={}
+        for index,dut in enumerate(self.launching_configurations.get_Duts()):
+            dutsdict[index]=dut.collect_data()
+        return dutsdict
+    
+    def showdesign(self):
+        self.DesignPath_lineEdit.setDisabled(True)
+        self.BrowseDesignPath_button.setDisabled(True)
+        self.setCheckable
+        for widget in self.compilation_config.findChildren(QWidget):
+            if (not (isinstance(widget,QPushButton)) and (type(widget) != QWidget) ):
+                widget.setDisabled(True)
+
+        for widget in self.launching_configurations.findChildren(QWidget):
+            if(not isinstance(widget,QGroupBox)):
+                if ((not (widget.objectName()=="Done_pushButton"))  and (type(widget) != QWidget) and (type(widget) != QScrollBar) and (type(widget) != QScrollArea)):
+                    widget.setDisabled(True)
+
+
+    def showdata(self,compilation_dict,tool_dict,dut_dict,design_path):
+        
+        self.DesignPath_lineEdit.setText(design_path)
+        self.launching_configurations.show_data(tool_dict)
+
+        for index in range(len(dut_dict.items())):
+            self.launching_configurations.add_dut_config()
+            self.launching_configurations.Duts[index].show_data(dut_dict[index])
+
+        self.compilation_config.show_data(compilation_dict)
+        self.showdesign()
+
+
+
+
+        
    

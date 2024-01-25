@@ -108,8 +108,6 @@ class MyRunBox(QtWidgets.QWidget):
         self.config_window_hang.center_on_parent()
 
         
-
-
     def show_data(self,running_dict):
         self.RunC.setCheckState(True)
         self.RunC.setDisabled(True)
@@ -127,14 +125,7 @@ class MyRunBox(QtWidgets.QWidget):
             self.ErrorConf.clicked.disconnect(self.show_error_config)
             self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_hang_data(rd))  
         
-                
-                
-
-
-
-    
-
-                
+                       
 def run_custom_runtime():
     import sys
     app = QtWidgets.QApplication(sys.argv)

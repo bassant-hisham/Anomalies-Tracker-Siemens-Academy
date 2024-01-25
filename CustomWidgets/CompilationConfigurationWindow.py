@@ -22,7 +22,17 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
         self.compilation_configurationsdict['compilation_configurations']['force'] = self.Force_checkBox.isChecked()
         self.compilation_configurationsdict['compilation_configurations']['timeout'] = self.Timeout_lineEdit.text()
         self.close()
+        return self.compilation_configurationsdict
     
     def closeEvent(self, event):
         self.closed_signal.emit()
         event.accept()
+
+    def show_data(self,compilation_configurationsdict:dict):
+        self.CompileDesign_checkBox.setChecked(compilation_configurationsdict['compilation_configurations']['compile_design'])
+        self.Source_lineEdit.setText(compilation_configurationsdict['compilation_configurations']['source_design_path'] )
+        self.Output_lineEdit.setText(compilation_configurationsdict['compilation_configurations']['output_directory'] )
+        self.Machine_comboBox.setCurrentText(compilation_configurationsdict['compilation_configurations']['machine'] )
+        self.Force_checkBox.setChecked(compilation_configurationsdict['compilation_configurations']['force'] )
+        self.Timeout_lineEdit.setText(compilation_configurationsdict['compilation_configurations']['timeout'])
+

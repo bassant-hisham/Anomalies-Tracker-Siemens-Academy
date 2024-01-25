@@ -10,7 +10,8 @@ from TaskTabIntegrated import MyTaskTab
 from Jobs import MyJobs
 from RunBox import MyRunBox
 import json
-
+from DesignBox import MyDesignBox
+import copy
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
@@ -18,13 +19,19 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Tasks.hide()
         self.CreateJobs_button.hide()
         self.CreateTask_button.clicked.connect(self.createTaskTabWidget)
-        
+
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
         self.ShowRun = MyRunBox()
+        self.design=MyDesignBox("")
+        #self.ShowDesign = MyDesignBox()
         self.CreateJobs_button.clicked.connect(self.createJobs)
+        self.new_window = QMainWindow()
+        self.design_widget_layout=QVBoxLayout()
         self.JasonData={}
         self.JasonData[self.Solution_comboBox.currentText()]={}
+
+        
         
         #self.CreateJobs_button.clicked.connect(self.collectData)
 
@@ -42,9 +49,17 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.ShowRun.show_data(running_dict)
         self.ShowRun.show()
 
+    def show_design(self,compilation_dict,tool_dict,dut_dict,design_path):
+
+        self.new_window.setCentralWidget(self.design)
+        self.new_window.resize(586, 272)
+        self.design.showdata(compilation_dict,tool_dict,dut_dict,design_path)
+        self.new_window.show()
+
 
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
+        self.DesignItems=[]
         
         if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
             self.Job = MyJobs()
@@ -87,7 +102,26 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job.Jobs_table.setItem(row_index, col_index, widget_item)
             self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
             col_index += 1
+
             self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+            col_index += 1
+
+            col_index += 1
+
+            compilation_dict=design.get_compilation_dict()
+            toolconfig_dict=design.get_ToolConfig()
+            dut_dict=design.get_Dut_dict()
+            design_path=design.get_design_path()
+
+            ShowDesignConfigB = QPushButton("Show")
+            ShowDesignConfigB.setStyleSheet("color: white;")
+            self.DesignItems.append(design)
+            ShowDesignConfigB.clicked.connect(lambda _, cd=compilation_dict,td=toolconfig_dict,dd=dut_dict,design_p=design_path: self.show_design(cd,td,dd,design_p))
+            # widget_item = QTableWidgetItem()
+            # widget_item.setData(Qt.DisplayRole, scriptPath)
+            # widget_item.setFlags(Qt.ItemIsEnabled)
+            #self.Job.Jobs_table.setItem(row_index, col_index, widget_item)
+            self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
             col_index += 1
 
            # DesignPath = design.DesignPath_lineEdit.text()
@@ -95,7 +129,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             #col_index += 1
 
            
-            
+
 
     def collectData(self):
 

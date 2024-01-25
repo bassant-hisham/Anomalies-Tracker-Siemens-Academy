@@ -1,9 +1,10 @@
 {
   "Ethernet": {
-    "task2": {
-      "id": 2,
+    "task1": {
+      "id": 1,
+      "binary_search": false,
       "jobs": {
-        "2": {
+        "1": {
           "prerequisites": {
             "previous_task_id": 0,
             "previous_job_id": 0
@@ -12,7 +13,7 @@
             "$schema": "../schemas/launching_configuration.schema.json",
             "platform": "Velos",
             "solution": "Ethernet",
-            "src_file": "vved1200.bash",
+            "src_file": "D:/Siemens diploma/Anomalies-Tracker-Siemens-Academy/Builds/vved1101.bash",
             "dut_configuration": [],
             "tools_configuration": {
               "launch_tool": false,
@@ -25,27 +26,14 @@
                 "terminate_tool_onerror": false
               },
               "slave_tool_configuration": {
-                "launch_behavior": "Controller",
-                "tool_launch_mode": "GDB_Run",
-                "additional_args": {
-                  "jm,.": "qew3"
-                },
-                "tool_additional_env_variables": {
-                  "tgrfedsw": "nhbgrve"
-                },
-                "terminate_tool": true,
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
                 "terminate_tool_onerror": false
               }
             }
-          },
-          "running_configurations": {
-            "run_script": false,
-            "error_type": "Mismatch",
-            "crash_configurations": {
-              "attach_gdb": "",
-              "crashed_process": ""
-            },
-            "script_path": ""
           }
         },
         "4": {
@@ -57,7 +45,7 @@
             "$schema": "../schemas/launching_configuration.schema.json",
             "platform": "Velos",
             "solution": "Ethernet",
-            "src_file": "vved1250.bash",
+            "src_file": "D:/Siemens diploma/Anomalies-Tracker-Siemens-Academy/Builds/vved1101.bash",
             "dut_configuration": [],
             "tools_configuration": {
               "launch_tool": false,
@@ -70,27 +58,14 @@
                 "terminate_tool_onerror": false
               },
               "slave_tool_configuration": {
-                "launch_behavior": "Controller",
-                "tool_launch_mode": "GDB_Run",
-                "additional_args": {
-                  "jm,.": "qew3"
-                },
-                "tool_additional_env_variables": {
-                  "tgrfedsw": "nhbgrve"
-                },
-                "terminate_tool": true,
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
                 "terminate_tool_onerror": false
               }
             }
-          },
-          "running_configurations": {
-            "run_script": false,
-            "error_type": "Mismatch",
-            "crash_configurations": {
-              "attach_gdb": "",
-              "crashed_process": ""
-            },
-            "script_path": ""
           }
         }
       }

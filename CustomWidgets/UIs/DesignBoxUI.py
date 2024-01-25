@@ -163,3 +163,13 @@ class Ui_DesignBox(object):
         self.BrowseDesignPath_button.setText(_translate("DesignBox", "..."))
         self.CompilationConfig_button.setText(_translate("DesignBox", "Compilation configuration"))
         self.LaunchingConfig_button.setText(_translate("DesignBox", "Launching Configuration"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    DesignBox = QtWidgets.QGroupBox()
+    ui = Ui_DesignBox()
+    ui.setupUi(DesignBox)
+    DesignBox.show()
+    sys.exit(app.exec_())

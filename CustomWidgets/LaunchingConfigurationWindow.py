@@ -56,7 +56,16 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.arguments[self.ArgName_HSpacer_mid_lineEdit_2.text()] = self.ArgValue_lineEdit_2.text()
         self.DPIAdditionalArg_2.append(str(self.arguments))
     
-
+    # def get_arguments(self):
+    #     text_content = self.DPIAdditionalArg_2.toPlainText()
+    #     if not text_content:
+    #         self.arguments = {}
+    #     else:
+    #         self.arguments = ast.literal_eval(text_content)
+    #         self.DPIAdditionalArg_2.clear()
+    #     self.arguments[self.ArgName_HSpacer_mid_lineEdit_2.text()] = self.ArgValue_lineEdit_2.text()
+    #     self.DPIAdditionalArg_2.append(str(self.arguments))
+        
     def add_additional_arguments(self):
         text_content = self.AdditionalArg.toPlainText()
         if not text_content:
@@ -120,8 +129,6 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
 
     def get_Duts(self):
         return self.Duts
-    
-
 
     def deleteLastDutWidget(self):
         if(len(self.Duts)!=0):
@@ -145,6 +152,20 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.ToolConfig["slave_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox_2.isChecked()
         self.ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"] = self.TerminateTool_checkBox_2.isChecked()
         return self.ToolConfig
+    
+    def show_data(self,ToolConfig):
+        self.LaunchToolCheckBox.setChecked( ToolConfig["launch_tool"] )
+        self.ToolName_comboBox.setCurrentText(ToolConfig["master_tool_configuration"]["tool_name"])
+        self.ToolLaunch_comboBox.setCurrentText(ToolConfig["master_tool_configuration"]["tool_launch_mode"] )
+        self.TerminateOnErr_checkBox.setChecked(ToolConfig["master_tool_configuration"]["terminate_tool"])
+        self.TerminateTool_checkBox.setChecked(ToolConfig["master_tool_configuration"]["terminate_tool_onerror"] )
+        #self.DPIAdditionalArg_2.setCurrentText(ToolConfig[""])
+
+        self.ToolName_comboBox_2.setCurrentText(ToolConfig["slave_tool_configuration"]["launch_behavior"])
+        self.ToolLaunch_comboBox_2.setCurrentText(ToolConfig["slave_tool_configuration"]["tool_launch_mode"])
+        self.TerminateOnErr_checkBox_2.setChecked(ToolConfig["slave_tool_configuration"]["terminate_tool"])
+        self.TerminateTool_checkBox_2.setChecked(ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"])
+        
     
     def closeEvent(self, event):
         self.closed_signal.emit()
