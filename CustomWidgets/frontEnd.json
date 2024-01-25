@@ -3,7 +3,90 @@
     "task1": {
       "id": 1,
       "binary_search": false,
-      "jobs": {}
+      "jobs": {
+        "1": {
+          "compilation_configurations": {
+            "compile_design": true,
+            "source_design_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/ComodelsConfigBox.py",
+            "output_directory": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs",
+            "machine": "Auto",
+            "force": true,
+            "timeout": "1"
+          },
+          "prerequisites": {
+            "previous_task_id": 0,
+            "previous_job_id": 0
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Velos",
+            "solution": "Ethernet",
+            "src_file": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs/__pycache__/CompilationConfigUI.cpython-39.pyc",
+            "dut_configuration": [
+              {
+                "launch_dpi": false,
+                "terminate_dpi": false,
+                "terminate_dpi_onerror": false,
+                "avb_list": [],
+                "design_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/ComodelsConfigBox.py",
+                "record_replay_configurations": {
+                  "record_configurations": {
+                    "record_dir": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs",
+                    "snapshots_number": {
+                      "config_type": "Range",
+                      "config_value": [
+                        1,
+                        10
+                      ]
+                    }
+                  },
+                  "replay_configurations": {
+                    "replay_dir": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs/__pycache__",
+                    "replay_snapshot_name": "me"
+                  }
+                },
+                "dpi_launch_mode": "normal",
+                "dpi_launch_type": "Simulation_Velclkgen",
+                "dpi_additional_args": {},
+                "dpi_additional_env_variables": {},
+                "use_custom_comodels_config": false
+              }
+            ],
+            "tools_configuration": {
+              "launch_tool": true,
+              "master_tool_configuration": {
+                "tool_name": "Controller",
+                "tool_launch_mode": "Normal",
+                "additional_args": {
+                  "key": "value"
+                },
+                "tool_additional_env_variables": {
+                  "key1": "value1"
+                },
+                "terminate_tool": true,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "Controller",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": true
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Crash",
+            "crash_configurations": {
+              "attach_gdb": true,
+              "crashed_process": "EPGM"
+            },
+            "script_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs/__pycache__/CrashConfigUI.cpython-39.pyc"
+          }
+        }
+      }
     }
   }
 }

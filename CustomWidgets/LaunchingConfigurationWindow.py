@@ -23,7 +23,11 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.AddEnv_2.clicked.connect(self.add_additional_env_variables_slave)
         self.Delete_pushButton.clicked.connect(self.deleteLastDutWidget)
         self.Done_pushButton.clicked.connect(self.close)
-
+        self.DeleteArgButton_master.clicked.connect(lambda: self.delete_last_variable(self.AdditionalArg))
+        self.DeleteEnvButton_master.clicked.connect(lambda: self.delete_last_variable(self.ToolAdditionalEnvValues))
+        self.DeleteArgButton_slave.clicked.connect(lambda: self.delete_last_variable(self.AdditionalArg_2))
+        self.DeleteEnvButton_slave.clicked.connect(lambda: self.delete_last_variable(self.ToolAdditionalEnvValues_2))
+        
         self.ToolConfig = {}
         self.ToolConfig["launch_tool"]=False
         self.ToolConfig['master_tool_configuration'] = {}
@@ -166,7 +170,12 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
     #     self.TerminateOnErr_checkBox_2.setChecked(ToolConfig["slave_tool_configuration"]["terminate_tool"])
     #     self.TerminateTool_checkBox_2.setChecked(ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"])
         
-    
+    def delete_last_variable(self, textbox):
+        text_content = ast.literal_eval(textbox.toPlainText())
+        textbox.clear()
+        text_content.popitem()
+        textbox.append(str(text_content))
+        
     def closeEvent(self, event):
         self.closed_signal.emit()
         event.accept()

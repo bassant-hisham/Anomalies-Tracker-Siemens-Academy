@@ -105,7 +105,7 @@ class Ui_Jobs(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.Jobs_scrollArea = QtWidgets.QWidget()
-        self.Jobs_scrollArea.setGeometry(QtCore.QRect(0, 0, 776, 586))
+        self.Jobs_scrollArea.setGeometry(QtCore.QRect(0, 0, 772, 582))
         self.Jobs_scrollArea.setStyleSheet("QWidget::pane{\n"
 "border-color:none;\n"
 "\n"
@@ -192,7 +192,7 @@ class Ui_Jobs(object):
 "color:white;\n"
 "}")
         self.Jobs_table.setObjectName("Jobs_table")
-        self.Jobs_table.setColumnCount(7)
+        self.Jobs_table.setColumnCount(9)
         self.Jobs_table.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.Jobs_table.setHorizontalHeaderItem(0, item)
@@ -208,6 +208,10 @@ class Ui_Jobs(object):
         self.Jobs_table.setHorizontalHeaderItem(5, item)
         item = QtWidgets.QTableWidgetItem()
         self.Jobs_table.setHorizontalHeaderItem(6, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.Jobs_table.setHorizontalHeaderItem(7, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.Jobs_table.setHorizontalHeaderItem(8, item)
         self.gridLayout_2.addWidget(self.Jobs_table, 1, 0, 1, 1)
         self.scrollArea.setWidget(self.Jobs_scrollArea)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
@@ -225,22 +229,16 @@ class Ui_Jobs(object):
         item = self.Jobs_table.horizontalHeaderItem(1)
         item.setText(_translate("Jobs", "ID"))
         item = self.Jobs_table.horizontalHeaderItem(2)
-        item.setText(_translate("Jobs", "Script Path"))
+        item.setText(_translate("Jobs", "Prerequisite Task"))
         item = self.Jobs_table.horizontalHeaderItem(3)
-        item.setText(_translate("Jobs", "Running Configurations"))
+        item.setText(_translate("Jobs", "Prerequisite Job"))
         item = self.Jobs_table.horizontalHeaderItem(4)
-        item.setText(_translate("Jobs", "Build Path"))
+        item.setText(_translate("Jobs", "Script Path"))
         item = self.Jobs_table.horizontalHeaderItem(5)
-        item.setText(_translate("Jobs", "Design Path"))
+        item.setText(_translate("Jobs", "Running Configurations"))
         item = self.Jobs_table.horizontalHeaderItem(6)
+        item.setText(_translate("Jobs", "Build Path"))
+        item = self.Jobs_table.horizontalHeaderItem(7)
+        item.setText(_translate("Jobs", "Design Path"))
+        item = self.Jobs_table.horizontalHeaderItem(8)
         item.setText(_translate("Jobs", "Design Configurations"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Jobs = QtWidgets.QWidget()
-    ui = Ui_Jobs()
-    ui.setupUi(Jobs)
-    Jobs.show()
-    sys.exit(app.exec_())

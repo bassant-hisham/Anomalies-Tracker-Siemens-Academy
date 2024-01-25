@@ -5,6 +5,7 @@ from UIs.TaskTabUI import Ui_Task_Tab
 from commonFunctions import *
 from DesignBox import MyDesignBox
 from RunningConfiguration import MyRunningConfigurations
+from PyQt5.QtGui import QIntValidator
 
 
 class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
@@ -32,7 +33,10 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.RunningDelete_pushButton.clicked.connect(self.deleteRunningWidget)
         self.DesignDelete_pushButton.clicked.connect(self.deleteDesignWidget)
         self.Task_tabWidget.currentChanged.connect(self.DesignTabEntered)
-
+        self.RangeFrom_lineEdit.setValidator(QIntValidator())
+        self.RangeTo_lineEdit.setValidator(QIntValidator())
+        self.BinarySearchFrom_lineEdit.setValidator(QIntValidator())
+        self.BinarySearchTo_lineEdit.setValidator(QIntValidator())
 
         self.Running_data=list()
         self.Design_data = list()

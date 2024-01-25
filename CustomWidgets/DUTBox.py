@@ -4,6 +4,7 @@ from UIs.DUTBoxUI import Ui_DUTConfiguration
 from CustomCoModelsConfig import CustomCoModelsConfig
 from commonFunctions import *
 import ast  # Import the ast module for safer evaluation
+from PyQt5.QtGui import QIntValidator
 
 class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
     def __init__(self, Dutconfig_Vlayout:QVBoxLayout, Duts:list,id):
@@ -22,10 +23,14 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.AddArgButton_2.clicked.connect(self.add_arguments)
         self.AddEnv_2.clicked.connect(self.add_additional_env_variables)
         self.ConfigType_comboBox.currentIndexChanged.connect(self.handleSnapshotsNu)
+        self.DeleteArgButton_DPI.clicked.connect(lambda: self.delete_last_variable(self.DPIAdditionalArg_2))
+        self.DeleteEnv_DPI.clicked.connect(lambda: self.delete_last_variable(self.DPIAdditionalEnvValues_2))
         self.Configvalue_label.hide()
         self.Configvalue_lineEdit.hide()
         self.ConfigValueList_label.hide()
         self.ConfigValueList_lineEdit.hide()
+        self.FromConfigValue_lineEdit.setValidator(QIntValidator())
+        self.ToConfigValue_lineEdit.setValidator(QIntValidator())
         self.Dutconfig_Vlayout=Dutconfig_Vlayout
         self.Duts=Duts
         
@@ -63,7 +68,13 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
             self.DPIAdditionalEnvValues_2.clear()
         self.additionalEnv[self.EnvVarName_HSpacer_mid_lineEdit_2.text()] = self.EnvVarValue_lineEdit_2.text()
         self.DPIAdditionalEnvValues_2.append(str(self.additionalEnv))
-
+    
+    def delete_last_variable(self, textbox):
+        text_content = ast.literal_eval(textbox.toPlainText())
+        textbox.clear()
+        text_content.popitem()
+        textbox.append(str(text_content))
+        
     def handleSnapshotsNu(self) -> None:
         if (self.ConfigType_comboBox.currentIndex()==0):  #range
             self.FromConfigValue_lineEdit.show()
