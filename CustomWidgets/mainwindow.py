@@ -198,10 +198,13 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
                     self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
                     
+                    previous_task_id = self.Job.Jobs_table.cellWidget(currentJobIndex,2).text()
+                    previous_job_id = self.Job.Jobs_table.cellWidget(currentJobIndex,3).text()
+                    
                     prerequistes={  #############to be changed
                         "prerequisites": {
-                        "previous_task_id": 0,
-                        "previous_job_id": 0
+                        "previous_task_id": int(previous_task_id) if previous_task_id else 0,
+                        "previous_job_id": int(previous_job_id) if previous_job_id else 0
                         },
                     }
                     self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)

@@ -5,85 +5,208 @@
       "binary_search": false,
       "jobs": {
         "1": {
-          "compilation_configurations": {
-            "compile_design": true,
-            "source_design_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/ComodelsConfigBox.py",
-            "output_directory": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs",
-            "machine": "Auto",
-            "force": true,
-            "timeout": "1"
-          },
           "prerequisites": {
-            "previous_task_id": 0,
-            "previous_job_id": 0
+            "previous_task_id": 1,
+            "previous_job_id": 1
           },
           "launching_configurations": {
             "$schema": "../schemas/launching_configuration.schema.json",
             "platform": "Velos",
             "solution": "Ethernet",
-            "src_file": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs/__pycache__/CompilationConfigUI.cpython-39.pyc",
-            "dut_configuration": [
-              {
-                "launch_dpi": false,
-                "terminate_dpi": false,
-                "terminate_dpi_onerror": false,
-                "avb_list": [],
-                "design_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/ComodelsConfigBox.py",
-                "record_replay_configurations": {
-                  "record_configurations": {
-                    "record_dir": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs",
-                    "snapshots_number": {
-                      "config_type": "Range",
-                      "config_value": [
-                        1,
-                        10
-                      ]
-                    }
-                  },
-                  "replay_configurations": {
-                    "replay_dir": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs/__pycache__",
-                    "replay_snapshot_name": "me"
-                  }
-                },
-                "dpi_launch_mode": "normal",
-                "dpi_launch_type": "Simulation_Velclkgen",
-                "dpi_additional_args": {},
-                "dpi_additional_env_variables": {},
-                "use_custom_comodels_config": false
-              }
-            ],
+            "src_file": "vved1100.bash",
+            "dut_configuration": [],
             "tools_configuration": {
-              "launch_tool": true,
+              "launch_tool": false,
               "master_tool_configuration": {
-                "tool_name": "Controller",
-                "tool_launch_mode": "Normal",
-                "additional_args": {
-                  "key": "value"
-                },
-                "tool_additional_env_variables": {
-                  "key1": "value1"
-                },
-                "terminate_tool": true,
-                "terminate_tool_onerror": false
-              },
-              "slave_tool_configuration": {
-                "launch_behavior": "Controller",
+                "tool_name": "EPGM",
                 "tool_launch_mode": "Normal",
                 "additional_args": {},
                 "tool_additional_env_variables": {},
                 "terminate_tool": false,
-                "terminate_tool_onerror": true
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
               }
             }
           },
           "running_configurations": {
             "run_script": true,
-            "error_type": "Crash",
+            "error_type": "Mismatch",
             "crash_configurations": {
-              "attach_gdb": true,
-              "crashed_process": "EPGM"
+              "attach_gdb": "",
+              "crashed_process": ""
             },
-            "script_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/UIs/__pycache__/CrashConfigUI.cpython-39.pyc"
+            "script_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/CustomCoModelsConfig.py"
+          }
+        },
+        "2": {
+          "prerequisites": {
+            "previous_task_id": null,
+            "previous_job_id": null
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Velos",
+            "solution": "Ethernet",
+            "src_file": "vved1101.bash",
+            "dut_configuration": [],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/CustomCoModelsConfig.py"
+          }
+        },
+        "3": {
+          "prerequisites": {
+            "previous_task_id": null,
+            "previous_job_id": null
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Velos",
+            "solution": "Ethernet",
+            "src_file": "vved1200.bash",
+            "dut_configuration": [],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/CustomCoModelsConfig.py"
+          }
+        },
+        "4": {
+          "prerequisites": {
+            "previous_task_id": null,
+            "previous_job_id": null
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Velos",
+            "solution": "Ethernet",
+            "src_file": "vved1212.bash",
+            "dut_configuration": [],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/CustomCoModelsConfig.py"
+          }
+        },
+        "5": {
+          "prerequisites": {
+            "previous_task_id": null,
+            "previous_job_id": null
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Velos",
+            "solution": "Ethernet",
+            "src_file": "vved1250.bash",
+            "dut_configuration": [],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "E:/Siemens/Siemens Academy/Project/GIT/Anomalies-Tracker-Siemens-Academy/CustomWidgets/CustomCoModelsConfig.py"
           }
         }
       }
