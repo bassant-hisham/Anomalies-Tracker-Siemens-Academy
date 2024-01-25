@@ -1,0 +1,9 @@
+{
+  "Ethernet": {
+    "task1": {
+      "id": 1,
+      "binary_search": false,
+      "jobs": {}
+    }
+  }
+}
