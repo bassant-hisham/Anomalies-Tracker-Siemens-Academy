@@ -47,9 +47,9 @@ class Jenkins:
         return JENKINS_API.get_build_info(job_name , build_number)
 
 # #6
-    def get_build_status(self, job_name):
-        build_number = self.job_executor.get_build_number(job_name)
-        return JENKINS_API.get_build_status(job_name , build_number)
+    # def get_build_status(self, job_name):
+    #     build_number = self.job_executor.get_build_number(job_name)
+    #     return JENKINS_API.get_build_status(job_name , build_number)
 
 # #7
     def get_job_commit_hash(self, job_name):   # needs to be tested
@@ -61,4 +61,14 @@ class Jenkins:
         return JENKINS_API.get_execution_time(job_name , build_number)
 
 # #9
-    # def binary_search_failure_finder(self):
+
+    def get_job_status(self , jobname):
+        self.job_executor.get_job_status(jobname)
+        
+
+    
+    
+    def get_all_status(self):
+        
+        Y = self.job_executor.get_all_jobs_status()
+        print(Y)

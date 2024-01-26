@@ -24,21 +24,20 @@ class JenkinsJobExecutor:
 
     def __init__(self):
         self.finished_jobs = []
-        self.All_Jobs_Info = {}
+        self.All_Jobs_Build_Numbers = {}
+        self.All_Jobs_Status = {}
         
-
-
     def run_job(self,jenkins_wrapper, job_name):
         try:
-            # jenkins_wrapper.create_job_from_xml(job_name, xml_config)
-
-            # jenkins_wrapper.wait_for_job_creation(job_name)
 
             queue_item = jenkins_wrapper.build_job(job_name)
-
+            
             build_number = jenkins_wrapper.wait_for_job_to_start_building(job_name)
 
-            self.All_Jobs_Info[job_name] = build_number
+            
+            self.All_Jobs_Status[job_name] = 'Job Started'
+            
+            self.All_Jobs_Build_Numbers[job_name] = build_number
             
             thread_fetch_output = threading.Thread(target=jenkins_wrapper.fetch_and_update_console_output,
                                                     args=(job_name, build_number))
@@ -47,14 +46,16 @@ class JenkinsJobExecutor:
             thread_fetch_output.join()
 
             # jenkins_wrapper.wait_for_job_to_finish_building(job_name, build_number)
+            
 
             job_status = jenkins_wrapper.get_build_status(job_name, build_number)
             job_execution_time = jenkins_wrapper.get_execution_time(job_name, build_number)
             self.finished_jobs.append((job_name, job_status, job_execution_time))
 
+            self.All_Jobs_Status[job_name] = job_status
+
             message = f"Job '{job_name}' finished with status: {job_status}  , execution time: {job_execution_time}"
             logging.info(message) 
-            print(message)
 
             #jenkins_wrapper.delete_job(job_name) # add flag
 
@@ -63,7 +64,7 @@ class JenkinsJobExecutor:
         except Exception as e:
             message =f"Exception occurred for job '{job_name}': {e}"
             logging.error(message) 
-            print(message)
+            self.All_Jobs_Status[job_name] = 'Job Crashed in Jenkins'
             jenkins_wrapper.delete_job(job_name)
 
     
@@ -82,9 +83,12 @@ class JenkinsJobExecutor:
         return self.finished_jobs
     
 
-    def run_jobs_in_batches(self,server , jobs_to_execute, batch_size):
-
-
+    def run_jobs_in_batches(self,server , jobs_to_execute , batch_size):
+        
+        #for i in jobs_to_execute:
+        #    self.All_Jobs_Status[i] = 'Job Not Started'
+        jobs_to_execute = list(jobs_to_execute.keys())
+        
         batches = [jobs_to_execute[i:i + batch_size] for i in range(0, len(jobs_to_execute), batch_size)]
 
         for batch in batches:
@@ -134,9 +138,17 @@ class JenkinsJobExecutor:
                 right = mid - 1
             else:
                 left = mid + 1
+                
 
         return first_failure
     
 
     def get_build_number(self, job_name):
-        return self.All_Jobs_Info.get(job_name)
+        return self.All_Jobs_Build_Numbers.get(job_name)
+    
+
+    def get_job_status(self, jobname):
+        return self.All_Jobs_Status[jobname]
+    
+    def get_all_jobs_status(self):
+        return self.All_Jobs_Status

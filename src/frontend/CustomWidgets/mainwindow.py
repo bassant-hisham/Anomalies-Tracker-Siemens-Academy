@@ -13,9 +13,10 @@ import json
 from src.frontend.CustomWidgets.DesignBox import MyDesignBox
 import copy
 import sys
-
+import time
 from src.backend.Jenkins_APIs import Jenkins
 
+import threading
 
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
@@ -207,7 +208,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         
         Jenkins_APIs = Jenkins()
         
-        Jenkins_APIs.start_jobs_in_batches(self.JasonData)         
+        Jenkins_APIs.start_jobs_in_batches(self.JasonData)
+
+        
+                
+
+        print("----------------------------")
+        
+        
                     
 
     
