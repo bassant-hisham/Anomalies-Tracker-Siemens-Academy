@@ -104,8 +104,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def deleteRunningWidget(self):
         if(len(self.Running_data)!=0):
             WidgteToBeRemoved=self.Running_data.pop()
-            self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved)
-            WidgteToBeRemoved.deleteLater()
+            self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved.custom_window)
+            WidgteToBeRemoved.custom_window.deleteLater()
 
     def deleteDesignWidget(self):
         if(len(self.Design_data)!=0):
