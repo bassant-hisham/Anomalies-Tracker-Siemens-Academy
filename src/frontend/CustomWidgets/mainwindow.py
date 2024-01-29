@@ -202,7 +202,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     
                     prerequistes={  #############to be changed
                         "prerequisites": {
-                        "previous_task_id": int(previous_task_id) if previous_task_id else 0,
+                        "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
                         "previous_job_id": int(previous_job_id) if previous_job_id else 0
                         },
                     }
