@@ -297,6 +297,21 @@ color:white;
            <string>Design Configurations</string>
           </property>
          </column>
+                   <column>
+            <property name="text">
+            <string>Job name</string>
+            </property>
+          </column>
+           <column>
+            <property name="text">
+            <string>Job Status</string>
+            </property>
+          </column>
+        <column>
+          <property name="text">
+           <string>Show Console</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>

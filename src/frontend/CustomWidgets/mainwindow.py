@@ -141,8 +141,20 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             ShowDesignConfigB.setStyleSheet("color: white;")
             ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
             self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
-            col_index += 1           
+            col_index += 1    
 
+            ShowConsole = QPushButton("Show")
+            ShowConsole.setStyleSheet("color: white;")
+            self.ShowRun = MyRunBox(0,[],"")
+            self.runningwindows.append(self.ShowRun)
+            ShowConsole.clicked.connect(lambda _, job_name="job_name": self.open_console(job_name))
+            self.Job.Jobs_table.setCellWidget(row_index, 11, ShowConsole)
+            col_index += 1
+
+    def open_console(self, job_name: str) -> None:
+        self.Job.scrollArea_console.setVisible(True)
+        self.Job.console_text.setPlainText(f"Console for {job_name} will go here.")
+        self.Job.console_text.repaint()
 
     def collectData(self):
 

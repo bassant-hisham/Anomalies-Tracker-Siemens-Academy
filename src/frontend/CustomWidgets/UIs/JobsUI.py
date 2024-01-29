@@ -185,14 +185,14 @@ class Ui_Jobs(object):
 "")
         self.Run_pushButton.setObjectName("Run_pushButton")
         self.horizontalLayout.addWidget(self.Run_pushButton)
-        self.gridLayout_2.addLayout(self.horizontalLayout, 2, 0, 1, 1)
+        self.gridLayout_2.addLayout(self.horizontalLayout, 3, 0, 1, 1)
         self.Jobs_table = QtWidgets.QTableWidget(self.Jobs_scrollArea)
         self.Jobs_table.setStyleSheet("QTableWidget::item {\n"
 "background-color:rgb(37, 40, 50);\n"
 "color:white;\n"
 "}")
         self.Jobs_table.setObjectName("Jobs_table")
-        self.Jobs_table.setColumnCount(9)
+        self.Jobs_table.setColumnCount(12)
         self.Jobs_table.setRowCount(0)
         item = QtWidgets.QTableWidgetItem()
         self.Jobs_table.setHorizontalHeaderItem(0, item)
@@ -212,7 +212,30 @@ class Ui_Jobs(object):
         self.Jobs_table.setHorizontalHeaderItem(7, item)
         item = QtWidgets.QTableWidgetItem()
         self.Jobs_table.setHorizontalHeaderItem(8, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.Jobs_table.setHorizontalHeaderItem(9, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.Jobs_table.setHorizontalHeaderItem(10, item)
+        item = QtWidgets.QTableWidgetItem()
+        self.Jobs_table.setHorizontalHeaderItem(11, item)
+
+        self.scrollArea_console = QtWidgets.QScrollArea(Jobs)
+        self.scrollArea_console.setWidgetResizable(True)
+        self.scrollArea_console.setObjectName("scrollArea_console")
+
+        self.console_text = QtWidgets.QTextEdit(self.scrollArea_console)
+        self.console_text.setReadOnly(True)
+        text_color = QtGui.QColor("white")
+        background_color = QtGui.QColor("rgb(37, 40, 50)")
+        self.console_text.setTextColor(text_color)
+        self.console_text.setStyleSheet(f"background-color: {background_color.name()};")
+        self.scrollArea_console.setVisible(False)
+
+        self.scrollArea_console.setWidget(self.console_text)
+
+        self.gridLayout_2.addWidget(self.scrollArea_console, 2, 0, 1, 1)
         self.gridLayout_2.addWidget(self.Jobs_table, 1, 0, 1, 1)
+        
         self.scrollArea.setWidget(self.Jobs_scrollArea)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
 
@@ -242,3 +265,9 @@ class Ui_Jobs(object):
         item.setText(_translate("Jobs", "Design Path"))
         item = self.Jobs_table.horizontalHeaderItem(8)
         item.setText(_translate("Jobs", "Design Configurations"))
+        item = self.Jobs_table.horizontalHeaderItem(9)
+        item.setText(_translate("Jobs", "Job Name"))
+        item = self.Jobs_table.horizontalHeaderItem(10)
+        item.setText(_translate("Jobs", "Job Status"))
+        item = self.Jobs_table.horizontalHeaderItem(11)
+        item.setText(_translate("Jobs", "Show Console"))
