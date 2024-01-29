@@ -1,7 +1,8 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import *
-from src.frontend.CustomWidgets.UIs.CompilationConfigUI import Ui_CompilationConfig_Form
-from src.frontend.CustomWidgets.commonFunctions import *
+from UIs.CompilationConfigUI import Ui_CompilationConfig_Form
+from commonFunctions import *
+from PyQt5.QtGui import QIntValidator
 
 class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
     closed_signal = QtCore.pyqtSignal()
@@ -12,6 +13,7 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
         self.BrowseSource_button.clicked.connect(lambda: showFileDialog(self,self.Source_lineEdit))
         self.BrowseOutput_button.clicked.connect(lambda: showDirectoryDialog(self,self.Output_lineEdit))
         self.compilation_configurationsdict={}
+        self.Timeout_lineEdit.setValidator(QIntValidator())
         
     def saveConfiguration(self):
         self.compilation_configurationsdict['compilation_configurations']={}

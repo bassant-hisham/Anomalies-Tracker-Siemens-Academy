@@ -112,8 +112,8 @@ background-color:rgb(37, 40, 50);
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>776</width>
-        <height>586</height>
+        <width>772</width>
+        <height>582</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -260,6 +260,16 @@ color:white;
          <column>
           <property name="text">
            <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Prerequisite Task</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Prerequisite Job</string>
           </property>
          </column>
          <column>

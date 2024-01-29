@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets,QtCore
-from src.frontend.CustomWidgets.commonFunctions import *
-from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilationConfigWindow 
-from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
-from src.frontend.CustomWidgets.UIs.DesignBoxUI import Ui_DesignBox
+from commonFunctions import *
+from CompilationConfigurationWindow import MyCompilationConfigWindow 
+from LaunchingConfigurationWindow import MyLaunchingConfigWindow
+from UIs.DesignBoxUI import Ui_DesignBox
+from PyQt5.QtCore import QPoint
 
 class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
     closed_signal = QtCore.pyqtSignal()
@@ -68,7 +69,14 @@ class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
                 if ((not (widget.objectName()=="Done_pushButton"))  and (type(widget) != QWidget) and (type(widget) != QScrollBar) and (type(widget) != QScrollArea)):
                     widget.setDisabled(True)
 
-
+    def center_on_parent(self):       
+        screen = QDesktopWidget().screenGeometry()
+        center_x = screen.width() // 2  
+        center_y = screen.height() // 2
+        popup_geometry = self.frameGeometry()
+        popup_geometry.moveCenter(QPoint(center_x, center_y))
+        self.move(popup_geometry.topLeft())
+        
     def closeEvent(self, event):
         self.DesignPath_lineEdit.setDisabled(False)
         self.BrowseDesignPath_button.setDisabled(False)

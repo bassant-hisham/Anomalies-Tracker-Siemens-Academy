@@ -2,21 +2,17 @@ from itertools import product
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
-from src.frontend.CustomWidgets.UIs.RunningConfigUI import Ui_RunningConfiguration
-from src.frontend.CustomWidgets.UIs.MainWindowUI import Ui_MainWindow
-from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilationConfigWindow
-from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
-from src.frontend.CustomWidgets.TaskTabIntegrated import MyTaskTab
-from src.frontend.CustomWidgets.Jobs import MyJobs
-from src.frontend.CustomWidgets.RunBox import MyRunBox
+from UIs.RunningConfigUI import Ui_RunningConfiguration
+from UIs.MainWindowUI import Ui_MainWindow
+from CompilationConfigurationWindow import MyCompilationConfigWindow
+from LaunchingConfigurationWindow import MyLaunchingConfigWindow
+from TaskTabIntegrated import MyTaskTab
+from Jobs import MyJobs
+from RunBox import MyRunBox
 import json
-from src.frontend.CustomWidgets.DesignBox import MyDesignBox
+from DesignBox import MyDesignBox
 import copy
-import sys
-import time
-from src.backend.Jenkins_APIs import Jenkins
-
-import threading
+from PyQt5.QtGui import QIntValidator
 
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
@@ -34,8 +30,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.CreateJobs_button.clicked.connect(self.createJobs)
         self.new_window = QMainWindow()
         self.design_widget_layout=QVBoxLayout()
-        self.JasonData={}
-        self.JasonData[self.Solution_comboBox.currentText()]={}
+        self.JsonData={}
+        self.JsonData[self.Solution_comboBox.currentText()]={}
 
         
         
@@ -62,6 +58,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.design.setParent(None)
         self.design.showdesign()
         self.design.show()
+        self.design.center_on_parent()
         
 
     def createJobs(self):
@@ -78,11 +75,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job = MyJobs()
             current_widget.Task_tabWidget.insertTab(3, self.Job, "Jobs")
 
-        self.Job.Run_pushButton.clicked.connect(self.GenerateJason)
+        self.Job.Run_pushButton.clicked.connect(self.GenerateJson)
         self.Job.selectall_pushButton.clicked.connect(self.selectallrows)
 
         self.combinations = self.collectData()
         self.Job.Jobs_table.setRowCount(len(self.combinations))
+        self.Job.Jobs_table.verticalHeader().setVisible(False)
 
         for row_index, (running_config, design, build) in enumerate(self.combinations):
 
@@ -91,9 +89,33 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             checkbox_item.setCheckState(Qt.Unchecked)
             self.Job.Jobs_table.setItem(row_index, 0, checkbox_item)
             
-            self.Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index)))
+            self.Job.Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index+1)))
+            
+            
+            lineEdit_PrerequisiteTask = QTableWidgetItem()
+            lineEdit_PrerequisiteTask.setFlags(lineEdit_PrerequisiteTask.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
+            self.Job.Jobs_table.setItem(row_index, 2, lineEdit_PrerequisiteTask)
+
+            # Create a QLineEdit and set it as the cell widget
+            text_box = QLineEdit(self.Job)
+            text_box.setStyleSheet("QLineEdit { color: white; }")
+            validator = QIntValidator()
+            text_box.setValidator(validator)
+            self.Job.Jobs_table.setCellWidget(row_index, 2, text_box)
+            
+            lineEdit_PrerequisiteJob = QTableWidgetItem()
+            lineEdit_PrerequisiteJob.setFlags(lineEdit_PrerequisiteJob.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
+            self.Job.Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteJob)
+
+            # Create a QLineEdit and set it as the cell widget
+            text_box = QLineEdit(self.Job)
+            text_box.setStyleSheet("QLineEdit { color: white; }")
+            validator = QIntValidator()
+            text_box.setValidator(validator)
+            self.Job.Jobs_table.setCellWidget(row_index, 3, text_box)
+            
             running_dict = running_config.custom_window.running_configurations
-            col_index = 2
+            col_index = 4
             scriptPath = running_dict['running_configurations']['script_path']
         
             self.Job.Jobs_table.setItem(row_index, col_index, QTableWidgetItem(str(scriptPath)))
@@ -152,17 +174,17 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job.Jobs_table.item(row, 0).setCheckState(Qt.Checked)
 
 
-    def GenerateJason(self):
+    def GenerateJson(self):
         file_path = "./frontEnd.json"
         platform=self.Platfrom_comboBox.currentText()
         solution=self.Solution_comboBox.currentText()
         taskNu=self.Tasks.currentIndex()
         
-        self.JasonData[solution]["task"+str(taskNu+1)]={}
-        self.JasonData[solution]["task"+str(taskNu+1)]["id"]=taskNu+1
+        self.JsonData[solution]["task"+str(taskNu+1)]={}
+        self.JsonData[solution]["task"+str(taskNu+1)]["id"]=taskNu+1
 
-        self.JasonData[solution]["task"+str(taskNu+1)]["binary_search"]=self.BinarySearhState
-        self.JasonData[solution]["task"+str(taskNu+1)]["jobs"]={}
+        self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"]=self.BinarySearhState
+        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"]={}
 
                        
         with open(file_path, 'w') as json_file:
@@ -175,16 +197,19 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     ToolConfigData = design.launching_configurations.get_ToolConfig()
                     DutConfigData=[]
                     buildPath=str(build)
-                    self.JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
-                    self.JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                    self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
+                    self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                    
+                    previous_task_id = self.Job.Jobs_table.cellWidget(currentJobIndex,2).text()
+                    previous_job_id = self.Job.Jobs_table.cellWidget(currentJobIndex,3).text()
                     
                     prerequistes={  #############to be changed
                         "prerequisites": {
-                        "previous_task_id": 0,
-                        "previous_job_id": 0
+                        "previous_task_id": int(previous_task_id) if previous_task_id else 0,
+                        "previous_job_id": int(previous_job_id) if previous_job_id else 0
                         },
                     }
-                    self.JasonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
+                    self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
                     Duts = design.get_Duts()
                     for dut in Duts:
                        DutConfigData.append(dut.collect_data())
@@ -200,22 +225,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                               }
                               }
                     
-                    self.JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
-                    self.JasonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
-            json.dump(self.JasonData,json_file, indent=2)
+                    self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
+                    self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+            json.dump(self.JsonData,json_file, indent=2)
             json_file.write("\n")
-            
-        
-        Jenkins_APIs = Jenkins()
-        
-        Jenkins_APIs.start_jobs_in_batches(self.JasonData)
-
-        
-                
-
-        print("----------------------------")
-        
-        
+                    
                     
 
     

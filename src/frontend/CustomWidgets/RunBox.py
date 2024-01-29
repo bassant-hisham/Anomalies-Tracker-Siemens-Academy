@@ -1,8 +1,9 @@
 from PyQt5 import QtWidgets
-from src.frontend.CustomWidgets.UIs.RunningConfigUI import Ui_RunningConfiguration
-from src.frontend.CustomWidgets.UIs.CrashConfigUI import CrashConfigWindow
-from src.frontend.CustomWidgets.UIs.HangConfigUI import HangConfigWindow  # Import HangConfigWindow
+from UIs.RunningConfigUI import Ui_RunningConfiguration
+from UIs.CrashConfigUI import CrashConfigWindow
+from UIs.HangConfigUI import HangConfigWindow  # Import HangConfigWindow
 from PyQt5.QtWidgets import *
+from commonFunctions import *
 
 class MyRunBox(QtWidgets.QWidget):
     def __init__(self):
@@ -26,6 +27,7 @@ class MyRunBox(QtWidgets.QWidget):
 
         self.ErrorC.currentTextChanged.connect(self.check_error_conf_visibility)
         self.ErrorConf.clicked.connect(self.show_error_config)  # Modified connection
+        self.toolButtonBrowseOutput_2.clicked.connect(lambda: showFileDialog(self,self.lineEditOutputDirectory_2))  
 
         self.config_window_crash = CrashConfigWindow()
         self.config_window_hang = HangConfigWindow()  # Create an instance of HangConfigWindow
@@ -34,7 +36,7 @@ class MyRunBox(QtWidgets.QWidget):
         self.ui.RunC_2.clicked.connect(self.showScriptPath)
         self.running_configurations = {}
         self.isconnected = False
-        self.myparent=self.parent()
+        # self.myparent=self.parent()
 
     def check_error_conf_visibility(self, selected_text):
         if selected_text in ["Crash", "Hang"]:

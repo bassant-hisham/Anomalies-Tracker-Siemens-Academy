@@ -1,10 +1,11 @@
 import os
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
-from src.frontend.CustomWidgets.UIs.TaskTabUI import Ui_Task_Tab
-from src.frontend.CustomWidgets.commonFunctions import *
-from src.frontend.CustomWidgets.DesignBox import MyDesignBox
-from src.frontend.CustomWidgets.RunningConfiguration import MyRunningConfigurations
+from UIs.TaskTabUI import Ui_Task_Tab
+from commonFunctions import *
+from DesignBox import MyDesignBox
+from RunningConfiguration import MyRunningConfigurations
+from PyQt5.QtGui import QIntValidator
 
 
 class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
@@ -32,7 +33,10 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.RunningDelete_pushButton.clicked.connect(self.deleteRunningWidget)
         self.DesignDelete_pushButton.clicked.connect(self.deleteDesignWidget)
         self.Task_tabWidget.currentChanged.connect(self.DesignTabEntered)
-
+        self.RangeFrom_lineEdit.setValidator(QIntValidator())
+        self.RangeTo_lineEdit.setValidator(QIntValidator())
+        self.BinarySearchFrom_lineEdit.setValidator(QIntValidator())
+        self.BinarySearchTo_lineEdit.setValidator(QIntValidator())
 
         self.Running_data=list()
         self.Design_data = list()
@@ -100,8 +104,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def deleteRunningWidget(self):
         if(len(self.Running_data)!=0):
             WidgteToBeRemoved=self.Running_data.pop()
-            self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved)
-            WidgteToBeRemoved.deleteLater()
+            self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved.custom_window)
+            WidgteToBeRemoved.custom_window.deleteLater()
 
     def deleteDesignWidget(self):
         if(len(self.Design_data)!=0):
