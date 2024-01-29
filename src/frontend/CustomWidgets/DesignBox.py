@@ -8,7 +8,7 @@ from PyQt5.QtCore import QPoint
 
 class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
     closed_signal = QtCore.pyqtSignal()
-    def __init__(self,id):
+    def __init__(self,id:int,Designs:list,DesignsLayout:QVBoxLayout):
         super(MyDesignBox, self).__init__()
         self.setupUi(self)  # This sets up the UI components from the Design box
         self.setTitle("Design " + str(id))
@@ -16,11 +16,14 @@ class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
         self.launching_configurations=MyLaunchingConfigWindow()
         self.CompilationConfig_button.clicked.connect(self.open_compilation_config)
         self.BrowseDesignPath_button.clicked.connect(lambda: showFileDialog(self,self.DesignPath_lineEdit))
+        self.delete_pushButton.clicked.connect(self.deleteDesignWidget)
         self.LaunchingConfig_button.clicked.connect(self.open_launching_config)
         self.setCheckable(True)
         self.setChecked(True)
         self.toggled.connect(self.toggle_content)
         self.myparent=self.parent()
+        self.DesignsList=Designs
+        self.DesignsLayout=DesignsLayout
         
 
     def toggle_content(self):
@@ -91,6 +94,14 @@ class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
         self.closed_signal.emit()
         event.accept()
 
+    def deleteDesignWidget(self):
+        self.DesignsList.remove(self)
+        self.DesignsLayout.removeWidget(self)
+        self.deleteLater()
+        
+        for index,widget in enumerate(self.DesignsList):
+            self.DesignsList[index].id=index+1
+            self.DesignsList[index].setTitle("Design Configuration " + str(index+1))
         
 
         

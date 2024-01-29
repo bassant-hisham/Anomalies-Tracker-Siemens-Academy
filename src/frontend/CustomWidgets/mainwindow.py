@@ -2,7 +2,6 @@ from itertools import product
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
-from src.frontend.CustomWidgets.UIs.RunningConfigUI import Ui_RunningConfiguration
 from src.frontend.CustomWidgets.UIs.MainWindowUI import Ui_MainWindow
 from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilationConfigWindow
 from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
@@ -24,8 +23,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
         
-        self.design=MyDesignBox("")
-        #self.ShowDesign = MyDesignBox()
+        self.design=MyDesignBox("",[],"")
         self.CreateJobs_button.clicked.connect(self.createJobs)
         self.new_window = QMainWindow()
         self.design_widget_layout=QVBoxLayout()
@@ -48,7 +46,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def show_running(self,ShowRun,running, running_dict):
         ShowRun.ui.groupBox.setTitle("Running Configuration " )
         ShowRun.show_data(running_dict)
-        ShowRun.myparent=running.custom_window.myparent
+        ShowRun.myparent=running.myparent
         ShowRun.show()
 
     def show_design(self,design):
@@ -113,7 +111,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             text_box.setValidator(validator)
             self.Job.Jobs_table.setCellWidget(row_index, 3, text_box)
             
-            running_dict = running_config.custom_window.running_configurations
+            running_dict = running_config.running_configurations
             col_index = 4
             scriptPath = running_dict['running_configurations']['script_path']
         
@@ -122,7 +120,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
             ShowRunningConfigB = QPushButton("Show")
             ShowRunningConfigB.setStyleSheet("color: white;")
-            self.ShowRun = MyRunBox()
+            self.ShowRun = MyRunBox(0,[],"")
             self.runningwindows.append(self.ShowRun)
             ShowRunningConfigB.clicked.connect(lambda _, ShowRun=self.ShowRun,r=running_config,rd=running_dict: self.show_running(ShowRun,r,rd))
             self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
@@ -149,7 +147,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         Builds  = self.Tasks.TaskTab.get_builds()
 
         for running in RunningConfigs:
-            running.custom_window.collect_running_config()
+            running.collect_running_config()
 
         self.BinarySearhState=self.Tasks.TaskTab.getBinarySearchValue()
 
@@ -191,7 +189,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             for currentJobIndex,(running_config, design, build) in enumerate(self.combinations):
                     if(self.Job.Jobs_table.item(currentJobIndex,0).checkState() != 2):
                         continue
-                    running_dict = running_config.custom_window.running_configurations
+                    running_dict = running_config.running_configurations
                     compilationConfigData = design.compilation_config.compilation_configurationsdict
                     ToolConfigData = design.launching_configurations.get_ToolConfig()
                     DutConfigData=[]
@@ -204,7 +202,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     
                     prerequistes={  #############to be changed
                         "prerequisites": {
-                        "previous_task_id": int(previous_task_id) if previous_task_id else 0,
+                        "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
                         "previous_job_id": int(previous_job_id) if previous_job_id else 0
                         },
                     }

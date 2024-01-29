@@ -6,14 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>727</width>
-    <height>210</height>
+    <width>892</width>
+    <height>506</height>
    </rect>
   </property>
   <property name="font">
    <font>
     <pointsize>10</pointsize>
-    <weight>75</weight>
     <bold>true</bold>
    </font>
   </property>
@@ -94,15 +93,17 @@ QPushButton:disabled {
    <string>Design</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="DesignPath_horizontalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
      <item>
       <widget class="QLabel" name="DesignPath_label">
        <property name="font">
         <font>
          <family>MS Shell Dlg 2</family>
          <pointsize>11</pointsize>
-         <weight>50</weight>
          <italic>false</italic>
          <bold>false</bold>
         </font>
@@ -141,8 +142,11 @@ QPushButton:disabled {
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
+   <item row="3" column="0">
     <layout class="QHBoxLayout" name="Configurations_horizontalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
      <item>
       <widget class="QPushButton" name="CompilationConfig_button">
        <property name="sizePolicy">
@@ -160,7 +164,6 @@ QPushButton:disabled {
        <property name="font">
         <font>
          <pointsize>10</pointsize>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -192,7 +195,6 @@ QPushButton:disabled {
        <property name="font">
         <font>
          <pointsize>10</pointsize>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -208,6 +210,69 @@ QPushButton:disabled {
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
+     <property name="bottomMargin">
+      <number>8</number>
+     </property>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="delete_pushButton">
+       <property name="styleSheet">
+        <string notr="true">background:none;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../IconsImages/delete.png</normaloff>../IconsImages/delete.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>35</width>
+         <height>25</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>66</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

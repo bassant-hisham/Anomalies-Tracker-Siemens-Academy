@@ -126,7 +126,7 @@ class EthernetHandler(SolutionHandler):
             machine = compilation_configurations["machine"]
             force = compilation_configurations["force"]
             timeout = compilation_configurations["timeout"]
-            compiling_command = "sh 'g++ -g  /home/vmarwan/Documents/JB/script.c++ -o /home/vmarwan/Documents/JB/script.out'"
+            #compiling_command = "sh 'g++ -g  /home/vmarwan/Documents/JB/script.c++ -o /home/vmarwan/Documents/JB/script.out'"
             if compile_design:
                 script += script_handler.start_stage("Compiling")
                 script += script_handler.write_step(f"echo 'compile_design: {compile_design}'")
@@ -135,7 +135,7 @@ class EthernetHandler(SolutionHandler):
                 script += script_handler.write_step(f"echo 'machine: {machine}'")
                 script += script_handler.write_step(f"echo 'force: {force}'")
                 script += script_handler.write_step(f"echo 'timeout: {timeout}'")
-                script += script_handler.write_step(compiling_command)
+                #script += script_handler.write_step(compiling_command)
                 script += script_handler.end_stage()
             return script
         except Exception as e:
@@ -336,8 +336,8 @@ class EthernetHandler(SolutionHandler):
             crashed_process = job["running_configurations"]["crash_configurations"]["crashed_process"]
             attach_gdb = job["running_configurations"]["crash_configurations"]["attach_gdb"]
             script_path = job["running_configurations"]["script_path"]
-            running_command = "sh '/home/vmarwan/Documents/JB/script.out'"
-            running_command_with_gdb = "sh 'sudo gdb -ex=r --args /home/vmarwan/Documents/JB/script.out'"
+            #running_command = "sh '/home/vmarwan/Documents/JB/script.out'"
+            #running_command_with_gdb = "sh 'sudo gdb -ex=r --args /home/vmarwan/Documents/JB/script.out'"
             if run_script:
                 script += script_handler.start_stage("Running")
                 script += script_handler.write_step(f"echo 'run_script: {run_script}'")
@@ -348,11 +348,11 @@ class EthernetHandler(SolutionHandler):
                 if attach_gdb:
                     script += script_handler.write_step(
                         "echo '##################### Run With GDB #####################'")
-                    script += script_handler.write_step(running_command_with_gdb)
+                    #script += script_handler.write_step(running_command_with_gdb)
                 else:
                     script += script_handler.write_step(
                         "echo '##################### Run Without GDB #####################'")
-                    script += script_handler.write_step(running_command)
+                    #script += script_handler.write_step(running_command)
                 script += script_handler.end_stage()
             return script
         except Exception as e:

@@ -1,77 +1,86 @@
 from collections import deque
 
 from src.backend.jenkins_wrapper_package.JenkinsWrapper import JenkinsWrapper
+from src.backend.jenkins_wrapper_package.JenkinsBuildInfoRetriever import JenkinsBuildInfoRetriever
+
+from src.backend.jenkins_wrapper_package.dependency_processor import topological_sort_in_batches
 import threading
-import json
 import logging
-import os
+from enum import Enum
+
+import config
 
 
+class BuildState(Enum):
+    JOB_CREATED = 'Job Created'
+    JOB_IN_BATCH = 'Job In Batch'
+    JOB_STARTED = 'Job Started'
+    JOB_CRASHED = 'Job Crashed in Jenkins'
 
 
-
-# **************************
-# one instance of the server shared between threads   Vs   one instance for each thread.
-# Exception occurred for job 'job_172': ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
-# connection pool is full, discarding connection: localhost. connection pool size: 10 jenkins
-# **************************
 
 
 
 class JenkinsJobExecutor:
 
-
-
     def __init__(self):
-        self.finished_jobs = []
-        self.All_Jobs_Build_Numbers = {}
+        self.finished_jobs = []  #to be removed
+        self.All_Jobs_Build_Numbers = {}        
         self.All_Jobs_Status = {}
-        
-    def run_job(self,jenkins_wrapper, job_name):
+        self.prerequisites = {}
+
+
+    def run_job(self,jenkins_wrapper:JenkinsWrapper, job_name):
         try:
-
             queue_item = jenkins_wrapper.build_job(job_name)
-            
-            build_number = jenkins_wrapper.wait_for_job_to_start_building(job_name)
 
-            
-            self.All_Jobs_Status[job_name] = 'Job Started'
-            
+            jenkins_wrapper.wait_for_job_to_start_building(job_name)
+
+            build_number = jenkins_wrapper.get_last_build_number(job_name)
+
+            self.All_Jobs_Status[job_name] = BuildState.JOB_STARTED.value
             self.All_Jobs_Build_Numbers[job_name] = build_number
             
-            thread_fetch_output = threading.Thread(target=jenkins_wrapper.fetch_and_update_console_output,
-                                                    args=(job_name, build_number))
-            thread_fetch_output.start()
+            if config.DUMP_CONSOLE_OUTPUT:
+                thread_fetch_output = threading.Thread(target=jenkins_wrapper.fetch_and_update_console_output,
+                                                        args=(job_name, build_number))
+                thread_fetch_output.start()
+                thread_fetch_output.join()
+            else:
+                jenkins_wrapper.wait_for_job_to_finish_building(job_name, build_number)
 
-            thread_fetch_output.join()
-
-            # jenkins_wrapper.wait_for_job_to_finish_building(job_name, build_number)
-            
-
-            job_status = jenkins_wrapper.get_build_status(job_name, build_number)
-            job_execution_time = jenkins_wrapper.get_execution_time(job_name, build_number)
-            self.finished_jobs.append((job_name, job_status, job_execution_time))
+            req_status, build_info = JenkinsBuildInfoRetriever.get_build_info(jenkins_wrapper.server,job_name,build_number)
+            job_status = JenkinsBuildInfoRetriever.get_build_result(build_info)
+            job_execution_time = JenkinsBuildInfoRetriever.get_execution_time(build_info)
 
             self.All_Jobs_Status[job_name] = job_status
+            self.finished_jobs.append((job_name, job_status, job_execution_time))
 
             message = f"Job '{job_name}' finished with status: {job_status}  , execution time: {job_execution_time}"
             logging.info(message) 
+            print(message)
 
-            #jenkins_wrapper.delete_job(job_name) # add flag
+            if config.DELETE_JOB_AFTER_FINISH:
+                jenkins_wrapper.delete_job(job_name)
 
             return job_name, job_status, job_execution_time
         
         except Exception as e:
             message =f"Exception occurred for job '{job_name}': {e}"
             logging.error(message) 
-            self.All_Jobs_Status[job_name] = 'Job Crashed in Jenkins'
-            jenkins_wrapper.delete_job(job_name)
+            print(message)
+            self.All_Jobs_Status[job_name] = BuildState.JOB_CRASHED.value
+
+            if config.DELETE_JOB_AFTER_FINISH:
+                jenkins_wrapper.delete_job(job_name)
 
     
     def run_all_jobs(self,server, jobs_to_execute):
+        self.All_Jobs_Status.update({i: BuildState.JOB_IN_BATCH.value for i in jobs_to_execute})
+
         threads = []
         #  add All_Jobs_Info
-        # sol-task-job
+
         for job_name in jobs_to_execute:
             t = threading.Thread(target=self.run_job, args=(server,job_name))
             threads.append(t)
@@ -80,22 +89,23 @@ class JenkinsJobExecutor:
         for t in threads:
             t.join()
 
-        return self.finished_jobs
+        return self.finished_jobs#no need 
     
 
-    def run_jobs_in_batches(self,server , jobs_to_execute , batch_size):
-        
-        #for i in jobs_to_execute:
-        #    self.All_Jobs_Status[i] = 'Job Not Started'
-        jobs_to_execute = list(jobs_to_execute.keys())
-        
-        batches = [jobs_to_execute[i:i + batch_size] for i in range(0, len(jobs_to_execute), batch_size)]
+    def run_jobs_in_batches(self,server , jobs_to_execute, batch_size):
+        print(jobs_to_execute)
+        self.All_Jobs_Status.update({i: BuildState.JOB_CREATED.value for i in jobs_to_execute})
 
-        for batch in batches:
+
+        # jobs_to_execute = list(jobs_to_execute.keys())
+        jobs_to_execute = topological_sort_in_batches(jobs_to_execute, batch_size)
+        # batches = [jobs_to_execute[i:i + batch_size] for i in range(0, len(jobs_to_execute), batch_size)]
+
+        for batch in jobs_to_execute:
             print(batch)
             self.run_all_jobs(server, batch)
 
-        return self.finished_jobs
+        return self.finished_jobs #no need
 
 
     def topological_sort(self , dependencies):
@@ -138,7 +148,6 @@ class JenkinsJobExecutor:
                 right = mid - 1
             else:
                 left = mid + 1
-                
 
         return first_failure
     
@@ -150,5 +159,6 @@ class JenkinsJobExecutor:
     def get_job_status(self, jobname):
         return self.All_Jobs_Status[jobname]
     
+
     def get_all_jobs_status(self):
         return self.All_Jobs_Status

@@ -18,35 +18,39 @@ class CrashConfigWindow(QMainWindow):
         tool_layout.addWidget(tool_label)
         tool_layout.addWidget(self.tool_combo_box)
         self.verticalSpacer=QtWidgets.QSpacerItem(0, 10, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        layout.addItem(self.verticalSpacer)
+        layout.addSpacerItem(self.verticalSpacer)
         layout.addLayout(tool_layout)
-        layout.addItem(self.verticalSpacer)
+        self.verticalSpacer2=QtWidgets.QSpacerItem(0, 10, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        layout.addSpacerItem(self.verticalSpacer2)
 
 
-        # self.parent = parent
+
+        #self.parent = parent
 
         # Create Checkboxes
         self.checkbox1 = QCheckBox('Attach GDB', self)
-        # ... (other checkboxes)
+    #     # ... (other checkboxes)
 
-       # Apply styles
+    #    # Apply styles
        
         layout.addWidget(self.checkbox1)
-        layout.addItem(self.verticalSpacer)
+        self.verticalSpacer3=QtWidgets.QSpacerItem(0, 10, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        layout.addSpacerItem(self.verticalSpacer3)
 
        
-        # Close button
+    #     # Close button
         self.close_button = QPushButton('Done', self)
         self.close_button.clicked.connect(self.close)
         self.closebtnLayout=QtWidgets.QHBoxLayout()
         self.HorizontalSpacer=QtWidgets.QSpacerItem(55, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        self.closebtnLayout.addItem(self.HorizontalSpacer)
+        self.closebtnLayout.addSpacerItem(self.HorizontalSpacer)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(10)
         sizePolicy.setVerticalStretch(0)
         self.close_button.setSizePolicy(sizePolicy)
         self.closebtnLayout.addWidget(self.close_button)
-        self.closebtnLayout.addItem(self.HorizontalSpacer)
+        self.HorizontalSpacer2=QtWidgets.QSpacerItem(55, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.closebtnLayout.addSpacerItem(self.HorizontalSpacer2)
         layout.addLayout(self.closebtnLayout)
 
         # Central widget setup
