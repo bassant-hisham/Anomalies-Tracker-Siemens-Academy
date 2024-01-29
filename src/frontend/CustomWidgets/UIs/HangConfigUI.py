@@ -23,10 +23,11 @@ class HangConfigWindow(QMainWindow):
         self.verticalSpacer=QtWidgets.QSpacerItem(0, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         layout.addItem(self.verticalSpacer)
         layout.addWidget(self.radiobutton1)
-        layout.addItem(self.verticalSpacer)
+        self.verticalSpacer2=QtWidgets.QSpacerItem(0, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        layout.addItem(self.verticalSpacer2)
         layout.addWidget(self.radiobutton2)
-        self.verticalSpacer=QtWidgets.QSpacerItem(0, 15, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        layout.addItem(self.verticalSpacer)
+        self.verticalSpacer3=QtWidgets.QSpacerItem(0, 15, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        layout.addItem(self.verticalSpacer3)
 
         # Close button
         self.closebtnLayout=QtWidgets.QHBoxLayout()
@@ -39,12 +40,13 @@ class HangConfigWindow(QMainWindow):
         sizePolicy.setVerticalStretch(0)
         self.close_button.setSizePolicy(sizePolicy)
         self.closebtnLayout.addWidget(self.close_button)
-        self.closebtnLayout.addItem(self.HorizontalSpacer)
+        self.HorizontalSpacer2=QtWidgets.QSpacerItem(55, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.closebtnLayout.addItem(self.HorizontalSpacer2)
 
 
         layout.addLayout(self.closebtnLayout)
-        self.verticalSpacer=QtWidgets.QSpacerItem(0, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        layout.addItem(self.verticalSpacer)
+        self.verticalSpacer4=QtWidgets.QSpacerItem(0, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        layout.addItem(self.verticalSpacer4)
 
         # Central widget setup
         central_widget = QWidget()

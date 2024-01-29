@@ -125,10 +125,8 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
 
 
     def add_dut_config(self):
-        #self.scrollLayout.addWidget(MyDesignBox(self.scrollLayout.count()+1))
         new_dut_box = MyDUTGroupBox(self.Dutconfig_Vlayout,self.Duts,self.Dutconfig_Vlayout.count()+1)
         self.Dutconfig_Vlayout.addWidget(new_dut_box)
-        # self.Design_data.append(new_design_box)
         self.Duts.append(new_dut_box)
 
     def get_Duts(self):
@@ -156,19 +154,6 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.ToolConfig["slave_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox_2.isChecked()
         self.ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"] = self.TerminateTool_checkBox_2.isChecked()
         return self.ToolConfig
-    
-    # def show_data(self,ToolConfig):
-    #     self.LaunchToolCheckBox.setChecked( ToolConfig["launch_tool"] )
-    #     self.ToolName_comboBox.setCurrentText(ToolConfig["master_tool_configuration"]["tool_name"])
-    #     self.ToolLaunch_comboBox.setCurrentText(ToolConfig["master_tool_configuration"]["tool_launch_mode"] )
-    #     self.TerminateOnErr_checkBox.setChecked(ToolConfig["master_tool_configuration"]["terminate_tool"])
-    #     self.TerminateTool_checkBox.setChecked(ToolConfig["master_tool_configuration"]["terminate_tool_onerror"] )
-    #     #self.DPIAdditionalArg_2.setCurrentText(ToolConfig[""])
-
-    #     self.ToolName_comboBox_2.setCurrentText(ToolConfig["slave_tool_configuration"]["launch_behavior"])
-    #     self.ToolLaunch_comboBox_2.setCurrentText(ToolConfig["slave_tool_configuration"]["tool_launch_mode"])
-    #     self.TerminateOnErr_checkBox_2.setChecked(ToolConfig["slave_tool_configuration"]["terminate_tool"])
-    #     self.TerminateTool_checkBox_2.setChecked(ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"])
         
     def delete_last_variable(self, textbox):
         text_content = ast.literal_eval(textbox.toPlainText())

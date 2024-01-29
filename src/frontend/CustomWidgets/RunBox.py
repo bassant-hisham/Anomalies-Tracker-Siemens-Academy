@@ -5,24 +5,23 @@ from src.frontend.CustomWidgets.UIs.HangConfigUI import HangConfigWindow  # Impo
 from PyQt5.QtWidgets import *
 from src.frontend.CustomWidgets.commonFunctions import *
 
-class MyRunBox(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
-        self.ui = Ui_RunningConfiguration()
-        self.ui.setupUi(self)
+class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
+    def __init__(self,id:int,Running:list,scrollLayoutRunning:QVBoxLayout):
+        super(MyRunBox,self).__init__()
+        self.setupUi(self)
 
-        self.ui.BrowseScriptPath_button.hide()
-        self.ui.ScriptPath_label.hide()
-        self.ui.ScriptPath_lineEdit.hide()
-        #self.widget_resize()
-        #self.ui.groupBox.resizeEvent = lambda event: self.window_resize()
-
-        self.RunC=self.ui.RunC_2
-        self.ErrorL=self.ui.ErrorL_2
-        self.ErrorC=self.ui.ErrorC_2
-        self.ErrorConf=self.ui.ErrorConf_2
-        self.toolButtonBrowseOutput_2=self.ui.BrowseScriptPath_button 
-        self.lineEditOutputDirectory_2 = self.ui.ScriptPath_lineEdit
+        self.BrowseScriptPath_button.hide()
+        self.ScriptPath_label.hide()
+        self.ScriptPath_lineEdit.hide()
+        # #self.widget_resize()
+        # #self.ui.groupBox.resizeEvent = lambda event: self.window_resize()
+        self.groupBox.setTitle("Running Configuration " + str(id))        
+        self.RunC=self.RunC_2
+        self.ErrorL=self.ErrorL_2
+        self.ErrorC=self.ErrorC_2
+        self.ErrorConf=self.ErrorConf_2
+        self.toolButtonBrowseOutput_2=self.BrowseScriptPath_button 
+        self.lineEditOutputDirectory_2 = self.ScriptPath_lineEdit
         self.ErrorConf.hide()
 
         self.ErrorC.currentTextChanged.connect(self.check_error_conf_visibility)
@@ -33,10 +32,14 @@ class MyRunBox(QtWidgets.QWidget):
         self.config_window_hang = HangConfigWindow()  # Create an instance of HangConfigWindow
         self.config_window_crash.closed_signal.connect(self.handle_another_window_closed)
         self.config_window_hang.closed_signal.connect(self.handle_another_window_closed)
-        self.ui.RunC_2.clicked.connect(self.showScriptPath)
+        self.RunC_2.clicked.connect(self.showScriptPath)
+        self.delete_pushButton.clicked.connect(self.deleteRunningWidget)
+
         self.running_configurations = {}
         self.isconnected = False
-        # self.myparent=self.parent()
+        self.myparent=self.parent()
+        self.RunningList=Running
+        self.RunningLayout=scrollLayoutRunning
 
     def check_error_conf_visibility(self, selected_text):
         if selected_text in ["Crash", "Hang"]:
@@ -68,14 +71,14 @@ class MyRunBox(QtWidgets.QWidget):
         grandparent.setEnabled(True)
 
     def showScriptPath(self):
-        if(self.ui.RunC_2.isChecked()==True):
-            self.ui.BrowseScriptPath_button.show()
-            self.ui.ScriptPath_label.show()
-            self.ui.ScriptPath_lineEdit.show()
-        else:
-            self.ui.BrowseScriptPath_button.hide()
-            self.ui.ScriptPath_label.hide()
-            self.ui.ScriptPath_lineEdit.hide()
+        if(self.RunC_2.isChecked()==True):
+            self.BrowseScriptPath_button.show()
+            self.ScriptPath_label.show()
+            self.ScriptPath_lineEdit.show()
+        else:    
+            self.BrowseScriptPath_button.hide()
+            self.ScriptPath_label.hide()
+            self.ScriptPath_lineEdit.hide()
     
     def collect_running_config(self):
         self.running_configurations['running_configurations']={}
@@ -132,15 +135,11 @@ class MyRunBox(QtWidgets.QWidget):
             #self.config_window_hang.closed_signal.disconnect(self.handle_another_window_closed) 
             self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_hang_data(rd))  
 
+    def deleteRunningWidget(self):
+        self.RunningList.remove(self)
+        self.RunningLayout.removeWidget(self)
+        self.deleteLater()
         
-        
-                       
-def run_custom_runtime():
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    window = MyRunBox()
-    window.show()
-    sys.exit(app.exec_())
-
-if __name__ == "__main__":
-    run_custom_runtime()
+        for index,widget in enumerate(self.RunningList):
+            self.RunningList[index].id=index+1
+            self.RunningList[index].groupBox.setTitle("Running Configuration"+str(index+1))

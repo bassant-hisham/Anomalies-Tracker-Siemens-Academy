@@ -4,7 +4,7 @@ from PyQt5 import QtWidgets
 from src.frontend.CustomWidgets.UIs.TaskTabUI import Ui_Task_Tab
 from src.frontend.CustomWidgets.commonFunctions import *
 from src.frontend.CustomWidgets.DesignBox import MyDesignBox
-from src.frontend.CustomWidgets.RunningConfiguration import MyRunningConfigurations
+from .RunBox import MyRunBox
 from PyQt5.QtGui import QIntValidator
 
 
@@ -50,7 +50,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
             
     def add_design(self):
         #self.scrollLayout.addWidget(MyDesignBox(self.scrollLayout.count()+1))
-        new_design_box = MyDesignBox(self.scrollLayout.count() + 1)
+        new_design_box = MyDesignBox(self.scrollLayout.count() + 1,self.Design_data,self.scrollLayout)
         self.scrollLayout.addWidget(new_design_box)
         new_design_box.myparent=new_design_box.parent()
         self.Design_data.append(new_design_box)
@@ -62,9 +62,11 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         return self.Running_data
         
     def add_running_config(self):
-        new_running_box = MyRunningConfigurations(self.scrollLayoutRunning)
-        new_running_box.custom_window.myparent=self.parent()
-        self.Running_data.append(new_running_box)  
+        new_running_box = MyRunBox(self.scrollLayoutRunning.count() + 1,self.Running_data,self.scrollLayoutRunning)
+        self.scrollLayoutRunning.addWidget(new_running_box)
+        new_running_box.myparent=new_running_box.parent()
+        self.Running_data.append(new_running_box) 
+        temp=8
         
     def get_builds(self):
         current_index = self.stacked_widget.currentIndex() #use it to know which of dir or file is used (0->Dir , 1->File)
@@ -104,8 +106,9 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def deleteRunningWidget(self):
         if(len(self.Running_data)!=0):
             WidgteToBeRemoved=self.Running_data.pop()
-            self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved.custom_window)
-            WidgteToBeRemoved.custom_window.deleteLater()
+            self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved)
+            WidgteToBeRemoved.deleteLater()
+        temp=8
 
     def deleteDesignWidget(self):
         if(len(self.Design_data)!=0):
