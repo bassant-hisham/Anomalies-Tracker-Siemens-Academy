@@ -12,9 +12,13 @@ import json
 from src.frontend.CustomWidgets.DesignBox import MyDesignBox
 import copy
 from PyQt5.QtGui import QIntValidator
+import threading
+from src.backend.Jenkins_APIs import Jenkins
+
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
+        self.JENKINS_APIs = Jenkins()
         self.setupUi(self)
         self.Tasks.hide()
         self.CreateJobs_button.hide()
@@ -228,9 +232,13 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             json_file.write("\n")
             
             
-          
 
-    
+
+            thread_output = threading.Thread(target=self.JENKINS_APIs.start_jobs_in_batches,
+                                                        args=(self.JsonData,3))
+            thread_output.start()
+
+            thread_output.join()
         
         
        
