@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import *
-from UIs.LaunchingConfigUI import Ui_launching_config
-from commonFunctions import *
-from DUTBox import MyDUTGroupBox
+from src.frontend.CustomWidgets.UIs.LaunchingConfigUI import Ui_launching_config
+from src.frontend.CustomWidgets.commonFunctions import *
+from src.frontend.CustomWidgets.DUTBox import MyDUTGroupBox
 import ast  # Import the ast module for safer evaluation
 
 

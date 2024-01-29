@@ -1,10 +1,10 @@
 import os
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
-from UIs.TaskTabUI import Ui_Task_Tab
-from commonFunctions import *
-from DesignBox import MyDesignBox
-from RunningConfiguration import MyRunningConfigurations
+from src.frontend.CustomWidgets.UIs.TaskTabUI import Ui_Task_Tab
+from src.frontend.CustomWidgets.commonFunctions import *
+from src.frontend.CustomWidgets.DesignBox import MyDesignBox
+from src.frontend.CustomWidgets.RunningConfiguration import MyRunningConfigurations
 from PyQt5.QtGui import QIntValidator
 
 

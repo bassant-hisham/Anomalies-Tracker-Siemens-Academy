@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import *
-from UIs.CompilationConfigUI import Ui_CompilationConfig_Form
-from commonFunctions import *
+from src.frontend.CustomWidgets.UIs.CompilationConfigUI import Ui_CompilationConfig_Form
+from src.frontend.CustomWidgets.commonFunctions import *
 from PyQt5.QtGui import QIntValidator
 
 class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):

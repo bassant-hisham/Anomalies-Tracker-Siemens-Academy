@@ -6,7 +6,7 @@
 
 import sys
 from PyQt5 import QtWidgets
-from mainwindow import MyMainWindow
+from src.frontend.CustomWidgets.mainwindow import MyMainWindow
 
 
 # In[ ]:

@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
-from UIs.RunningConfigUI import Ui_RunningConfiguration
-from RunBox import MyRunBox
+from src.frontend.CustomWidgets.UIs.RunningConfigUI import Ui_RunningConfiguration
+from src.frontend.CustomWidgets.RunBox import MyRunBox
 
 class MyRunningConfigurations(QWidget, Ui_RunningConfiguration):
 

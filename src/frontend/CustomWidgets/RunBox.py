@@ -1,9 +1,9 @@
 from PyQt5 import QtWidgets
-from UIs.RunningConfigUI import Ui_RunningConfiguration
-from UIs.CrashConfigUI import CrashConfigWindow
-from UIs.HangConfigUI import HangConfigWindow  # Import HangConfigWindow
+from src.frontend.CustomWidgets.UIs.RunningConfigUI import Ui_RunningConfiguration
+from src.frontend.CustomWidgets.UIs.CrashConfigUI import CrashConfigWindow
+from src.frontend.CustomWidgets.UIs.HangConfigUI import HangConfigWindow  # Import HangConfigWindow
 from PyQt5.QtWidgets import *
-from commonFunctions import *
+from src.frontend.CustomWidgets.commonFunctions import *
 
 class MyRunBox(QtWidgets.QWidget):
     def __init__(self):

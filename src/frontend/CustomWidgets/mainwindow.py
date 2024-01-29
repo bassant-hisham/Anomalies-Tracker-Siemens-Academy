@@ -2,18 +2,17 @@ from itertools import product
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
-from UIs.RunningConfigUI import Ui_RunningConfiguration
-from UIs.MainWindowUI import Ui_MainWindow
-from CompilationConfigurationWindow import MyCompilationConfigWindow
-from LaunchingConfigurationWindow import MyLaunchingConfigWindow
-from TaskTabIntegrated import MyTaskTab
-from Jobs import MyJobs
-from RunBox import MyRunBox
+from src.frontend.CustomWidgets.UIs.RunningConfigUI import Ui_RunningConfiguration
+from src.frontend.CustomWidgets.UIs.MainWindowUI import Ui_MainWindow
+from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilationConfigWindow
+from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
+from src.frontend.CustomWidgets.TaskTabIntegrated import MyTaskTab
+from src.frontend.CustomWidgets.Jobs import MyJobs
+from src.frontend.CustomWidgets.RunBox import MyRunBox
 import json
-from DesignBox import MyDesignBox
+from src.frontend.CustomWidgets.DesignBox import MyDesignBox
 import copy
 from PyQt5.QtGui import QIntValidator
-
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
@@ -229,8 +228,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
             json.dump(self.JsonData,json_file, indent=2)
             json_file.write("\n")
-                    
-                    
+            
+            
+          
 
     
         

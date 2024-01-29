@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets,QtCore
-from commonFunctions import *
-from CompilationConfigurationWindow import MyCompilationConfigWindow 
-from LaunchingConfigurationWindow import MyLaunchingConfigWindow
-from UIs.DesignBoxUI import Ui_DesignBox
+from src.frontend.CustomWidgets.commonFunctions import *
+from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilationConfigWindow 
+from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
+from src.frontend.CustomWidgets.UIs.DesignBoxUI import Ui_DesignBox
 from PyQt5.QtCore import QPoint
 
 class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):

@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
-from UIs.JobsUI import Ui_Jobs
+from src.frontend.CustomWidgets.UIs.JobsUI import Ui_Jobs
 
 
 class MyJobs(QtWidgets.QWidget,Ui_Jobs):

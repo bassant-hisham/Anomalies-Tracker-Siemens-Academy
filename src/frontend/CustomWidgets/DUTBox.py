@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-from UIs.DUTBoxUI import Ui_DUTConfiguration
-from CustomCoModelsConfig import CustomCoModelsConfig
-from commonFunctions import *
+from src.frontend.CustomWidgets.UIs.DUTBoxUI import Ui_DUTConfiguration
+from src.frontend.CustomWidgets.CustomCoModelsConfig import CustomCoModelsConfig
+from src.frontend.CustomWidgets.commonFunctions import *
 import ast  # Import the ast module for safer evaluation
 from PyQt5.QtGui import QIntValidator
 
