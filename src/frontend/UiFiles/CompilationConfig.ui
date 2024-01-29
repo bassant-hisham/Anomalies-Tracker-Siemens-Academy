@@ -17,6 +17,8 @@
    <string notr="true">QWidget{
 	background-color: rgb(44, 49, 59);
 	color: white;
+	font-size: 11pt;
+
 }
 
 #MainWindow, #scrollAreaWidgetContents{
@@ -135,6 +137,7 @@ QPushButton:disabled {
          <widget class="QCheckBox" name="CompileDesign_checkBox">
           <property name="font">
            <font>
+            <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
           </property>
@@ -154,6 +157,7 @@ QPushButton:disabled {
              <widget class="QLabel" name="Source_label">
               <property name="font">
                <font>
+                <pointsize>11</pointsize>
                 <bold>true</bold>
                </font>
               </property>
@@ -170,6 +174,7 @@ QPushButton:disabled {
              <widget class="QLabel" name="Output_label">
               <property name="font">
                <font>
+                <pointsize>11</pointsize>
                 <bold>true</bold>
                </font>
               </property>
@@ -220,6 +225,7 @@ QPushButton:disabled {
            <widget class="QLabel" name="Machine_label">
             <property name="font">
              <font>
+              <pointsize>11</pointsize>
               <bold>true</bold>
              </font>
             </property>
@@ -274,6 +280,7 @@ QPushButton:disabled {
          <widget class="QCheckBox" name="Force_checkBox">
           <property name="font">
            <font>
+            <pointsize>11</pointsize>
             <bold>true</bold>
            </font>
           </property>
@@ -291,6 +298,7 @@ QPushButton:disabled {
            <widget class="QLabel" name="Timeout_label">
             <property name="font">
              <font>
+              <pointsize>11</pointsize>
               <bold>true</bold>
              </font>
             </property>
@@ -349,7 +357,7 @@ QPushButton:disabled {
             </property>
             <property name="font">
              <font>
-              <pointsize>12</pointsize>
+              <pointsize>11</pointsize>
               <bold>true</bold>
              </font>
             </property>

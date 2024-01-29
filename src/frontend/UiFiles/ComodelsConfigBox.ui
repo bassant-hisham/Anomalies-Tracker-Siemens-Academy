@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>0</height>
+    <width>680</width>
+    <height>202</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,20 +21,153 @@
 }
 QGroupBox{
 	margin-top: 10px;
-	background-color: transparent;
+ background-color:rgb(37, 40, 50)
     border: 1px solid rgb(255, 255, 255);
 	padding-top: 20px;
 font:22px;
 font:bold;
 border-color:white;
 }
-</string>
+
+/* QFrame */
+QWidget {
+	border-radius: 15px;
+	background-color: rgb(37, 40, 50);
+}
+/* Label */
+QLabel{
+background-color:none;
+	color: rgb(255, 255, 255);
+font-size:22px;
+font:normal;
+
+}
+/* ToolButton */
+QToolButton {
+	border: 0px;
+	width: 28px;
+	height: 28px;
+	background-color: transparent;
+	color: rgb(255, 255, 255);
+	border-radius: 15px;
+}
+QToolButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 2px solid rgb(61, 70, 86);
+}
+QToolButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 2px solid rgb(43, 50, 61);
+}
+/* Button */
+QPushButton {
+	border: 0px solid rgb(52, 59, 72);
+	color: rgb(255, 255, 255);
+	border-radius: 10px;
+    background-color:#1b1d23;
+	color: rgb(255, 255, 255);
+	margin:10px;
+	padding:5px;
+font:bold 20px;
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 5px solid transparent;
+}
+QPushButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 7px solid transparent;
+}
+QPushButton:disabled {
+	background-color: rgb(102, 109, 122);
+	color: rgb(168, 168, 168);
+}
+
+QComboBox {
+	background-color: rgb(52, 59, 72);
+	border: 1px solid rgb(49, 54, 65);
+	height: 30px;
+	border-radius: 10px;
+	padding-left: 10px;
+	padding-right: 15px;
+	color: rgb(255, 255, 255);
+    font-size:22px;
+    font:normal; 
+}
+QComboBox QAbstractItemView {
+    background-color:rgb(27, 29, 35);
+	border: 0px;
+	color: #fff;
+    selection-background-color: rgb(22, 51, 79);
+    outline: none;
+}
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgb(22, 51, 79);
+}
+QComboBox::drop-down {
+	border: 0px;
+}
+QComboBox::down-arrow{
+	image: url(&quot;:/icons/icons/cil-chevron-bottom.png&quot;);
+	width:15px;
+	height:15px;
+	margin-right:15px;
+}
+QComboBox:on {
+	border: 0px solid rgb(61, 70, 86);
+	background-color: rgb(57, 65, 80)
+}
+QComboBox QListView {
+	background-color: rgb(27, 29, 35);
+	border-radius: 10px;
+	color: #FFF;
+	padding: 10px;
+}
+QComboBox:disabled {
+	background-color: #808080;
+}
+/* LineEdit */
+QLineEdit{
+	border: 0px solid rgb(37, 39, 48);
+	height: 30px;
+	border-radius: 15px;
+	color: white;
+	padding-left: 20px;
+	padding-right: 20px;
+	background-color: rgb(27, 29, 35);
+	font-size:20px;
+}
+QLineEdit:hover{
+	border: 2px solid rgb(64, 71, 88)
+}
+QLineEdit:focus{
+	border: 3px solid rgb(91, 101, 124);
+	color: white;
+}
+QLineEdit:disabled {
+	background-color: #808080;
+}
+QCheckBox
+{
+background-color:none;
+    font-size:22px;
+    font:normal; 
+	 color:white;
+}
+QListWidget
+{
+    font-size:18px;
+    font:normal; 
+	 color:white;
+	background-color: rgb(52, 59, 72);
+
+}</string>
   </property>
   <property name="title">
    <string/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="HostName_Hlayout">
      <property name="topMargin">
       <number>5</number>
@@ -136,7 +269,7 @@ border-radius:7px;</string>
      </item>
     </layout>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="DomainId_Hlayout">
      <property name="topMargin">
       <number>5</number>
@@ -235,6 +368,46 @@ border-radius:7px;</string>
         </size>
        </property>
       </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <layout class="QHBoxLayout" name="delete_horizontalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <item>
+      <spacer name="delete_horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="delete_pushButton">
+       <property name="styleSheet">
+        <string notr="true">background:none;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../IconsImages/delete.png</normaloff>../IconsImages/delete.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

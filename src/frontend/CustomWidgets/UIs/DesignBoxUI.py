@@ -16,13 +16,14 @@ class Ui_DesignBox(object):
         DesignBox.setObjectName("DesignBox")
         DesignBox.resize(892, 506)
         font = QtGui.QFont()
-        font.setPointSize(10)
+        font.setPointSize(-1)
         font.setBold(True)
         DesignBox.setFont(font)
         DesignBox.setStyleSheet("QGroupBox{\n"
 "background-color:rgb(37, 40, 50);\n"
 "color: white;\n"
-"    border-radius: 15px;\n"
+"border-radius: 15px;\n"
+"font-size:16px;\n"
 "}\n"
 "QLabel{\n"
 "color: white;\n"
@@ -114,7 +115,11 @@ class Ui_DesignBox(object):
         self.BrowseDesignPath_button.setIcon(icon)
         self.BrowseDesignPath_button.setObjectName("BrowseDesignPath_button")
         self.DesignPath_horizontalLayout.addWidget(self.BrowseDesignPath_button)
-        self.gridLayout.addLayout(self.DesignPath_horizontalLayout, 1, 0, 1, 1)
+        self.gridLayout.addLayout(self.DesignPath_horizontalLayout, 2, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(20, 24, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        self.gridLayout.addItem(spacerItem, 1, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 60, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        self.gridLayout.addItem(spacerItem1, 5, 0, 1, 1)
         self.Configurations_horizontalLayout = QtWidgets.QHBoxLayout()
         self.Configurations_horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.Configurations_horizontalLayout.setObjectName("Configurations_horizontalLayout")
@@ -148,14 +153,14 @@ class Ui_DesignBox(object):
         self.LaunchingConfig_button.setStyleSheet("")
         self.LaunchingConfig_button.setObjectName("LaunchingConfig_button")
         self.Configurations_horizontalLayout.addWidget(self.LaunchingConfig_button)
-        self.gridLayout.addLayout(self.Configurations_horizontalLayout, 3, 0, 1, 1)
+        self.gridLayout.addLayout(self.Configurations_horizontalLayout, 4, 0, 1, 1)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.horizontalLayout.setContentsMargins(-1, -1, -1, 8)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        spacerItem = QtWidgets.QSpacerItem(40, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout.addItem(spacerItem)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem2)
         self.delete_pushButton = QtWidgets.QPushButton(DesignBox)
         self.delete_pushButton.setStyleSheet("background:none;\n"
 "")
@@ -167,8 +172,8 @@ class Ui_DesignBox(object):
         self.delete_pushButton.setObjectName("delete_pushButton")
         self.horizontalLayout.addWidget(self.delete_pushButton)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 66, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        self.gridLayout.addItem(spacerItem1, 2, 0, 1, 1)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 94, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        self.gridLayout.addItem(spacerItem3, 3, 0, 1, 1)
 
         self.retranslateUi(DesignBox)
         QtCore.QMetaObject.connectSlotsByName(DesignBox)

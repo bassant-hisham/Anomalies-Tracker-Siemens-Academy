@@ -12,7 +12,7 @@
   </property>
   <property name="font">
    <font>
-    <pointsize>10</pointsize>
+    <pointsize>-1</pointsize>
     <bold>true</bold>
    </font>
   </property>
@@ -23,7 +23,8 @@
    <string notr="true">QGroupBox{
 background-color:rgb(37, 40, 50);
 color: white;
-	border-radius: 15px;
+border-radius: 15px;
+font-size:16px;
 }
 QLabel{
 color: white;
@@ -93,7 +94,7 @@ QPushButton:disabled {
    <string>Design</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="DesignPath_horizontalLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetNoConstraint</enum>
@@ -142,7 +143,39 @@ QPushButton:disabled {
      </item>
     </layout>
    </item>
-   <item row="3" column="0">
+   <item row="1" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>24</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="5" column="0">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>60</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="0">
     <layout class="QHBoxLayout" name="Configurations_horizontalLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetNoConstraint</enum>
@@ -258,8 +291,8 @@ QPushButton:disabled {
      </item>
     </layout>
    </item>
-   <item row="2" column="0">
-    <spacer name="verticalSpacer">
+   <item row="3" column="0">
+    <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -269,7 +302,7 @@ QPushButton:disabled {
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>66</height>
+       <height>94</height>
       </size>
      </property>
     </spacer>

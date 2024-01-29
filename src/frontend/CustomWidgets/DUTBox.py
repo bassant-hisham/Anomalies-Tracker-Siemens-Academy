@@ -4,7 +4,9 @@ from src.frontend.CustomWidgets.UIs.DUTBoxUI import Ui_DUTConfiguration
 from src.frontend.CustomWidgets.CustomCoModelsConfig import CustomCoModelsConfig
 from src.frontend.CustomWidgets.commonFunctions import *
 import ast  # Import the ast module for safer evaluation
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtGui import *
+from PyQt5.QtCore import QRegExp
+
 
 class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
     def __init__(self, Dutconfig_Vlayout:QVBoxLayout, Duts:list,id):
@@ -31,6 +33,9 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.ConfigValueList_lineEdit.hide()
         self.FromConfigValue_lineEdit.setValidator(QIntValidator())
         self.ToConfigValue_lineEdit.setValidator(QIntValidator())
+        self.Configvalue_lineEdit.setValidator(QIntValidator())
+        regex = QRegExp('\[\d(,\d)*\]')
+        self.ConfigValueList_lineEdit.setValidator(QRegExpValidator(regex))
         self.Dutconfig_Vlayout=Dutconfig_Vlayout
         self.Duts=Duts
         
@@ -164,5 +169,4 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                      self.data["dpi_additional_args"]=eval(self.DPIAdditionalArg_2.toPlainText())
             
                 return self.data
-    
     
