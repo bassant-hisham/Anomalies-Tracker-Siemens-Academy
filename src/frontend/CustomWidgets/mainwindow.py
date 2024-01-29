@@ -237,8 +237,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             thread_output = threading.Thread(target=self.JENKINS_APIs.start_jobs_in_batches,
                                                         args=(self.JsonData,3))
             thread_output.start()
-
-            thread_output.join()
         
         
        

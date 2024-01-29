@@ -10,7 +10,7 @@ from src.backend.job_generator.job_generator import create_jobs
 #                             config.JenkinsConfig.JENKINS_USERNAME,
 #                             config.JenkinsConfig.JENKINS_PASSWORD)
 
-JENKINS_SERVER = JenkinsWrapper("http://localhost:8080/","AhmedSh","#myjenkinsacc#")
+JENKINS_SERVER = JenkinsWrapper("http://localhost:8080/","admin","11f6ffd591aa58166016b94c900f0c361d")
 
 
 class Jenkins:
