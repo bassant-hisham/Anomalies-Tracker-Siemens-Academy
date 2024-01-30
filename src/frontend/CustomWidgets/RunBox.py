@@ -122,12 +122,13 @@ class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
     def show_data(self,running_dict):
         self.RunC.setCheckState(True)
         self.RunC.setDisabled(True)
-        self.ui.ScriptPath_label.show()
-        self.ui.ScriptPath_lineEdit.show()
+        self.ScriptPath_label.show()
+        self.ScriptPath_lineEdit.show()
         self.lineEditOutputDirectory_2.setText(running_dict['running_configurations']['script_path'])
         self.lineEditOutputDirectory_2.setReadOnly(True)
         self.ErrorC.setCurrentText(running_dict['running_configurations']['error_type'])
         self.ErrorC.setDisabled(True)
+        self.delete_pushButton.setDisabled(True)
         if running_dict['running_configurations']['error_type'] == "Crash":
             #self.config_window_crash.closed_signal.disconnect(self.handle_another_window_closed) 
             self.ErrorConf.clicked.connect(lambda _, rd=running_dict: self.show_crash_data(rd))  
