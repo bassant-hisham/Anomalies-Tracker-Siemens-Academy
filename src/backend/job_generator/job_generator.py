@@ -38,7 +38,7 @@ def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> di
                 job_xml = job_xmls[job_index]
                 # with open(f"{solution_type}-Task{task_id}-Job{job_id}.xml") as xmlFile:
                 #     config = xmlFile.read()
-                server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
+                #server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
         return job_names
     except Exception as e:
         logging.error(f"Error while creating jobs. Error: {e}")
@@ -371,7 +371,7 @@ class EthernetHandler(SolutionHandler):
             logging.error(f"Error while generating script: {e}")
             return ""
 
-    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = True) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = False) -> tuple:
         try:
             job_ids = []
             job_xmls = []

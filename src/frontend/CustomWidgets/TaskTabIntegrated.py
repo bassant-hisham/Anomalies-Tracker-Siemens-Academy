@@ -6,13 +6,14 @@ from src.frontend.CustomWidgets.commonFunctions import *
 from src.frontend.CustomWidgets.DesignBox import MyDesignBox
 from .RunBox import MyRunBox
 from PyQt5.QtGui import QIntValidator
+from PyQt5.QtGui import QIcon
 
 
 class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def __init__(self):
         super(MyTaskTab, self).__init__()
         self.setupUi(self)  # This sets up the UI components from the TaskTab section
-        
+        self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.stacked_widget = QStackedWidget(self)
         self.stacked_widget.addWidget(self.Directory_widget)
         self.stacked_widget.addWidget(self.File_widget)

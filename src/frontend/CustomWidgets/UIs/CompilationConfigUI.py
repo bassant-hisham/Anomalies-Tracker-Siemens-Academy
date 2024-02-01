@@ -9,10 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon
 
 
 class Ui_CompilationConfig_Form(object):
     def setupUi(self, CompilationConfig_Form):
+        self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         CompilationConfig_Form.setObjectName("CompilationConfig_Form")
         CompilationConfig_Form.resize(619, 553)
         CompilationConfig_Form.setStyleSheet("QWidget{\n"
@@ -265,7 +267,7 @@ class Ui_CompilationConfig_Form(object):
 
     def retranslateUi(self, CompilationConfig_Form):
         _translate = QtCore.QCoreApplication.translate
-        CompilationConfig_Form.setWindowTitle(_translate("CompilationConfig_Form", "Form"))
+        CompilationConfig_Form.setWindowTitle(_translate("CompilationConfig_Form", "Compilation Configuration"))
         self.CompileDesign_checkBox.setText(_translate("CompilationConfig_Form", "Compile Design"))
         self.Source_label.setText(_translate("CompilationConfig_Form", "Source Design Path"))
         self.Output_label.setText(_translate("CompilationConfig_Form", "Output Directory"))

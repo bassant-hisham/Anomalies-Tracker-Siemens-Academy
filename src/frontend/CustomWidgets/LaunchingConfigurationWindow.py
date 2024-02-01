@@ -4,6 +4,7 @@ from src.frontend.CustomWidgets.UIs.LaunchingConfigUI import Ui_launching_config
 from src.frontend.CustomWidgets.commonFunctions import *
 from src.frontend.CustomWidgets.DUTBox import MyDUTGroupBox
 import ast  # Import the ast module for safer evaluation
+from PyQt5.QtGui import QIcon
 
 
 class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
@@ -14,7 +15,7 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.ToolConfigGroupBox.setCheckable(True)
         self.ToolConfigGroupBox.setChecked(False)
         self.toggle_content()
-
+        self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.ToolConfigGroupBox.toggled.connect(self.toggle_content)
         self.Add_PushButton.clicked.connect(self.add_dut_config)
         self.AddArgButton.clicked.connect(self.add_additional_arguments)
@@ -71,46 +72,112 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
     #     self.DPIAdditionalArg_2.append(str(self.arguments))
         
     def add_additional_arguments(self):
+        self.argument_key_empty = True
+        self.argument_value_empty = True
         text_content = self.AdditionalArg.toPlainText()
         if not text_content:
             self.arguments = {}
         else:
             self.arguments = ast.literal_eval(text_content)
-            self.AdditionalArg.clear()     
+            self.AdditionalArg.clear()   
+        
+          
         argument_key = self.ArgName_HSpacer_mid_lineEdit.text()
+        if(argument_key == ""):
+             self.argument_key_empty = True
+        else:
+            self.argument_key_empty = False
+            
+            
         argument_value = self.ArgValue_lineEdit.text()
-        self.arguments[argument_key] =argument_value
-        self.ToolConfig["master_tool_configuration"]["additional_args"][argument_key] = argument_value
-        self.AdditionalArg.append(str(self.arguments))
+            
+        if(not self.argument_key_empty):
+            self.arguments[argument_key] =argument_value
+            self.ToolConfig["master_tool_configuration"]["additional_args"][argument_key] = argument_value
+            self.AdditionalArg.append(str(self.arguments))
 
+        if(self.argument_key_empty):
+            self.showWarningMessage("Argument cannot be empty")
+       
             
     def add_additional_env_variables(self):
+        self.VE_ENABLE_BUFFERS_STATISTICS_empty = True
+        self.ENABLE_BACKUP_LOG_empty = True
+        
         text_content = self.ToolAdditionalEnvValues.toPlainText()
+        
         if not text_content:
             self.arguments = {}
         else:
             self.arguments = ast.literal_eval(text_content)
             self.ToolAdditionalEnvValues.clear()     
+            
         VE_ENABLE_BUFFERS_STATISTICS = self.EnvVarName_HSpacer_mid_lineEdit.text()
+        if(VE_ENABLE_BUFFERS_STATISTICS == ""):
+            self.VE_ENABLE_BUFFERS_STATISTICS_empty = True
+        else:
+            self.VE_ENABLE_BUFFERS_STATISTICS_empty = False
+            
+            
         ENABLE_BACKUP_LOG = self.EnvVarValue_lineEdit.text()
-        self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
-        self.arguments[VE_ENABLE_BUFFERS_STATISTICS] =ENABLE_BACKUP_LOG
-        self.ToolAdditionalEnvValues.append(str(self.arguments))
-    
+        if(ENABLE_BACKUP_LOG == ""):
+            self.ENABLE_BACKUP_LOG_empty = True
+            print("i am here no value")
+        else:
+            self.ENABLE_BACKUP_LOG_empty = False
+            print("i am not here")
+            
+            
+        if(not self.VE_ENABLE_BUFFERS_STATISTICS_empty and not self.ENABLE_BACKUP_LOG_empty):
+            self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
+            self.arguments[VE_ENABLE_BUFFERS_STATISTICS] =ENABLE_BACKUP_LOG
+            self.ToolAdditionalEnvValues.append(str(self.arguments))
+        
+        
+        if(self.VE_ENABLE_BUFFERS_STATISTICS_empty  or  self.ENABLE_BACKUP_LOG_empty):
+            self.showWarningMessage("Environment Variable cannot be empty")
+        
+            
+            
     def add_additional_env_variables_slave(self):
+        self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty = True
+        self.ENABLE_BACKUP_LOG_empty_slave = True
+        
         text_content = self.ToolAdditionalEnvValues_2.toPlainText()
+        
         if not text_content:
             self.arguments = {}
         else:
             self.arguments = ast.literal_eval(text_content)
             self.ToolAdditionalEnvValues_2.clear()     
         VE_ENABLE_BUFFERS_STATISTICS = self.EnvVarName_HSpacer_mid_lineEdit_2.text()
+        
+
+        if(VE_ENABLE_BUFFERS_STATISTICS == ""):
+            self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty = True
+        else:
+            self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty = False
+            
         ENABLE_BACKUP_LOG = self.EnvVarValue_lineEdit_2.text()
-        self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
-        self.arguments[VE_ENABLE_BUFFERS_STATISTICS] =ENABLE_BACKUP_LOG
-        self.ToolAdditionalEnvValues_2.append(str(self.arguments))
+        
+        if(ENABLE_BACKUP_LOG == ""):
+            self.ENABLE_BACKUP_LOG_empty_slave = True
+        else:
+            self.ENABLE_BACKUP_LOG_empty_slave = False
+        
+        if(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty  or  self.ENABLE_BACKUP_LOG_empty_slave):
+            self.showWarningMessage("Environment Variable cannot be empty")
+        
+        if(not self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty and not self.ENABLE_BACKUP_LOG_empty_slave):
+            self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
+            self.arguments[VE_ENABLE_BUFFERS_STATISTICS] =ENABLE_BACKUP_LOG
+            self.ToolAdditionalEnvValues_2.append(str(self.arguments))
+        
+        
 
     def add_additional_arguments_slave(self):
+        self.argument_value_slave_empty= True
+        self.argument_key_slave_empty = True
         text_content = self.AdditionalArg_2.toPlainText()
         if not text_content:
             self.arguments = {}
@@ -118,11 +185,21 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             self.arguments = ast.literal_eval(text_content)
             self.AdditionalArg_2.clear()     
         argument_key = self.ArgName_HSpacer_mid_lineEdit_2.text()
+        
+        if(argument_key == ""):
+            self.argument_key_slave_empty= True
+        else:
+            self.argument_key_slave_empty = False
+            
         argument_value = self.ArgValue_lineEdit_2.text()
-        self.arguments[argument_key] =argument_value
-        self.ToolConfig["slave_tool_configuration"]["additional_args"][argument_key] = argument_value
-        self.AdditionalArg_2.append(str(self.arguments))
+            
+        if(not self.argument_key_slave_empty):
+            self.arguments[argument_key] =argument_value
+            self.ToolConfig["slave_tool_configuration"]["additional_args"][argument_key] = argument_value
+            self.AdditionalArg_2.append(str(self.arguments))
 
+        if(self.argument_key_slave_empty):
+            self.showWarningMessage("Environment Variable cannot be empty")
 
     def add_dut_config(self):
         new_dut_box = MyDUTGroupBox(self.Dutconfig_Vlayout,self.Duts,self.Dutconfig_Vlayout.count()+1)
@@ -160,6 +237,14 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         textbox.clear()
         text_content.popitem()
         textbox.append(str(text_content))
+    
+    
+    def showWarningMessage(self , input):
+        warning_dialog = QMessageBox(self)
+        warning_dialog.setIcon(QMessageBox.Warning)
+        warning_dialog.setWindowTitle('Empty String')
+        warning_dialog.setText(f'Error : {input}')
+        warning_dialog.show()
         
     def closeEvent(self, event):
         self.closed_signal.emit()

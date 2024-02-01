@@ -7,15 +7,10 @@ from src.backend.jenkins_wrapper_package.dependency_processor import topological
 import threading
 import logging
 from enum import Enum
-
 import config
+from config import BuildState
 
 
-class BuildState(Enum):
-    JOB_CREATED = 'Job Created'
-    JOB_IN_BATCH = 'Job In Batch'
-    JOB_STARTED = 'Job Started'
-    JOB_CRASHED = 'Job Crashed in Jenkins'
 
 
 
@@ -38,7 +33,7 @@ class JenkinsJobExecutor:
 
             build_number = jenkins_wrapper.get_last_build_number(job_name)
 
-            self.All_Jobs_Status[job_name] = BuildState.JOB_STARTED.value
+            self.All_Jobs_Status[job_name] = BuildState.JOB_STARTED.description
             self.All_Jobs_Build_Numbers[job_name] = build_number
             
             if config.DUMP_CONSOLE_OUTPUT:
@@ -69,42 +64,61 @@ class JenkinsJobExecutor:
             message =f"Exception occurred for job '{job_name}': {e}"
             logging.error(message) 
             print(message)
-            self.All_Jobs_Status[job_name] = BuildState.JOB_CRASHED.value
+            self.All_Jobs_Status[job_name] = BuildState.JOB_CRASHED.description
 
             if config.DELETE_JOB_AFTER_FINISH:
                 jenkins_wrapper.delete_job(job_name)
 
     
     def run_all_jobs(self,server, jobs_to_execute):
-        self.All_Jobs_Status.update({i: BuildState.JOB_IN_BATCH.value for i in jobs_to_execute})
+        self.All_Jobs_Status.update({i: BuildState.JOB_IN_BATCH.description for i in jobs_to_execute})
 
         threads = []
         #  add All_Jobs_Info
 
         for job_name in jobs_to_execute:
-            t = threading.Thread(target=self.run_job, args=(server,job_name))
-            threads.append(t)
-            t.start()
+            dependency_job , dependency_result  = self.is_dependency_failed(job_name)
+            if dependency_result:
+                self.All_Jobs_Status[job_name] = f"{BuildState.CHILD_JOB_FAILED.description} : {dependency_job}"
+            else:   
+                t = threading.Thread(target=self.run_job, args=(server,job_name))
+                threads.append(t)
+                t.start()
 
         for t in threads:
             t.join()
 
         return self.finished_jobs#no need 
     
+    
+    def is_dependency_failed(self, job):
+        for dependency in self.dependencies[job]:
+            if dependency in self.All_Jobs_Status and (self.All_Jobs_Status[dependency] == "FAILURE" or self.All_Jobs_Status[dependency][:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description):
+                return dependency , True
+        return "" , False 
 
+
+
+    
     def run_jobs_in_batches(self,server , jobs_to_execute, batch_size):
-        print(jobs_to_execute)
-        self.All_Jobs_Status.update({i: BuildState.JOB_CREATED.value for i in jobs_to_execute})
+        self.dependencies = jobs_to_execute
+        self.All_Jobs_Status.update({i: BuildState.JOB_CREATED.description for i in jobs_to_execute})
 
 
         # jobs_to_execute = list(jobs_to_execute.keys())
+       
         jobs_to_execute = topological_sort_in_batches(jobs_to_execute, batch_size)
-        # batches = [jobs_to_execute[i:i + batch_size] for i in range(0, len(jobs_to_execute), batch_size)]
-
+            
+            
+            #try catch exceptions here , 2 choices --> error msg , ob status --> DjEADLOCK
+            
+            
+            # batches = [jobs_to_execute[i:i + batch_size] for i in range(0, len(jobs_to_execute), batch_size)
+        
         for batch in jobs_to_execute:
-            print(batch)
-            self.run_all_jobs(server, batch)
-
+                print(batch)
+                self.run_all_jobs(server, batch)
+                
         return self.finished_jobs #no need
 
 

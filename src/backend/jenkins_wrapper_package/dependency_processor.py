@@ -1,6 +1,6 @@
 from collections import defaultdict, deque
 
-
+from src.common.exception import CircularDependencyException
 def topological_sort_in_batches(graph:dict, batch_size:int):
     """
     topological sort on a directed acyclic graph in batches, where each batch contains a specified number of nodes that can be run in parallel.
@@ -48,18 +48,34 @@ def topological_sort_in_batches(graph:dict, batch_size:int):
                     queue.append(neighbor)
 
         result.append(batch)
+    flattened_array = [element for row in result for element in row]
+    if len(flattened_array) != len(graph):
+        raise CircularDependencyException 
 
     return result
 
-# graph = {
-#     "1": ["2", "4"],
-#     "2": ["5"],
-#     "3": ["5"],
-#     "4": ["5"],
-#     "5": [],
-#     "6": [],
-#     "7": []
-# }
+graph = {
+    "1": ["2"],
+    "2": [1],
+    "3": [],
+    "4": [],
+    "5": [],
+    "6": [],
+    "7": []
+}
+# [['5','6','7'],['2','3','4'],['1']]
+
+
+All_Jobs_Status = {
+    "1": "True",
+    "2": "True",
+    "3": "",
+    "4": "",
+    "5": "FAILURE",
+    "6": "",
+    "7": ""
+}
+
 # graph = {
 #     'Ethernet-1-1': ['Ethernet-1-2'],
 #     'Ethernet-1-2': ['Ethernet-1-3'],
@@ -70,5 +86,14 @@ def topological_sort_in_batches(graph:dict, batch_size:int):
 # print("Batched Topological Sort:", result)
 
 
+
+# def is_dependency_failed(job):
+#     for dependency in graph[job]:
+#         if dependency in All_Jobs_Status and All_Jobs_Status[dependency] == "FAILURE":
+#             return False
+#     return True
+
+
+#print(is_dependency_failed("6"))
 
 

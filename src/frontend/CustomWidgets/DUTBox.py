@@ -15,6 +15,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.id=id
         self.setTitle("DUT Configuration " + str(id))
         self.setCheckable(True)
+        self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.setChecked(True)
         self.toggled.connect(self.toggle_content)
         self.CustomComConf_checkbox_2.stateChanged.connect(self.add_custom_comodel)

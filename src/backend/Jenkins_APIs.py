@@ -2,15 +2,14 @@ from src.backend.jenkins_wrapper_package.JenkinsJobExecutor import JenkinsJobExe
 from src.backend.jenkins_wrapper_package.JenkinsWrapper import JenkinsWrapper
 from src.backend.job_generator.job_generator import create_jobs
 
-# import config
+import config
 
 
-# to note jenkins jobs is letter case insensitive --> git = Git = giT = GIT
-# JENKINS_SERVER = JenkinsWrapper(config.JenkinsConfig.JENKINS_URL,
-#                             config.JenkinsConfig.JENKINS_USERNAME,
-#                             config.JenkinsConfig.JENKINS_PASSWORD)
+#to note jenkins jobs is letter case insensitive --> git = Git = giT = GIT
+JENKINS_SERVER = JenkinsWrapper(config.JenkinsConfig.JENKINS_URL,
+                            config.JenkinsConfig.JENKINS_USERNAME,
+                            config.JenkinsConfig.JENKINS_PASSWORD)
 
-JENKINS_SERVER = JenkinsWrapper("http://localhost:8080/","admin","11f6ffd591aa58166016b94c900f0c361d")
 
 
 class Jenkins:

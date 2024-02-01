@@ -5,6 +5,7 @@ from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilat
 from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
 from src.frontend.CustomWidgets.UIs.DesignBoxUI import Ui_DesignBox
 from PyQt5.QtCore import QPoint
+from PyQt5.QtGui import QIcon
 
 class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
     closed_signal = QtCore.pyqtSignal()
@@ -12,6 +13,7 @@ class MyDesignBox(QtWidgets.QGroupBox,Ui_DesignBox):
         super(MyDesignBox, self).__init__()
         self.setupUi(self)  # This sets up the UI components from the Design box
         self.setTitle("Design " + str(id))
+        self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations=MyLaunchingConfigWindow()
         self.CompilationConfig_button.clicked.connect(self.open_compilation_config)

@@ -944,7 +944,7 @@ class Ui_launching_config(object):
 
     def retranslateUi(self, launching_config):
         _translate = QtCore.QCoreApplication.translate
-        launching_config.setWindowTitle(_translate("launching_config", "Form"))
+        launching_config.setWindowTitle(_translate("launching_config", "Launching Configurations"))
         self.Title.setText(_translate("launching_config", "Launching Configurations :"))
         self.ToolConfigGroupBox.setTitle(_translate("launching_config", "Tools Configuration"))
         self.LaunchToolCheckBox.setText(_translate("launching_config", "Launch Tool"))

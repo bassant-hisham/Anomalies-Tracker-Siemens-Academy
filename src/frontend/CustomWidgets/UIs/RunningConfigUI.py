@@ -310,7 +310,7 @@ class Ui_RunningConfiguration(object):
 
     def retranslateUi(self, RunningConfiguration):
         _translate = QtCore.QCoreApplication.translate
-        RunningConfiguration.setWindowTitle(_translate("RunningConfiguration", "Form"))
+        RunningConfiguration.setWindowTitle(_translate("RunningConfiguration", "Running Configuration"))
         self.groupBox.setTitle(_translate("RunningConfiguration", "Running Configuration 1"))
         self.ScriptPath_label.setText(_translate("RunningConfiguration", "Script Path"))
         self.BrowseScriptPath_button.setText(_translate("RunningConfiguration", "..."))

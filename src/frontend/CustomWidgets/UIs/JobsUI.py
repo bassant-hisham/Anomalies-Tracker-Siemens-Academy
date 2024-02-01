@@ -163,6 +163,7 @@ class Ui_Jobs(object):
         sizePolicy.setHeightForWidth(self.Run_pushButton.sizePolicy().hasHeightForWidth())
         self.Run_pushButton.setSizePolicy(sizePolicy)
         self.Run_pushButton.setMinimumSize(QtCore.QSize(100, 35))
+        self.Run_pushButton.setFixedSize(100, 50)
         self.Run_pushButton.setStyleSheet("QPushButton {\n"
 "    background-color: red;\n"
 "    color:White;\n"
@@ -244,7 +245,7 @@ class Ui_Jobs(object):
 
     def retranslateUi(self, Jobs):
         _translate = QtCore.QCoreApplication.translate
-        Jobs.setWindowTitle(_translate("Jobs", "Form"))
+        Jobs.setWindowTitle(_translate("Jobs", "Running Jobs"))
         self.selectall_pushButton.setText(_translate("Jobs", "Select All"))
         self.Run_pushButton.setText(_translate("Jobs", "Run"))
         item = self.Jobs_table.horizontalHeaderItem(0)

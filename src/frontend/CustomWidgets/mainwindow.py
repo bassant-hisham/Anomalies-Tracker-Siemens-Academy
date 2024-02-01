@@ -2,6 +2,7 @@ from itertools import product
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
+from PyQt5 import QtCore
 from src.frontend.CustomWidgets.UIs.MainWindowUI import Ui_MainWindow
 from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilationConfigWindow
 from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
@@ -12,9 +13,14 @@ import json
 from src.frontend.CustomWidgets.DesignBox import MyDesignBox
 import copy
 from PyQt5.QtGui import QIntValidator
+from PyQt5 import QtGui
 import threading
 from src.backend.Jenkins_APIs import Jenkins
-
+import config
+from PyQt5.QtGui import QIcon
+from config import BuildState
+from PyQt5.QtCore import Qt, QThread, QObject, pyqtSignal
+from src.common.exception import CircularDependencyException
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
@@ -23,7 +29,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Tasks.hide()
         self.CreateJobs_button.hide()
         self.CreateTask_button.clicked.connect(self.createTaskTabWidget)
-
+        self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
         
@@ -33,8 +39,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.design_widget_layout=QVBoxLayout()
         self.JsonData={}
         self.JsonData[self.Solution_comboBox.currentText()]={}
+        self.timer = self.refresh_every_5_sec_for_jobs()
+        self.console_timer = self.refresh_every_5_sec()
+        self.console_timer.timeout.connect(self.update_console)
 
-        
+        self.worker_thread = WorkerThread(self, self.JsonData ,)
+        self.worker_thread.error_signal.connect(self.show_error_message)
         
         #self.CreateJobs_button.clicked.connect(self.collectData)
 
@@ -79,6 +89,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Job.Run_pushButton.clicked.connect(self.GenerateJson)
         self.Job.selectall_pushButton.clicked.connect(self.selectallrows)
 
+        
         self.combinations = self.collectData()
         self.Job.Jobs_table.setRowCount(len(self.combinations))
         self.Job.Jobs_table.verticalHeader().setVisible(False)
@@ -143,19 +154,123 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job.Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
             col_index += 1    
 
+
+            solution=self.Solution_comboBox.currentText()
+            taskNu=self.Tasks.currentIndex()
+            job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
+
+            self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(job_name_str))
+            col_index += 1 
+            #self.add_all_jobs_status()
             ShowConsole = QPushButton("Show")
             ShowConsole.setStyleSheet("color: white;")
             self.ShowRun = MyRunBox(0,[],"")
             self.runningwindows.append(self.ShowRun)
-            ShowConsole.clicked.connect(lambda _, job_name="job_name": self.open_console(job_name))
+            ShowConsole.clicked.connect(lambda _, job_name=job_name_str: self.open_and_update_console(job_name))
             self.Job.Jobs_table.setCellWidget(row_index, 11, ShowConsole)
             col_index += 1
 
-    def open_console(self, job_name: str) -> None:
+
+            
+
+    def open_and_update_console(self, job_name: str):
+        self.open_console(job_name)
+
+        self.current_job_name = job_name
+
+
+    def update_console(self):
+        if hasattr(self, 'current_job_name'):
+            self.open_console(self.current_job_name)
+
+    def open_console(self, job_name: str) -> None:        
         self.Job.scrollArea_console.setVisible(True)
-        self.Job.console_text.setPlainText(f"Console for {job_name} will go here.")
+        state, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
+        if state:
+            self.Job.console_text.setPlainText(console_output)
+        else:
+            self.Job.console_text.setPlainText(f"No Console Output for {job_name} Yet.")
+
+        scrollbar = self.Job.console_text.verticalScrollBar()
+        scrollbar.setValue(scrollbar.maximum())
         self.Job.console_text.repaint()
 
+
+    def refresh_every_5_sec(self) -> QtCore.QTimer:
+        timer = QtCore.QTimer(self)
+        timer.timeout.connect(self.update_console)
+        timer.start(5000)
+        return timer
+
+    # def add_all_jobs_status(self) -> None:
+    #     original_dict = self.JENKINS_APIs.get_all_status()
+    #     jobs = [{job:status} for job, status in original_dict.items()]
+
+    #     for job_index in range(len(jobs)):
+    #         self.add_job(jobs[job_index])
+
+
+    def refresh_job(self, job_name: str, job_status: str) -> None:
+        number_of_rows = self.Job.Jobs_table.rowCount()
+        job_row = -1
+        for row in range(number_of_rows):
+            if self.Job.Jobs_table.item(row, 9).text() == job_name:
+                job_row = row
+                break
+        if job_row >= 0:
+            status_item = QTableWidgetItem("")
+            label = QLabel(job_status)
+            
+            # match case but needs python 3.10 upwards
+             
+            if job_status == "SUCCESS":
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet("color: green; text-align: center; font-weight: bold;") 
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label)  
+            elif job_status == "FAILURE":
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label) 
+            elif job_status == BuildState.JOB_CREATED.description:
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet(f"color: {BuildState.JOB_CREATED.color}; text-align: center; font-weight: bold;")
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+            elif job_status == BuildState.JOB_CRASHED.description:
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet(f"color: {BuildState.JOB_CRASHED.color}; text-align: center; font-weight: bold;")
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+            elif job_status == BuildState.JOB_IN_BATCH.description:
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet(f"color: {BuildState.JOB_IN_BATCH.color}; text-align: center; font-weight: bold;")
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+            elif job_status == BuildState.JOB_STARTED.description:
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet(f"color: {BuildState.JOB_STARTED.color}; text-align: center; font-weight: bold;")
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+            elif job_status[:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description:
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+            else:
+                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
+                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+                
+    def refresh_all_jobs(self) -> None:
+        original_dict = self.JENKINS_APIs.get_all_status()
+        jobs = [{job:status} for job, status in original_dict.items()]
+
+        for job_index in range(len(jobs)):
+            job_name = list(jobs[job_index].items())[0][0]
+            job_status = list(jobs[job_index].items())[0][1]
+            self.refresh_job(job_name, job_status)
+
+    def refresh_every_5_sec_for_jobs(self) -> QtCore.QTimer:
+        timer = QtCore.QTimer(self)
+        timer.timeout.connect(self.refresh_all_jobs)
+        timer.start(5000)
+        return timer
+    
     def collectData(self):
 
         Designs = self.Tasks.TaskTab.get_design()
@@ -244,18 +359,29 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             json_file.write("\n")
             
             
+            self.worker_thread.json_data = self.JsonData
+            self.worker_thread.start()
 
 
-            thread_output = threading.Thread(target=self.JENKINS_APIs.start_jobs_in_batches,
-                                                        args=(self.JsonData,3))
-            thread_output.start()
-        
-        
-       
-
-                   
+    def show_error_message(self, error_message):
+        QMessageBox.warning(self, "Dependency Failure", f"<b>{error_message}</b>")
 
 
 
-        
 
+
+class WorkerThread(QThread, QObject):
+    error_signal = pyqtSignal(str)
+
+    def __init__(self,main_window, json_data):
+        super().__init__()
+        self.main_window = main_window
+        self.json_data = json_data
+
+
+    def run(self):
+        try:
+            self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data, 3)
+        except CircularDependencyException as e:
+            self.error_signal.emit(str(e))
+            

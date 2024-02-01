@@ -562,9 +562,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Anomalies Tracker Home"))
         self.Platform_label.setText(_translate("MainWindow", "Platform"))
-        self.Platfrom_comboBox.setItemText(0, _translate("MainWindow", "Velos"))
+        self.Platfrom_comboBox.setItemText(0, _translate("MainWindow", "Veloce"))
         self.Platfrom_comboBox.setItemText(1, _translate("MainWindow", "VPS"))
         self.Solution_label.setText(_translate("MainWindow", "Solution"))
         self.Solution_comboBox.setItemText(0, _translate("MainWindow", "Ethernet"))

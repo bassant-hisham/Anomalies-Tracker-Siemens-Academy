@@ -4,12 +4,13 @@ from src.frontend.CustomWidgets.UIs.CrashConfigUI import CrashConfigWindow
 from src.frontend.CustomWidgets.UIs.HangConfigUI import HangConfigWindow  # Import HangConfigWindow
 from PyQt5.QtWidgets import *
 from src.frontend.CustomWidgets.commonFunctions import *
+from PyQt5.QtGui import QIcon
 
 class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
     def __init__(self,id:int,Running:list,scrollLayoutRunning:QVBoxLayout):
         super(MyRunBox,self).__init__()
         self.setupUi(self)
-
+        self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.BrowseScriptPath_button.hide()
         self.ScriptPath_label.hide()
         self.ScriptPath_lineEdit.hide()
