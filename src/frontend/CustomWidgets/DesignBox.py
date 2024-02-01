@@ -12,9 +12,9 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
     def __init__(self,id:int,Designs:list,DesignsLayout:QVBoxLayout):
         super(MyDesignBox, self).__init__()
         self.setupUi(self)  # This sets up the UI components from the Design box
-        self.setTitle("Design " + str(id))
+        #self.setTitle("Design " + str(id))
         self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
-        self.DesignBox.setTitle("Design " + str(id))
+        #self.DesignBox.setTitle("Design " + str(id))
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations=MyLaunchingConfigWindow()
         self.CompilationConfig_button.clicked.connect(self.open_compilation_config)
