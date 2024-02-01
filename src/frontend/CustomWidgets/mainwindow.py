@@ -79,6 +79,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
         self.runningwindows=[]
+        # if(self.design.DesignPath_lineEdit.text() == ""):
+        #     self.showWarningMessage("Design Path cannot be empty for Job Creation")
         
         if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
             self.Job = MyJobs()
@@ -99,8 +101,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Job.Jobs_table.setRowCount(len(self.combinations))
         self.Job.Jobs_table.verticalHeader().setVisible(False)
         self.combinations[self.Tasks.currentIndex()] = self.collectData()
-        self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-        self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
+        
+        self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
+        self.Job.Jobs_table.verticalHeader().setVisible(False)
 
         for row_index, (running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
 
@@ -153,6 +156,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             col_index += 1
 
             DesignPath = design.DesignPath_lineEdit.text()
+            if(DesignPath == ""):
+                self.showWarningMessage("Design Path cannot be empty for Job Creation")
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
             col_index += 1
 
@@ -216,7 +221,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     #     for job_index in range(len(jobs)):
     #         self.add_job(jobs[job_index])
-
+    def showWarningMessage(self , input):
+        warning_dialog = QMessageBox(self)
+        warning_dialog.setIcon(QMessageBox.Warning)
+        warning_dialog.setWindowTitle('Empty String')
+        warning_dialog.setText(f'Error : {input}')
+        warning_dialog.show()
 
     def refresh_job(self, job_name: str, job_status: str) -> None:
         number_of_rows = self.Job.Jobs_table.rowCount()
@@ -282,6 +292,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def collectData(self):
 
         Designs = self.Tasks.currentWidget().get_design()
+        #print(self.Tasks.cuurentwidget().
         RunningConfigs = self.Tasks.currentWidget().get_running()
         Builds  = self.Tasks.currentWidget().get_builds()
 
