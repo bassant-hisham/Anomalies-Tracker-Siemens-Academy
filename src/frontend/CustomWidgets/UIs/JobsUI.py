@@ -162,9 +162,9 @@ class Ui_Jobs(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Run_pushButton.sizePolicy().hasHeightForWidth())
         self.Run_pushButton.setSizePolicy(sizePolicy)
-        self.Run_pushButton.setMinimumSize(QtCore.QSize(100, 35))
+        self.Run_pushButton.setFixedSize(QtCore.QSize(100, 35))
         self.Run_pushButton.setStyleSheet("QPushButton {\n"
-"    background-color: red;\n"
+"    background-color: green;\n"
 "    color:White;\n"
 "    margin-right:5px;\n"
 "    border-radius: 10px;\n"
@@ -173,7 +173,7 @@ class Ui_Jobs(object):
 "    font-weight:bold;\n"
 "}\n"
 "QPushButton:hover {\n"
-"    background-color: rgb(230, 96, 96);\n"
+"    background-color: rgb(33, 188, 180);\n"
 "    border: 5px solid transparent;\n"
 "}\n"
 "QPushButton:pressed {\n"
