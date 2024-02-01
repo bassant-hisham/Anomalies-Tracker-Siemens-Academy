@@ -95,10 +95,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
 
         
-        self.combinations = self.collectData()
-        self.Job.Jobs_table.setRowCount(len(self.combinations))
-        self.Job.Jobs_table.verticalHeader().setVisible(False)
+
         self.combinations[self.Tasks.currentIndex()] = self.collectData()
+        self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
+        self.Job.Jobs_table.verticalHeader().setVisible(False)
         self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
         self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
 
