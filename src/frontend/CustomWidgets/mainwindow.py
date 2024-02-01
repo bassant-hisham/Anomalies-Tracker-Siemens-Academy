@@ -22,6 +22,7 @@ from PyQt5.QtGui import QIcon
 from config import BuildState
 from PyQt5.QtCore import Qt, QThread, QObject, pyqtSignal
 from src.common.exception import CircularDependencyException
+from PyQt5.QtCore import QSize
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
@@ -96,7 +97,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         self.Jobslist[self.Tasks.currentIndex()].Run_pushButton.clicked.connect(self.GenerateJson)
         self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
-
+        self.Job.Close_pushButton.clicked.connect(self.close_console)
         
 
         self.combinations[self.Tasks.currentIndex()] = self.collectData()
@@ -180,16 +181,49 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
             col_index += 1 
             self.add_all_jobs_status()
-            ShowConsole = QPushButton("Show")
+
+            button_size = QSize(40, 14)
+            ShowConsole = QPushButton(" 👁️ ")
             ShowConsole.setStyleSheet("color: white;")
-            self.ShowRun = MyRunBox(0,[],"")
-            self.runningwindows.append(self.ShowRun)
-            ShowConsole.clicked.connect(lambda _, job_name=job_name_str: self.open_and_update_console(job_name))
-            self.Job.Jobs_table.setCellWidget(row_index, 11, ShowConsole)
+            ShowConsole.setFixedSize(button_size)
+            self.ShowRun1 = MyRunBox(0, [], "")
+            self.runningwindows.append(self.ShowRun1)
+            ShowConsole.clicked.connect(lambda _, job_name="job_name": self.open_and_update_console(job_name))
+
+            abort = QPushButton(" ❌ ")
+            abort.setStyleSheet("color: white;")
+            self.ShowRun2 = MyRunBox(0, [], "")
+            abort.setFixedSize(button_size)
+            self.runningwindows.append(self.ShowRun2)
+            abort.clicked.connect(lambda _, job_name="job_name": self.abort_job(job_name))
+
+            trash = QPushButton(" 🗑️  ")
+            trash.setStyleSheet("color: white;")
+            self.ShowRun3 = MyRunBox(0, [], "")
+            trash.setFixedSize(button_size)
+            self.runningwindows.append(self.ShowRun3)
+            trash.clicked.connect(lambda _, job_name="job_name": self.delete_job(job_name))
+
+            # Create a horizontal layout
+            button_layout = QHBoxLayout()
+            button_layout.addWidget(ShowConsole)
+            button_layout.addWidget(abort)
+            button_layout.addWidget(trash)
+
+            # Set the layout as the cell widget
+            cell_widget = QWidget()
+            cell_widget.setLayout(button_layout)
+
+            self.Job.Jobs_table.setCellWidget(row_index, 11, cell_widget)
             col_index += 1
 
 
-            
+
+                     
+
+    def close_console(self, job_name: str):
+        self.Job.scrollArea_console.setVisible(False)
+        self.Job.Close_pushButton.setVisible(False)
 
     def open_and_update_console(self, job_name: str):
         self.open_console(job_name)
@@ -203,6 +237,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def open_console(self, job_name: str) -> None:        
         self.Job.scrollArea_console.setVisible(True)
+        self.Job.Close_pushButton.setVisible(True)
         state, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
         if state:
             self.Job.console_text.setPlainText(console_output)
@@ -211,6 +246,16 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         scrollbar = self.Job.console_text.verticalScrollBar()
         scrollbar.setValue(scrollbar.maximum())
+        self.Job.console_text.repaint()
+
+    def abort_job(self, job_name: str) -> None:
+        self.Job.scrollArea_console.setVisible(True)
+        self.Job.console_text.setPlainText(f"Console for {job_name} will go here.")
+        self.Job.console_text.repaint()
+
+    def delete_job(self, job_name: str) -> None:
+        self.Job.scrollArea_console.setVisible(True)
+        self.Job.console_text.setPlainText(f"Console for {job_name} will go here.")
         self.Job.console_text.repaint()
 
 
