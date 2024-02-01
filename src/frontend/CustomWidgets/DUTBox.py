@@ -162,7 +162,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                     self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=int(self.Configvalue_lineEdit.text())
                 elif(self.ConfigType_comboBox.currentText()=="List" and self.ConfigValueList_lineEdit.text()!='' ):  
                     self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[]
-                    for num in self.ConfigValueList_lineEdit.text().split(','):
+                    for num in self.ConfigValueList_lineEdit.text()[1:len(self.ConfigValueList_lineEdit.text())-1].split(','):
                         self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"].append(int(num)) 
                 if(self.DPIAdditionalEnvValues_2.toPlainText()):
                     self. data["dpi_additional_env_variables"]=eval(self.DPIAdditionalEnvValues_2.toPlainText())
