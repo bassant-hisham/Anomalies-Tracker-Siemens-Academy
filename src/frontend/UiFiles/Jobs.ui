@@ -264,6 +264,11 @@ color:white;
          </column>
          <column>
           <property name="text">
+           <string>Job name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Prerequisite Task</string>
           </property>
          </column>
@@ -274,17 +279,12 @@ color:white;
          </column>
          <column>
           <property name="text">
-           <string>Script Path</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Running Configurations</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
            <string>Build Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Script Path</string>
           </property>
          </column>
          <column>
@@ -294,20 +294,20 @@ color:white;
          </column>
          <column>
           <property name="text">
+           <string>Running Configurations</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>Design Configurations</string>
           </property>
          </column>
-                   <column>
-            <property name="text">
-            <string>Job name</string>
-            </property>
-          </column>
-           <column>
-            <property name="text">
-            <string>Job Status</string>
-            </property>
-          </column>
-        <column>
+         <column>
+          <property name="text">
+           <string>Job Status</string>
+          </property>
+         </column>
+         <column>
           <property name="text">
            <string>Show Console</string>
           </property>

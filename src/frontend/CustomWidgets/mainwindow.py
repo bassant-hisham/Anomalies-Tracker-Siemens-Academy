@@ -1,4 +1,5 @@
 from itertools import product
+import os
 from PyQt5.QtWidgets import *
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
@@ -114,18 +115,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             
             lineEdit_PrerequisiteTask = QTableWidgetItem()
             lineEdit_PrerequisiteTask.setFlags(lineEdit_PrerequisiteTask.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 2, lineEdit_PrerequisiteTask)
-
-            # Create a QLineEdit and set it as the cell widget
-            text_box = QLineEdit(self.Job)
-            text_box.setStyleSheet("QLineEdit { color: white; }")
-            validator = QIntValidator()
-            text_box.setValidator(validator)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 2, text_box)
-            
-            lineEdit_PrerequisiteJob = QTableWidgetItem()
-            lineEdit_PrerequisiteJob.setFlags(lineEdit_PrerequisiteJob.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteJob)
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteTask)
 
             # Create a QLineEdit and set it as the cell widget
             text_box = QLineEdit(self.Job)
@@ -134,11 +124,34 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             text_box.setValidator(validator)
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 3, text_box)
             
+            lineEdit_PrerequisiteJob = QTableWidgetItem()
+            lineEdit_PrerequisiteJob.setFlags(lineEdit_PrerequisiteJob.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 4, lineEdit_PrerequisiteJob)
+
+            # Create a QLineEdit and set it as the cell widget
+            text_box = QLineEdit(self.Job)
+            text_box.setStyleSheet("QLineEdit { color: white; }")
+            validator = QIntValidator()
+            text_box.setValidator(validator)
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 4, text_box)
+            
             running_dict = running_config.running_configurations
-            col_index = 4
+            col_index = 5
             scriptPath = running_dict['running_configurations']['script_path']
-        
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, QTableWidgetItem(str(scriptPath)))
+
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+            col_index += 1
+
+            
+            item = QTableWidgetItem(str(os.path.basename(scriptPath)))
+            item.setToolTip(scriptPath)
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
+            col_index += 1
+
+            DesignPath = design.DesignPath_lineEdit.text()
+            item = QTableWidgetItem(str(os.path.basename(DesignPath)))
+            item.setToolTip(DesignPath)
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
             col_index += 1
 
             ShowRunningConfigB = QPushButton("Show")
@@ -149,25 +162,17 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
             col_index += 1
 
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
-            col_index += 1
-
-            DesignPath = design.DesignPath_lineEdit.text()
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
-            col_index += 1
-
             ShowDesignConfigB = QPushButton("Show")
             ShowDesignConfigB.setStyleSheet("color: white;")
             ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
             col_index += 1           
 
-
             solution=self.Solution_comboBox.currentText()
             taskNu=self.Tasks.currentIndex()
             job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
 
-            self.Job.Jobs_table.setItem(row_index, col_index , QTableWidgetItem(job_name_str))
+            self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
             col_index += 1 
             #self.add_all_jobs_status()
             ShowConsole = QPushButton("Show")
@@ -210,12 +215,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         timer.start(5000)
         return timer
 
-    # def add_all_jobs_status(self) -> None:
-    #     original_dict = self.JENKINS_APIs.get_all_status()
-    #     jobs = [{job:status} for job, status in original_dict.items()]
+    def add_all_jobs_status(self) -> None:
+        original_dict = self.JENKINS_APIs.get_all_status()
+        jobs = [{job:status} for job, status in original_dict.items()]
 
-    #     for job_index in range(len(jobs)):
-    #         self.add_job(jobs[job_index])
+        for job_index in range(len(jobs)):
+            self.add_job(jobs[job_index])
 
 
     def refresh_job(self, job_name: str, job_status: str) -> None:
@@ -392,4 +397,3 @@ class WorkerThread(QThread, QObject):
             self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data, 3)
         except CircularDependencyException as e:
             self.error_signal.emit(str(e))
-            
