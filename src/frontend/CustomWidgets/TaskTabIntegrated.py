@@ -42,7 +42,9 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.Design_data = list()
         self.Builds = list()
         self.add_design()
+        self.Design_data[0].delete_pushButton.setDisabled(True)
         self.add_running_config()
+        self.Running_data[0].delete_pushButton.setDisabled(True)
     
     def toggle_directory(self):
         self.stacked_widget.setCurrentIndex(0)
@@ -58,9 +60,17 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.Design_data.append(new_design_box)
 
     def get_design(self):
+        for design in self.Design_data:
+            if design.DesignPath_lineEdit.text()=="" :
+                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Design File Path</b>") 
+                return []
         return self.Design_data
     
     def get_running(self):
+        for running in self.Running_data:
+            if running.ScriptPath_lineEdit.text()=="" :
+                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Running File Path</b>") 
+                return []
         return self.Running_data
         
     def add_running_config(self):
@@ -68,7 +78,6 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.scrollLayoutRunning.addWidget(new_running_box)
         new_running_box.myparent=new_running_box.parent()
         self.Running_data.append(new_running_box) 
-        temp=8
         
     def get_builds(self):
         current_index = self.stacked_widget.currentIndex() #use it to know which of dir or file is used (0->Dir , 1->File)
