@@ -75,7 +75,10 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
 
         if current_index == 1:
             file_path = self.FilePath_lineEdit.text()
-            self.Builds.append(file_path)
+            if file_path:
+                self.Builds.append(file_path)
+            else:
+                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter build's File Path</b>")
         else:
             parent_dir = self.ParentDir_lineEdit.text()
             StartRange = 0
@@ -89,16 +92,22 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
                 EndRange = self.BinarySearchTo_lineEdit.text()
 
             if self.All_radioButton.isChecked():
-                bash_files = [f for f in os.listdir(parent_dir) if f.endswith(".bash")]
-                for file_name in bash_files:
-                    self.Builds.append(file_name)
-            else :
-                start_value = int(StartRange) 
-                end_value = int(EndRange) 
-                for i in range(start_value, end_value + 1):
-                    file_name = f"vved{i}.bash"
-                    if os.path.exists(os.path.join(parent_dir, file_name)):
+                if parent_dir:
+                    bash_files = [f for f in os.listdir(parent_dir) if f.endswith(".bash")]
+                    for file_name in bash_files:
                         self.Builds.append(file_name)
+                else:
+                    QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
+            else :
+                if parent_dir:
+                    start_value = int(StartRange) 
+                    end_value = int(EndRange) 
+                    for i in range(start_value, end_value + 1):
+                        file_name = f"vved{i}.bash"
+                        if os.path.exists(os.path.join(parent_dir, file_name)):
+                            self.Builds.append(file_name)
+                else:
+                    QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
         return self.Builds
     
     def getBinarySearchValue(self):
