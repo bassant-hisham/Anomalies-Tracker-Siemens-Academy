@@ -16,7 +16,7 @@ import copy
 from PyQt5.QtGui import QIntValidator
 from PyQt5 import QtGui
 import threading
-from src.backend.Jenkins_APIs import Jenkins
+#from src.backend.Jenkins_APIs import Jenkins
 import config
 from PyQt5.QtGui import QIcon
 from config import BuildState
@@ -25,7 +25,7 @@ from src.common.exception import CircularDependencyException
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
-        self.JENKINS_APIs = Jenkins()
+        #self.JENKINS_APIs = Jenkins()
         self.setupUi(self)
         self.Tasks.hide()
         self.CreateJobs_button.hide()
@@ -40,14 +40,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.design_widget_layout=QVBoxLayout()
         self.JsonData={}
         self.JsonData[self.Solution_comboBox.currentText()]={}
-        self.timer = self.refresh_every_5_sec_for_jobs()
-        self.console_timer = self.refresh_every_5_sec()
-        self.console_timer.timeout.connect(self.update_console)
+        #self.timer = self.refresh_every_5_sec_for_jobs()
+        #self.console_timer = self.refresh_every_5_sec()
+        #self.console_timer.timeout.connect(self.update_console)
         self.combinations=list()
         self.Jobslist=list()
 
-        self.worker_thread = WorkerThread(self, self.JsonData ,)
-        self.worker_thread.error_signal.connect(self.show_error_message)
+        #self.worker_thread = WorkerThread(self, self.JsonData ,)
+        #self.worker_thread.error_signal.connect(self.show_error_message)
         
         #self.CreateJobs_button.clicked.connect(self.collectData)
 
@@ -166,16 +166,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             ShowRunningConfigB.clicked.connect(lambda _, ShowRun=self.ShowRun,r=running_config,rd=running_dict: self.show_running(ShowRun,r,rd))
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
             col_index += 1
-
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
-            col_index += 1
-
-            DesignPath = design.DesignPath_lineEdit.text()
-            # if(DesignPath == ""):
-            #     self.showWarningMessage("Design Path cannot be empty for Job Creation")
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(DesignPath)))
-            col_index += 1
-
+        
             ShowDesignConfigB = QPushButton("Show")
             ShowDesignConfigB.setStyleSheet("color: white;")
             ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
@@ -290,7 +281,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
                 
-    def refresh_all_jobs(self) -> None:
+    """ def refresh_all_jobs(self) -> None:
         original_dict = self.JENKINS_APIs.get_all_status()
         jobs = [{job:status} for job, status in original_dict.items()]
 
@@ -303,7 +294,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.refresh_all_jobs)
         timer.start(5000)
-        return timer
+        return timer """
     
     def collectData(self):
 
@@ -316,7 +307,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             running.collect_running_config()
 
         self.BinarySearhState=self.Tasks.currentWidget().getBinarySearchValue()
-
+        
         if(self.BinarySearhState==True):
             if(len(RunningConfigs)!=0 and  len(Designs)!=0):
                 RunningConfigsFirstIndex=list()

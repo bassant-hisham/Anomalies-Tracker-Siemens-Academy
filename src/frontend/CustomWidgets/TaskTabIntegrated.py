@@ -38,10 +38,11 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.RangeTo_lineEdit.setValidator(QIntValidator())
         self.BinarySearchFrom_lineEdit.setValidator(QIntValidator())
         self.BinarySearchTo_lineEdit.setValidator(QIntValidator())
-
         self.Running_data=list()
         self.Design_data = list()
         self.Builds = list()
+        self.add_design()
+        self.add_running_config()
     
     def toggle_directory(self):
         self.stacked_widget.setCurrentIndex(0)
@@ -114,14 +115,14 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         return self.BinarySearch_radioButton.isChecked()
     
     def deleteRunningWidget(self):
-        if(len(self.Running_data)!=0):
+        if(len(self.Running_data) > 1):
             WidgteToBeRemoved=self.Running_data.pop()
             self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved)
             WidgteToBeRemoved.deleteLater()
         temp=8
 
     def deleteDesignWidget(self):
-        if(len(self.Design_data)!=0):
+        if(len(self.Design_data) > 1):
             WidgteToBeRemoved=self.Design_data.pop()
             self.scrollLayout.removeWidget(WidgteToBeRemoved)
             WidgteToBeRemoved.deleteLater()
