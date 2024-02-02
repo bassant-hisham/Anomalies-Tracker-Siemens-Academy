@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Jobs.ui'
+# Form implementation generated from reading ui file 'd:\Siemens diploma\Anomalies-Tracker-Siemens-Academy\src\frontend\UiFiles\Jobs.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
 #
@@ -105,7 +105,7 @@ class Ui_Jobs(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.Jobs_scrollArea = QtWidgets.QWidget()
-        self.Jobs_scrollArea.setGeometry(QtCore.QRect(0, 0, 772, 582))
+        self.Jobs_scrollArea.setGeometry(QtCore.QRect(0, 0, 776, 586))
         self.Jobs_scrollArea.setStyleSheet("QWidget::pane{\n"
 "border-color:none;\n"
 "\n"
@@ -124,6 +124,31 @@ class Ui_Jobs(object):
         self.selectall_horizontalLayout.setObjectName("selectall_horizontalLayout")
         spacerItem = QtWidgets.QSpacerItem(500, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.selectall_horizontalLayout.addItem(spacerItem)
+        self.unselectall_pushButton = QtWidgets.QPushButton(self.selectall_widget)
+        self.unselectall_pushButton.setStyleSheet("QPushButton {\n"
+"    border: 0px solid rgb(52, 59, 72);\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-radius: 10px;\n"
+"    background-color: rgb(33, 188, 180);\n"
+"    color: rgb(255, 255, 255);\n"
+"    margin:10px;\n"
+"    padding:5px;\n"
+"font:bold 20px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(57, 65, 80);\n"
+"    border: 5px solid transparent;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(35, 40, 49);\n"
+"    border: 7px solid transparent;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: rgb(102, 109, 122);\n"
+"    color: rgb(168, 168, 168);\n"
+"}")
+        self.unselectall_pushButton.setObjectName("unselectall_pushButton")
+        self.selectall_horizontalLayout.addWidget(self.unselectall_pushButton)
         self.selectall_pushButton = QtWidgets.QPushButton(self.selectall_widget)
         self.selectall_pushButton.setMinimumSize(QtCore.QSize(143, 54))
         self.selectall_pushButton.setStyleSheet("QPushButton {\n"
@@ -278,6 +303,7 @@ class Ui_Jobs(object):
     def retranslateUi(self, Jobs):
         _translate = QtCore.QCoreApplication.translate
         Jobs.setWindowTitle(_translate("Jobs", "Form"))
+        self.unselectall_pushButton.setText(_translate("Jobs", "  Unselect All  "))
         self.selectall_pushButton.setText(_translate("Jobs", "Select All"))
         self.Run_pushButton.setText(_translate("Jobs", "Run"))
         item = self.Jobs_table.horizontalHeaderItem(0)
@@ -303,5 +329,6 @@ class Ui_Jobs(object):
         item = self.Jobs_table.horizontalHeaderItem(10)
         item.setText(_translate("Jobs", "Job Status"))
         item = self.Jobs_table.horizontalHeaderItem(11)
-        item.setText(_translate("Jobs", "           Actons          "))
+        # item.setText(_translate("Jobs", "Show Console"))
+        item.setText(_translate("Jobs", "           Actions          "))
         self.Close_pushButton.setText(_translate("Jobs", "X"))

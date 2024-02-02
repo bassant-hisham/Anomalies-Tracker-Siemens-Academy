@@ -97,6 +97,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         self.Jobslist[self.Tasks.currentIndex()].Run_pushButton.clicked.connect(self.GenerateJson)
         self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
+        self.Jobslist[self.Tasks.currentIndex()].unselectall_pushButton.clicked.connect(self.unselectallrows)
+
         self.Job.Close_pushButton.clicked.connect(self.close_console)
         
 
@@ -371,6 +373,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def selectallrows(self):
         for row in  range(len(self.combinations[self.Tasks.currentIndex()] )):
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Checked)
+
+    def unselectallrows(self):
+        for row in  range(len(self.combinations[self.Tasks.currentIndex()] )):
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Unchecked)
 
 
     def GenerateJson(self):
