@@ -227,6 +227,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def open_and_update_console(self, job_name: str):
         self.open_console(job_name)
+        self.Job.scrollArea_console.setVisible(True)
+        self.Job.Close_pushButton.setVisible(True)
 
         self.current_job_name = job_name
 
@@ -236,8 +238,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.open_console(self.current_job_name)
 
     def open_console(self, job_name: str) -> None:        
-        self.Job.scrollArea_console.setVisible(True)
-        self.Job.Close_pushButton.setVisible(True)
         state, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
         if state:
             self.Job.console_text.setPlainText(console_output)
