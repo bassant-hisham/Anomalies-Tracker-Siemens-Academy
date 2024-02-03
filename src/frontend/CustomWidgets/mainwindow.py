@@ -22,6 +22,7 @@ from PyQt5.QtGui import QIcon
 from config import BuildState
 from PyQt5.QtCore import Qt, QThread, QObject, pyqtSignal
 from src.common.exception import CircularDependencyException
+from PyQt5.QtCore import QSize
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
@@ -50,7 +51,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.worker_thread.error_signal.connect(self.show_error_message)
         
         self.CreateJobs_button.clicked.connect(self.collectData)
-
+        
+        self.undoShortcut = QShortcut(Qt.CTRL + Qt.Key_Z, self)
+        self.undoShortcut.activated.connect(self.undo_delete)
+        self.undoStack = []
+        
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
         self.combinations.append([])
@@ -91,12 +96,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         #     # Remove the existing MyJobs instance
         #     current_widget.Task_tabWidget.removeTab(3) 
         #     # Create a new instance of MyJobs
-        #     self.Job = MyJobs()
+        #     self.Job = MyJobs()   
         #     current_widget.Task_tabWidget.insertTab(3, self.Job, "Jobs")
 
         self.Jobslist[self.Tasks.currentIndex()].Run_pushButton.clicked.connect(self.GenerateJson)
         self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
+        self.Jobslist[self.Tasks.currentIndex()].unselectall_pushButton.clicked.connect(self.unselectallrows)
 
+        self.Job.Close_pushButton.clicked.connect(self.close_console)
         
 
         self.combinations[self.Tasks.currentIndex()] = self.collectData()
@@ -179,20 +186,55 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
             self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
             col_index += 1 
-            #self.add_all_jobs_status()
-            ShowConsole = QPushButton("Show")
+            self.add_all_jobs_status()
+
+            button_size = QSize(40, 14)
+            ShowConsole = QPushButton(" 👁️ ")
             ShowConsole.setStyleSheet("color: white;")
-            self.ShowRun = MyRunBox(0,[],"")
-            self.runningwindows.append(self.ShowRun)
+            ShowConsole.setFixedSize(button_size)
+            self.ShowRun1 = MyRunBox(0, [], "")
+            self.runningwindows.append(self.ShowRun1)
             ShowConsole.clicked.connect(lambda _, job_name=job_name_str: self.open_and_update_console(job_name))
-            self.Job.Jobs_table.setCellWidget(row_index, 11, ShowConsole)
+
+            abort = QPushButton(" ❌ ")
+            abort.setStyleSheet("color: white;")
+            self.ShowRun2 = MyRunBox(0, [], "")
+            abort.setFixedSize(button_size)
+            self.runningwindows.append(self.ShowRun2)
+            abort.clicked.connect(lambda _, job_name=job_name_str: self.abort_job(job_name))
+
+            trash = QPushButton(" 🗑️  ")
+            trash.setStyleSheet("color: white;")
+            self.ShowRun3 = MyRunBox(0, [], "")
+            trash.setFixedSize(button_size)
+            self.runningwindows.append(self.ShowRun3)
+            trash.clicked.connect(lambda _, job_name= job_name_str: self.delete_job(job_name))
+
+            # Create a horizontal layout
+            button_layout = QHBoxLayout()
+            button_layout.addWidget(ShowConsole)
+            button_layout.addWidget(abort)
+            button_layout.addWidget(trash)
+
+            # Set the layout as the cell widget
+            cell_widget = QWidget()
+            cell_widget.setLayout(button_layout)
+
+            self.Job.Jobs_table.setCellWidget(row_index, 11, cell_widget)
             col_index += 1
 
 
-            
+
+                     
+
+    def close_console(self, job_name: str):
+        self.Job.scrollArea_console.setVisible(False)
+        self.Job.Close_pushButton.setVisible(False)
 
     def open_and_update_console(self, job_name: str):
         self.open_console(job_name)
+        self.Job.scrollArea_console.setVisible(True)
+        self.Job.Close_pushButton.setVisible(True)
 
         self.current_job_name = job_name
 
@@ -202,17 +244,47 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.open_console(self.current_job_name)
 
     def open_console(self, job_name: str) -> None:        
-        self.Job.scrollArea_console.setVisible(True)
-        state, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
-        if state:
+        success, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
+        if success:
             self.Job.console_text.setPlainText(console_output)
         else:
-            self.Job.console_text.setPlainText(f"No Console Output for {job_name} Yet.")
+            self.Job.console_text.setPlainText(f"Job {job_name} has not started.")
 
         scrollbar = self.Job.console_text.verticalScrollBar()
         scrollbar.setValue(scrollbar.maximum())
         self.Job.console_text.repaint()
 
+    def abort_job(self, job_name: str) -> None:
+        success, message= self.JENKINS_APIs.stop_job(job_name)
+
+        self.Job.scrollArea_console.setVisible(True)
+        if success:
+            self.Job.console_text.setPlainText(f"Job '{job_name}' aborted successfully")
+        else:
+            self.Job.console_text.setPlainText(f"Job {job_name} has not started.")
+        self.Job.console_text.repaint()
+
+
+
+    # def delete_job(self, job_name: str) -> None:
+    #     #self.JENKINS_APIs.delete_job(job_name)    # need confirmation for job deletion in jenkins server
+    #     for row in range(self.Job.Jobs_table.rowCount()):
+    #         item = self.Job.Jobs_table.item(row, 2)  
+            
+    #         if item is not None and item.text() == job_name:
+    #             for col in range(self.Job.Jobs_table.columnCount()):
+    #                 if(col is not None):
+    #                     self.undoStack.append((row, [self.Job.Jobs_table.item(row, col).text() ]))
+    #             self.Job.Jobs_table.removeRow(row)
+    #             break  
+    
+    # def undo_delete(self):
+    #     if self.undoStack:
+    #         row, data = self.undoStack.pop()
+    #         self.Job.Jobs_table.insertRow(row)
+    #         for col, value in enumerate(data):
+    #             item = QTableWidgetItem(value)
+    #             self.Job.Jobs_table.setItem(row, col, item)
 
     def refresh_every_5_sec(self) -> QtCore.QTimer:
         timer = QtCore.QTimer(self)
@@ -294,7 +366,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.refresh_all_jobs)
         timer.start(5000)
-        return timer 
+        return timer
     
     def collectData(self):
 
@@ -326,6 +398,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def selectallrows(self):
         for row in  range(len(self.combinations[self.Tasks.currentIndex()] )):
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Checked)
+
+    def unselectallrows(self):
+        for row in  range(len(self.combinations[self.Tasks.currentIndex()] )):
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Unchecked)
 
 
     def GenerateJson(self):

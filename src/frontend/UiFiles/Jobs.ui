@@ -112,8 +112,8 @@ background-color:rgb(37, 40, 50);
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>772</width>
-        <height>582</height>
+        <width>776</width>
+        <height>586</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -143,6 +143,37 @@ background-color:rgb(37, 40, 50);
                </size>
               </property>
              </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="unselectall_pushButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border: 0px solid rgb(52, 59, 72);
+	color: rgb(255, 255, 255);
+	border-radius: 10px;
+    background-color: rgb(33, 188, 180);
+	color: rgb(255, 255, 255);
+	margin:10px;
+	padding:5px;
+font:bold 20px;
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 5px solid transparent;
+}
+QPushButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 7px solid transparent;
+}
+QPushButton:disabled {
+	background-color: rgb(102, 109, 122);
+	color: rgb(168, 168, 168);
+}</string>
+              </property>
+              <property name="text">
+               <string>  Unselect All  </string>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QPushButton" name="selectall_pushButton">
