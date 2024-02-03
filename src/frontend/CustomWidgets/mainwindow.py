@@ -16,7 +16,7 @@ import copy
 from PyQt5.QtGui import QIntValidator
 from PyQt5 import QtGui
 import threading
-#from src.backend.Jenkins_APIs import Jenkins
+from src.backend.Jenkins_APIs import Jenkins
 import config
 from PyQt5.QtGui import QIcon
 from config import BuildState
@@ -25,7 +25,7 @@ from src.common.exception import CircularDependencyException
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
-        #self.JENKINS_APIs = Jenkins()
+        self.JENKINS_APIs = Jenkins()
         self.setupUi(self)
         self.Tasks.hide()
         self.CreateJobs_button.hide()
@@ -40,16 +40,16 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.design_widget_layout=QVBoxLayout()
         self.JsonData={}
         self.JsonData[self.Solution_comboBox.currentText()]={}
-        #self.timer = self.refresh_every_5_sec_for_jobs()
-        #self.console_timer = self.refresh_every_5_sec()
-        #self.console_timer.timeout.connect(self.update_console)
+        self.timer = self.refresh_every_5_sec_for_jobs()
+        self.console_timer = self.refresh_every_5_sec()
+        self.console_timer.timeout.connect(self.update_console)
         self.combinations=list()
         self.Jobslist=list()
 
-        #self.worker_thread = WorkerThread(self, self.JsonData ,)
-        #self.worker_thread.error_signal.connect(self.show_error_message)
+        self.worker_thread = WorkerThread(self, self.JsonData ,)
+        self.worker_thread.error_signal.connect(self.show_error_message)
         
-        #self.CreateJobs_button.clicked.connect(self.collectData)
+        self.CreateJobs_button.clicked.connect(self.collectData)
 
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
@@ -281,7 +281,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
                 
-    """ def refresh_all_jobs(self) -> None:
+    def refresh_all_jobs(self) -> None:
         original_dict = self.JENKINS_APIs.get_all_status()
         jobs = [{job:status} for job, status in original_dict.items()]
 
@@ -294,7 +294,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.refresh_all_jobs)
         timer.start(5000)
-        return timer """
+        return timer 
     
     def collectData(self):
 
