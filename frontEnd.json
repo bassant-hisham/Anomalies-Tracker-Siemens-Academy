@@ -6,9 +6,9 @@
       "jobs": {
         "1": {
           "compilation_configurations": {
-            "compile_design": false,
-            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
-            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "compile_design": true,
+            "source_design_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1212.bash",
+            "output_directory": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds",
             "machine": "Auto",
             "force": false,
             "timeout": ""
@@ -76,14 +76,14 @@
               "attach_gdb": "",
               "crashed_process": ""
             },
-            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+            "script_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1101.bash"
           }
         },
         "2": {
           "compilation_configurations": {
-            "compile_design": false,
-            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
-            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "compile_design": true,
+            "source_design_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1212.bash",
+            "output_directory": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds",
             "machine": "Auto",
             "force": false,
             "timeout": ""
@@ -151,14 +151,14 @@
               "attach_gdb": "",
               "crashed_process": ""
             },
-            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+            "script_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1101.bash"
           }
         },
         "3": {
           "compilation_configurations": {
-            "compile_design": false,
-            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
-            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "compile_design": true,
+            "source_design_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1212.bash",
+            "output_directory": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds",
             "machine": "Auto",
             "force": false,
             "timeout": ""
@@ -226,14 +226,14 @@
               "attach_gdb": "",
               "crashed_process": ""
             },
-            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+            "script_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1101.bash"
           }
         },
         "4": {
           "compilation_configurations": {
-            "compile_design": false,
-            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
-            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "compile_design": true,
+            "source_design_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1212.bash",
+            "output_directory": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds",
             "machine": "Auto",
             "force": false,
             "timeout": ""
@@ -301,14 +301,14 @@
               "attach_gdb": "",
               "crashed_process": ""
             },
-            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+            "script_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1101.bash"
           }
         },
         "5": {
           "compilation_configurations": {
-            "compile_design": false,
-            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
-            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "compile_design": true,
+            "source_design_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1212.bash",
+            "output_directory": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds",
             "machine": "Auto",
             "force": false,
             "timeout": ""
@@ -376,7 +376,7 @@
               "attach_gdb": "",
               "crashed_process": ""
             },
-            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+            "script_path": "C:/Users/ashar/OneDrive/Desktop/new_updates/Anomalies-Tracker-Siemens-Academy/Extras/Builds/vved1101.bash"
           }
         }
       }
