@@ -32,7 +32,7 @@ class Jenkins:
 #2
     def stop_job(self, job_name):
         build_number = self.job_executor.get_build_number(job_name)
-        JENKINS_SERVER.abort_build(job_name , build_number)
+        return JENKINS_SERVER.abort_build(job_name , build_number)
 
 #3
     def delete_job(self, job_name):

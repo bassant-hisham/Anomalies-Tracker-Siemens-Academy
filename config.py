@@ -31,13 +31,13 @@ class BuildState(Enum):
 
 class JenkinsConfig:
     JENKINS_URL = "http://localhost:8080/"
-    JENKINS_USERNAME = "AhmedSh"
-    JENKINS_PASSWORD = "#myjenkinsacc#"
+    JENKINS_USERNAME = "admin"
+    JENKINS_PASSWORD = "11f6ffd591aa58166016b94c900f0c361d"
 
 
 
 if ENABLE_LOGGER:
-    log_folder = os.path.join(os.path.dirname(__file__), 'logs')
+    log_folder = os.path.join(os.path.dirname(__file__),'generated', 'logs')
     os.makedirs(log_folder, exist_ok=True)
 
     log_file = os.path.join(log_folder, 'info.log')
@@ -49,5 +49,3 @@ if ENABLE_LOGGER:
     )
 
     logger = logging.getLogger(__name__)
-        
-

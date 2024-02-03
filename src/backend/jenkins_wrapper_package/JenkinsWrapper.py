@@ -77,7 +77,7 @@ class JenkinsWrapper:
             return False
         
 
-    def abort_build(self, job_name: str, build_number: int) -> bool:
+    def abort_build(self, job_name: str, build_number: int) -> Union[bool, str]:
         """
         aborts a specific build of a job in Jenkins.
         
@@ -90,11 +90,11 @@ class JenkinsWrapper:
             self.server.stop_build(job_name, build_number)
             message =  f"Build {build_number} of job '{job_name}' aborted successfully"
             logging.info(message) 
-            return True
+            return True, message
         except jenkins.JenkinsException as e:
             message = f"Failed to abort build {build_number} of job '{job_name}': {str(e)}"
             logging.error(message)
-            return False
+            return False, message
 
 
     def get_build_info(self, job_name: str, build_number: int) -> dict:
@@ -140,7 +140,7 @@ class JenkinsWrapper:
         try:
             while True:
                 console_output = self.server.get_build_console_output(job_name, build_number)
-                output_folder = os.path.join(os.path.dirname(__file__),'..', '..', 'generated','console')
+                output_folder = os.path.join(os.path.dirname(__file__),'..', '..', '..', 'generated','console')
                 os.makedirs(output_folder, exist_ok=True)
 
                 output_file = os.path.join(output_folder, f"console_output_job_{job_name}_build_{build_number}.txt")

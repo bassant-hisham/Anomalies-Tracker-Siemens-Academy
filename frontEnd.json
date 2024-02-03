@@ -1,0 +1,385 @@
+{
+  "Ethernet": {
+    "task1": {
+      "id": 1,
+      "binary_search": false,
+      "jobs": {
+        "1": {
+          "compilation_configurations": {
+            "compile_design": false,
+            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
+            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "machine": "Auto",
+            "force": false,
+            "timeout": ""
+          },
+          "prerequisites": {
+            "previous_task_id": 1,
+            "previous_job_id": 0
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Veloce",
+            "solution": "Ethernet",
+            "src_file": "vved1100.bash",
+            "dut_configuration": [
+              {
+                "launch_dpi": false,
+                "terminate_dpi": false,
+                "terminate_dpi_onerror": false,
+                "avb_list": [],
+                "design_path": "",
+                "record_replay_configurations": {
+                  "record_configurations": {
+                    "record_dir": "",
+                    "snapshots_number": {
+                      "config_type": "Range",
+                      "config_value": []
+                    }
+                  },
+                  "replay_configurations": {
+                    "replay_dir": "",
+                    "replay_snapshot_name": ""
+                  }
+                },
+                "dpi_launch_mode": "",
+                "dpi_launch_type": "Emulation",
+                "dpi_additional_args": {},
+                "dpi_additional_env_variables": {},
+                "use_custom_comodels_config": false
+              }
+            ],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+          }
+        },
+        "2": {
+          "compilation_configurations": {
+            "compile_design": false,
+            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
+            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "machine": "Auto",
+            "force": false,
+            "timeout": ""
+          },
+          "prerequisites": {
+            "previous_task_id": 1,
+            "previous_job_id": 0
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Veloce",
+            "solution": "Ethernet",
+            "src_file": "vved1101.bash",
+            "dut_configuration": [
+              {
+                "launch_dpi": false,
+                "terminate_dpi": false,
+                "terminate_dpi_onerror": false,
+                "avb_list": [],
+                "design_path": "",
+                "record_replay_configurations": {
+                  "record_configurations": {
+                    "record_dir": "",
+                    "snapshots_number": {
+                      "config_type": "Range",
+                      "config_value": []
+                    }
+                  },
+                  "replay_configurations": {
+                    "replay_dir": "",
+                    "replay_snapshot_name": ""
+                  }
+                },
+                "dpi_launch_mode": "",
+                "dpi_launch_type": "Emulation",
+                "dpi_additional_args": {},
+                "dpi_additional_env_variables": {},
+                "use_custom_comodels_config": false
+              }
+            ],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+          }
+        },
+        "3": {
+          "compilation_configurations": {
+            "compile_design": false,
+            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
+            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "machine": "Auto",
+            "force": false,
+            "timeout": ""
+          },
+          "prerequisites": {
+            "previous_task_id": 1,
+            "previous_job_id": 0
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Veloce",
+            "solution": "Ethernet",
+            "src_file": "vved1200.bash",
+            "dut_configuration": [
+              {
+                "launch_dpi": false,
+                "terminate_dpi": false,
+                "terminate_dpi_onerror": false,
+                "avb_list": [],
+                "design_path": "",
+                "record_replay_configurations": {
+                  "record_configurations": {
+                    "record_dir": "",
+                    "snapshots_number": {
+                      "config_type": "Range",
+                      "config_value": []
+                    }
+                  },
+                  "replay_configurations": {
+                    "replay_dir": "",
+                    "replay_snapshot_name": ""
+                  }
+                },
+                "dpi_launch_mode": "",
+                "dpi_launch_type": "Emulation",
+                "dpi_additional_args": {},
+                "dpi_additional_env_variables": {},
+                "use_custom_comodels_config": false
+              }
+            ],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+          }
+        },
+        "4": {
+          "compilation_configurations": {
+            "compile_design": false,
+            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
+            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "machine": "Auto",
+            "force": false,
+            "timeout": ""
+          },
+          "prerequisites": {
+            "previous_task_id": 1,
+            "previous_job_id": 0
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Veloce",
+            "solution": "Ethernet",
+            "src_file": "vved1212.bash",
+            "dut_configuration": [
+              {
+                "launch_dpi": false,
+                "terminate_dpi": false,
+                "terminate_dpi_onerror": false,
+                "avb_list": [],
+                "design_path": "",
+                "record_replay_configurations": {
+                  "record_configurations": {
+                    "record_dir": "",
+                    "snapshots_number": {
+                      "config_type": "Range",
+                      "config_value": []
+                    }
+                  },
+                  "replay_configurations": {
+                    "replay_dir": "",
+                    "replay_snapshot_name": ""
+                  }
+                },
+                "dpi_launch_mode": "",
+                "dpi_launch_type": "Emulation",
+                "dpi_additional_args": {},
+                "dpi_additional_env_variables": {},
+                "use_custom_comodels_config": false
+              }
+            ],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+          }
+        },
+        "5": {
+          "compilation_configurations": {
+            "compile_design": false,
+            "source_design_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/frontEnd.json",
+            "output_directory": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy",
+            "machine": "Auto",
+            "force": false,
+            "timeout": ""
+          },
+          "prerequisites": {
+            "previous_task_id": 1,
+            "previous_job_id": 0
+          },
+          "launching_configurations": {
+            "$schema": "../schemas/launching_configuration.schema.json",
+            "platform": "Veloce",
+            "solution": "Ethernet",
+            "src_file": "vved1250.bash",
+            "dut_configuration": [
+              {
+                "launch_dpi": false,
+                "terminate_dpi": false,
+                "terminate_dpi_onerror": false,
+                "avb_list": [],
+                "design_path": "",
+                "record_replay_configurations": {
+                  "record_configurations": {
+                    "record_dir": "",
+                    "snapshots_number": {
+                      "config_type": "Range",
+                      "config_value": []
+                    }
+                  },
+                  "replay_configurations": {
+                    "replay_dir": "",
+                    "replay_snapshot_name": ""
+                  }
+                },
+                "dpi_launch_mode": "",
+                "dpi_launch_type": "Emulation",
+                "dpi_additional_args": {},
+                "dpi_additional_env_variables": {},
+                "use_custom_comodels_config": false
+              }
+            ],
+            "tools_configuration": {
+              "launch_tool": false,
+              "master_tool_configuration": {
+                "tool_name": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              },
+              "slave_tool_configuration": {
+                "launch_behavior": "EPGM",
+                "tool_launch_mode": "Normal",
+                "additional_args": {},
+                "tool_additional_env_variables": {},
+                "terminate_tool": false,
+                "terminate_tool_onerror": false
+              }
+            }
+          },
+          "running_configurations": {
+            "run_script": true,
+            "error_type": "Mismatch",
+            "crash_configurations": {
+              "attach_gdb": "",
+              "crashed_process": ""
+            },
+            "script_path": "C:/Users/moham/Desktop/new/Anomalies-Tracker-Siemens-Academy/config.py"
+          }
+        }
+      }
+    }
+  }
+}

@@ -190,14 +190,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             ShowConsole.setFixedSize(button_size)
             self.ShowRun1 = MyRunBox(0, [], "")
             self.runningwindows.append(self.ShowRun1)
-            ShowConsole.clicked.connect(lambda _, job_name="job_name": self.open_and_update_console(job_name))
+            ShowConsole.clicked.connect(lambda _, job_name=job_name_str: self.open_and_update_console(job_name))
 
             abort = QPushButton(" ❌ ")
             abort.setStyleSheet("color: white;")
             self.ShowRun2 = MyRunBox(0, [], "")
             abort.setFixedSize(button_size)
             self.runningwindows.append(self.ShowRun2)
-            abort.clicked.connect(lambda _, job_name="job_name": self.abort_job(job_name))
+            abort.clicked.connect(lambda _, job_name=job_name_str: self.abort_job(job_name))
 
             trash = QPushButton(" 🗑️  ")
             trash.setStyleSheet("color: white;")
@@ -240,20 +240,27 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.open_console(self.current_job_name)
 
     def open_console(self, job_name: str) -> None:        
-        state, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
-        if state:
+        success, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
+        if success:
             self.Job.console_text.setPlainText(console_output)
         else:
-            self.Job.console_text.setPlainText(f"No Console Output for {job_name} Yet.")
+            self.Job.console_text.setPlainText(f"Job {job_name} has not started.")
 
         scrollbar = self.Job.console_text.verticalScrollBar()
         scrollbar.setValue(scrollbar.maximum())
         self.Job.console_text.repaint()
 
     def abort_job(self, job_name: str) -> None:
+        success, message= self.JENKINS_APIs.stop_job(job_name)
+
         self.Job.scrollArea_console.setVisible(True)
-        self.Job.console_text.setPlainText(f"Console for {job_name} will go here.")
+        if success:
+            self.Job.console_text.setPlainText(f"Job '{job_name}' aborted successfully")
+        else:
+            self.Job.console_text.setPlainText(f"Job {job_name} has not started.")
         self.Job.console_text.repaint()
+
+
 
     def delete_job(self, job_name: str) -> None:
         self.Job.scrollArea_console.setVisible(True)
