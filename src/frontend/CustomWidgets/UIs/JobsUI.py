@@ -198,7 +198,7 @@ class Ui_Jobs(object):
 "    font-weight:bold;\n"
 "}\n"
 "QPushButton:hover {\n"
-"    background-color: rgb(33, 188, 180);\n"
+"    background-color: rgb(63, 140, 108);\n"
 "    border: 5px solid transparent;\n"
 "}\n"
 "QPushButton:pressed {\n"
@@ -215,7 +215,8 @@ class Ui_Jobs(object):
         self.Jobs_table.setStyleSheet("QTableWidget::item {\n"
 "background-color:rgb(37, 40, 50);\n"
 "color:white;\n"
-"}")
+"}"
+)
         self.Jobs_table.setObjectName("Jobs_table")
         self.Jobs_table.setColumnCount(12)
         self.Jobs_table.setRowCount(0)
@@ -243,6 +244,7 @@ class Ui_Jobs(object):
         self.Jobs_table.setHorizontalHeaderItem(10, item)
         item = QtWidgets.QTableWidgetItem()
         self.Jobs_table.setHorizontalHeaderItem(11, item)
+        
         self.scrollArea_console = QtWidgets.QScrollArea(Jobs)
         self.scrollArea_console.setWidgetResizable(True)
         self.scrollArea_console.setObjectName("scrollArea_console")
@@ -296,6 +298,8 @@ class Ui_Jobs(object):
         self.gridLayout_2.addWidget(self.Jobs_table, 1, 0, 1, 1)
         self.scrollArea.setWidget(self.Jobs_scrollArea)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
+        self.Jobs_table.horizontalHeader().setStretchLastSection(True)
+        # self.Jobs_table.horizontalHeader().setDefaultSectionSize(200)
 
         self.retranslateUi(Jobs)
         QtCore.QMetaObject.connectSlotsByName(Jobs)
@@ -330,5 +334,5 @@ class Ui_Jobs(object):
         item.setText(_translate("Jobs", "Job Status"))
         item = self.Jobs_table.horizontalHeaderItem(11)
         # item.setText(_translate("Jobs", "Show Console"))
-        item.setText(_translate("Jobs", "           Actions          "))
+        item.setText(_translate("Jobs", "Actions"))
         self.Close_pushButton.setText(_translate("Jobs", "X"))
