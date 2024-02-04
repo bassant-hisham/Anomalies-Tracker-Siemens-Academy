@@ -272,20 +272,16 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             item = self.Job.Jobs_table.item(row, 2)  
             
             if item is not None and item.text() == job_name:
-                # for col in range(self.Job.Jobs_table.columnCount()):
-                #     if(col is not None):
-                #         self.undoStack.append((row, [self.Job.Jobs_table.item(row, col).text() ]))
+                #self.undoStack.append(self.Jobslist[self.Tasks.currentIndex()])
                 self.Job.Jobs_table.removeRow(row)
                 break  
     
     # def undo_delete(self):
     #     if self.undoStack:
-    #         row, data = self.undoStack.pop()
-    #         self.Job.Jobs_table.insertRow(row)
-    #         for col, value in enumerate(data):
-    #             item = QTableWidgetItem(value)
-    #             self.Job.Jobs_table.setItem(row, col, item)
-
+    #         data = self.undoStack.pop()
+    #         print("*****  data:      ")
+    #         print(data)
+    #         print("*****")
     def refresh_every_5_sec(self) -> QtCore.QTimer:
         timer = QtCore.QTimer(self)
         timer.timeout.connect(self.update_console)
@@ -422,8 +418,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         with open(file_path, 'w') as json_file:
             
             for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
-                    if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
-                        continue
+                    
+                    
+                    if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0)):
+                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
+                            continue
                     running_dict = running_config.running_configurations
                     compilationConfigData = design.compilation_config.compilation_configurationsdict
                     ToolConfigData = design.launching_configurations.get_ToolConfig()
@@ -432,8 +431,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
                     self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
                     
-                    previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
-                    previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
+                    if(self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3)):
+                        previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
+                    
+                    if(self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4)):
+                        previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
                     
                     prerequistes={  #############to be changed
                         "prerequisites": {
