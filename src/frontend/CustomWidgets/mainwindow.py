@@ -52,9 +52,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         
         self.CreateJobs_button.clicked.connect(self.collectData)
         
-        self.undoShortcut = QShortcut(Qt.CTRL + Qt.Key_Z, self)
-        self.undoShortcut.activated.connect(self.undo_delete)
-        self.undoStack = []
+        # self.undoShortcut = QShortcut(Qt.CTRL + Qt.Key_Z, self)
+        # self.undoShortcut.activated.connect(self.undo_delete)
+        # self.undoStack = []
         
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
@@ -266,17 +266,17 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
 
-    # def delete_job(self, job_name: str) -> None:
-    #     #self.JENKINS_APIs.delete_job(job_name)    # need confirmation for job deletion in jenkins server
-    #     for row in range(self.Job.Jobs_table.rowCount()):
-    #         item = self.Job.Jobs_table.item(row, 2)  
+    def delete_job(self, job_name: str) -> None:
+        #self.JENKINS_APIs.delete_job(job_name)    # need confirmation for job deletion in jenkins server
+        for row in range(self.Job.Jobs_table.rowCount()):
+            item = self.Job.Jobs_table.item(row, 2)  
             
-    #         if item is not None and item.text() == job_name:
-    #             for col in range(self.Job.Jobs_table.columnCount()):
-    #                 if(col is not None):
-    #                     self.undoStack.append((row, [self.Job.Jobs_table.item(row, col).text() ]))
-    #             self.Job.Jobs_table.removeRow(row)
-    #             break  
+            if item is not None and item.text() == job_name:
+                # for col in range(self.Job.Jobs_table.columnCount()):
+                #     if(col is not None):
+                #         self.undoStack.append((row, [self.Job.Jobs_table.item(row, col).text() ]))
+                self.Job.Jobs_table.removeRow(row)
+                break  
     
     # def undo_delete(self):
     #     if self.undoStack:
@@ -397,11 +397,13 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     
     def selectallrows(self):
         for row in  range(len(self.combinations[self.Tasks.currentIndex()] )):
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Checked)
+            if(self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0)):
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Checked)
 
     def unselectallrows(self):
         for row in  range(len(self.combinations[self.Tasks.currentIndex()] )):
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Unchecked)
+            if(self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0)):
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Unchecked)
 
 
     def GenerateJson(self):
