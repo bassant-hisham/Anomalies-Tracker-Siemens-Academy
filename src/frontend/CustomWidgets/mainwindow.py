@@ -271,7 +271,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
     def delete_job(self, job_name: str) -> None:
+        
+        # check status before deletion of jenkins , button disabled  
+        
         # self.JENKINS_APIs.delete_job(job_name)  # Need confirmation for job deletion in Jenkins server.
+        
+        
         for row in range(self.Job.Jobs_table.rowCount()):
             item = self.Job.Jobs_table.item(row, 2)
             
