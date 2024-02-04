@@ -234,8 +234,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             button_layout = QHBoxLayout()
             button_layout.addWidget(ShowConsole)
             button_layout.addWidget(abort)
-            button_layout.addWidget(trash)
             button_layout.addWidget(hide)
+            button_layout.addWidget(trash)
 
             # Set the layout as the cell widget
             cell_widget = QWidget()
