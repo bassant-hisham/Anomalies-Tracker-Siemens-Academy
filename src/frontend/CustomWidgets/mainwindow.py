@@ -53,7 +53,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.CreateJobs_button.clicked.connect(self.collectData)
         
         self.undoShortcut = QShortcut(Qt.CTRL + Qt.Key_Z, self)
-        self.undoShortcut.activated.connect(self.undo_delete_job)
+        self.undoShortcut.activated.connect(self.undo_hide_job)
         self.undoStack = []
         
         
@@ -199,26 +199,43 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.ShowRun1 = MyRunBox(0, [], "")
             self.runningwindows.append(self.ShowRun1)
             ShowConsole.clicked.connect(lambda _, job_name=job_name_str: self.open_and_update_console(job_name))
-
+            ShowConsole.setToolTip("Show Output")  
+            ShowConsole.setStyleSheet("color: rgb(37, 40, 50);")
+            
             abort = QPushButton(" ❌ ")
             abort.setStyleSheet("color: white;")
             self.ShowRun2 = MyRunBox(0, [], "")
             abort.setFixedSize(button_size)
             self.runningwindows.append(self.ShowRun2)
             abort.clicked.connect(lambda _, job_name=job_name_str: self.abort_job(job_name))
-
+            abort.setToolTip("Abort")
+            abort.setStyleSheet("color: rgb(37, 40, 50);")
+            
+            
             trash = QPushButton(" 🗑️  ")
             trash.setStyleSheet("color: white;")
             self.ShowRun3 = MyRunBox(0, [], "")
             trash.setFixedSize(button_size)
             self.runningwindows.append(self.ShowRun3)
             trash.clicked.connect(lambda _, job_name= job_name_str: self.delete_job(job_name))
-
+            trash.setToolTip("Delete")  
+            trash.setStyleSheet("color: rgb(37, 40, 50);")
+            
+            
+            hide = QPushButton("🚫")
+            hide.setStyleSheet("color: white;")
+            self.ShowRun4 = MyRunBox(0, [], "")
+            hide.setFixedSize(button_size)
+            self.runningwindows.append(self.ShowRun4)
+            hide.clicked.connect(lambda _, job_name= job_name_str: self.hide_job(job_name))
+            hide.setToolTip("Hide")  
+            hide.setStyleSheet("color: rgb(37, 40, 50);")
             # Create a horizontal layout
             button_layout = QHBoxLayout()
             button_layout.addWidget(ShowConsole)
             button_layout.addWidget(abort)
             button_layout.addWidget(trash)
+            button_layout.addWidget(hide)
 
             # Set the layout as the cell widget
             cell_widget = QWidget()
@@ -270,7 +287,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
 
-    def delete_job(self, job_name: str) -> None:
+    def hide_job(self, job_name: str) -> None:
         
         # check status before deletion of jenkins , button disabled  
         
@@ -287,7 +304,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
     
-    def undo_delete_job(self):
+    def undo_hide_job(self):
         if not self.undoStack:
             print("No actions to undo.")
             return
@@ -297,7 +314,24 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         print(f"Row {row} restored.")
         
-    
+    def delete_job(self, job_name: str) -> None:
+        
+        reply = QMessageBox.question(self, 'Confirm Deletion', 
+                                 f"Are you sure you want to delete the job '{job_name}'?", 
+                                 QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            for row in range(self.Job.Jobs_table.rowCount()):
+                item = self.Job.Jobs_table.item(row, 2)
+                if item is not None and item.text() == job_name:
+                    self.Job.Jobs_table.removeRow(row)
+                    break
+                
+        # try:
+        #     self.JENKINS_APIs.delete_job(job_name)
+        #     raise Exception("Job not in the server to be deleted")
+        # except:
+        #     print("Exception occured")
 
     def refresh_every_5_sec(self) -> QtCore.QTimer:
         timer = QtCore.QTimer(self)
