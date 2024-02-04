@@ -18,9 +18,10 @@ class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
         # #self.ui.groupBox.resizeEvent = lambda event: self.window_resize()
         self.groupBox.setTitle("Running Configuration " + str(id))        
         self.RunC=self.RunC_2
+        
         self.ErrorL=self.ErrorL_2
         self.ErrorC=self.ErrorC_2
-        self.ErrorConf=self.ErrorConf_2
+        self.ErrorConf= self.ErrorConf_2
         self.toolButtonBrowseOutput_2=self.BrowseScriptPath_button 
         self.lineEditOutputDirectory_2 = self.ScriptPath_lineEdit
         self.ErrorConf.hide()
@@ -59,7 +60,7 @@ class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
             self.config_window_hang.center_on_parent()
         grandparent = self.get_grandparent(self)
         grandparent.setEnabled(False)
-    
+        
     def get_grandparent(self, widget):
         grandparent = widget.myparent
         temp=type(grandparent)
@@ -76,10 +77,17 @@ class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
             self.BrowseScriptPath_button.show()
             self.ScriptPath_label.show()
             self.ScriptPath_lineEdit.show()
+            self.ErrorL.show()
+            self.ErrorC.show()
         else:    
             self.BrowseScriptPath_button.hide()
             self.ScriptPath_label.hide()
             self.ScriptPath_lineEdit.hide()
+            self.ErrorL.hide()
+            self.ErrorC.hide()
+            
+            
+            
     
     def collect_running_config(self):
         self.running_configurations['running_configurations']={}
@@ -106,8 +114,8 @@ class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
         self.config_window_crash.checkbox1.setDisabled(True)
         self.config_window_crash.show_window()
         self.config_window_crash.center_on_parent()
+
         
-    
     def show_hang_data(self,running_dict):
         selected = running_dict['running_configurations']['crash_configurations']['crashed_process']
         for radio_button in self.config_window_hang.button_group.buttons():

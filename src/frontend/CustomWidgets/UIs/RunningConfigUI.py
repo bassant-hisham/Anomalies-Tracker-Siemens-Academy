@@ -319,4 +319,6 @@ class Ui_RunningConfiguration(object):
         self.ErrorC_2.setItemText(0, _translate("RunningConfiguration", "Mismatch"))
         self.ErrorC_2.setItemText(1, _translate("RunningConfiguration", "Crash"))
         self.ErrorC_2.setItemText(2, _translate("RunningConfiguration", "Hang"))
+        self.ErrorL_2.hide()
+        self.ErrorC_2.hide()
         self.ErrorConf_2.setText(_translate("RunningConfiguration", "Error Configuration"))
