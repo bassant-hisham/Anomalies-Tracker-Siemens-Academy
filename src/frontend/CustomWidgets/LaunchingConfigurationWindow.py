@@ -251,23 +251,33 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
 
         for index,dut in enumerate(self.Duts):
             if(dut.DesignPath_lineEdit_2.text()==""):
-                error_msg+="Please enter a Design File Path for Dut "+str(index)+"\n"
-            temp=dut.AVB_ListView_2.selectedIndexes()
+                error_msg+="Please enter a Design File Path for Dut "+str(index+1)+"\n"
+
             if (len(dut.AVB_ListView_2.selectedIndexes())==0):
-                error_msg+="Please select values for the Avb List for Dut "+str(index)+"\n"
+                error_msg+="Please select values for the Avb List for Dut "+str(index+1)+"\n"
 
             if(dut.RecordDir_lineEdit_2.text()==""):
-                error_msg+="Please enter a Record Directory path for Dut "+str(index)+"\n" 
+                error_msg+="Please enter a Record Directory path for Dut "+str(index+1)+"\n" 
 
             if(dut.ReplyDir_lineEdit_2.text()==""):
-                error_msg+="Please enter a Reply Directory path for Dut "+str(index)+"\n"
+                error_msg+="Please enter a Reply Directory path for Dut "+str(index+1)+"\n"
 
             if(dut.ReplySnapshotName_lineEdit_2.text()==""):
-                error_msg+="Please enter a Reply Snapshot Name for Dut "+str(index)+"\n" 
+                error_msg+="Please enter a Reply Snapshot Name for Dut "+str(index+1)+"\n" 
 
             if(dut.DPILaunchMode_lineEdit_2.text()==""):
-                error_msg+="Please enter a DPI Launch Mode for Dut "+str(index)+"\n"
-            
+                error_msg+="Please enter a DPI Launch Mode for Dut "+str(index+1)+"\n"
+
+            t=dut.ConfigType_comboBox.currentText()
+            if (dut.ConfigType_comboBox.currentText()=="Range"  and (dut.FromConfigValue_lineEdit.text()=="" or dut.ToConfigValue_lineEdit.text()=="")):
+                error_msg+="Please enter a Config Range for Dut "+str(index+1)+"\n"  
+
+            elif (dut.ConfigType_comboBox.currentText()=="Value" and dut.Configvalue_lineEdit.text()=="" ):
+                error_msg+="Please enter a Config Value for Dut "+str(index+1)+"\n"
+
+            elif(dut.ConfigType_comboBox.currentText()=="List" and dut.ConfigValueList_lineEdit.text()=="" ):  
+                error_msg+="Please enter a Config List for Dut "+str(index+1)+"\n"    
+
         if(error_msg==""):       
             self.closed_signal.emit()
             event.accept()

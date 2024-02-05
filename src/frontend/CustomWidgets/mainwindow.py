@@ -85,23 +85,33 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.design.show()
         self.design.center_on_parent()
         
+    def checkError(self):
+
+        current_index = self.Tasks.currentWidget().stacked_widget.currentIndex() #use it to know which of dir or file is used (0->Dir , 1->File)
+
+        if current_index == 1:
+            if (self.Tasks.currentWidget().FilePath_lineEdit.text()==""):  
+                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter build's File Path</b>")
+        elif (self.Tasks.currentWidget().ParentDir_lineEdit.text() ==""):
+                QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
+                    
+        for running in self.Tasks.currentWidget().Running_data:
+                if running.ScriptPath_lineEdit.text()=="" :
+                    QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Running File Path</b>") 
+
+        for design in self.Tasks.currentWidget().Design_data:
+                if design.DesignPath_lineEdit.text()=="" :
+                    QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Design File Path</b>") 
+
 
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
         self.runningwindows=[]
-        # if(self.design.DesignPath_lineEdit.text() == ""):
-        #     self.showWarningMessage("Design Path cannot be empty for Job Creation")
         
         if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
             self.Job = MyJobs()
             self.Jobslist[self.Tasks.currentIndex()]=self.Job
             current_widget.Task_tabWidget.addTab(self.Job,"Jobs")
-        # else:
-        #     # Remove the existing MyJobs instance
-        #     current_widget.Task_tabWidget.removeTab(3) 
-        #     # Create a new instance of MyJobs
-        #     self.Job = MyJobs()   
-        #     current_widget.Task_tabWidget.insertTab(3, self.Job, "Jobs")
 
         self.Jobslist[self.Tasks.currentIndex()].Run_pushButton.clicked.connect(self.GenerateJson)
         self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
@@ -110,7 +120,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Job.Close_pushButton.clicked.connect(self.close_console)
         
 
-        self.combinations[self.Tasks.currentIndex()] = self.collectData()
+        self.combinations[self.Tasks.currentIndex()]=self.collectData()
         
         self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
         self.Job.Jobs_table.verticalHeader().setVisible(False)
@@ -118,9 +128,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Job.Jobs_table.verticalHeader().setVisible(False)
         self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
         self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
+        self.checkError()
+        
 
-        for row_index, (running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
 
+        for row_index,(running_config, design, build )in enumerate(self.combinations[self.Tasks.currentIndex()]) :
+            
             checkbox_item = QTableWidgetItem()
             checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
             checkbox_item.setCheckState(Qt.Unchecked)
@@ -291,7 +304,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         
         # check status before deletion of jenkins , button disabled  
         
-        # self.JENKINS_APIs.delete_job(job_name)  # Need confirmation for job deletion in Jenkins server.
+        #self.JENKINS_APIs.delete_job(job_name)  # Need confirmation for job deletion in Jenkins server.
         
         
         for row in range(self.Job.Jobs_table.rowCount()):
@@ -342,6 +355,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def add_all_jobs_status(self) -> None:
         original_dict = self.JENKINS_APIs.get_all_status()
         jobs = [{job:status} for job, status in original_dict.items()]
+        
         
     #    for job_index in range(len(jobs)):
     #         self.add_job(jobs[job_index])
@@ -418,7 +432,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def collectData(self):
 
         Designs = self.Tasks.currentWidget().get_design()
-        #print(self.Tasks.cuurentwidget().
         RunningConfigs = self.Tasks.currentWidget().get_running()
         Builds  = self.Tasks.currentWidget().get_builds()
 
@@ -430,16 +443,17 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         if(self.BinarySearhState==True):
             if(len(RunningConfigs)!=0 and  len(Designs)!=0):
                 RunningConfigsFirstIndex=list()
-                DesignConfigsFirstIndex=list() # 3shan product msh btakhod gher list f m7tgha a7ot awel element fy el list el fo2a fy list 
+                DesignConfigsFirstIndex=list() 
                 RunningConfigsFirstIndex.append(RunningConfigs[0])
                 DesignConfigsFirstIndex.append(Designs[0])
 
-                combinations = list(product(RunningConfigsFirstIndex, DesignConfigsFirstIndex, Builds))
+                combinations= list(product(RunningConfigsFirstIndex, DesignConfigsFirstIndex, Builds))
             else:
-                combinations = list(product(RunningConfigs , Designs, Builds))
+                combinations= list(product(RunningConfigs , Designs, Builds))
         else:
-            combinations = list(product(RunningConfigs , Designs, Builds))
+            combinations= list(product(RunningConfigs , Designs, Builds))
         return combinations
+        
     
     
     def selectallrows(self):

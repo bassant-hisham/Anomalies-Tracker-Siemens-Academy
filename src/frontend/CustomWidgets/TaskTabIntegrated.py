@@ -62,17 +62,15 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def get_design(self):
         for design in self.Design_data:
             if design.DesignPath_lineEdit.text()=="" :
-                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Design File Path</b>") 
                 return []
         return self.Design_data
     
     def get_running(self):
         for running in self.Running_data:
             if running.ScriptPath_lineEdit.text()=="" :
-                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Running File Path</b>") 
                 return []
         return self.Running_data
-        
+       
     def add_running_config(self):
         new_running_box = MyRunBox(self.scrollLayoutRunning.count() + 1,self.Running_data,self.scrollLayoutRunning)
         self.scrollLayoutRunning.addWidget(new_running_box)
@@ -87,8 +85,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
             file_path = self.FilePath_lineEdit.text()
             if file_path:
                 self.Builds.append(file_path)
-            else:
-                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter build's File Path</b>")
+            # else:
+            #     QMessageBox.warning(self, "Empty File Path", f"<b>Please enter build's File Path</b>")
         else:
             parent_dir = self.ParentDir_lineEdit.text()
             StartRange = 0
@@ -106,8 +104,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
                     bash_files = [f for f in os.listdir(parent_dir) if f.endswith(".bash")]
                     for file_name in bash_files:
                         self.Builds.append(file_name)
-                else:
-                    QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
+                # else:
+                #     QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
             else :
                 if parent_dir:
                     start_value = int(StartRange) 
@@ -116,8 +114,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
                         file_name = f"vved{i}.bash"
                         if os.path.exists(os.path.join(parent_dir, file_name)):
                             self.Builds.append(file_name)
-                else:
-                    QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
+                # else:
+                #     QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
         return self.Builds
     
     def getBinarySearchValue(self):
@@ -128,7 +126,6 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
             WidgteToBeRemoved=self.Running_data.pop()
             self.scrollLayoutRunning.removeWidget(WidgteToBeRemoved)
             WidgteToBeRemoved.deleteLater()
-        temp=8
 
     def deleteDesignWidget(self):
         if(len(self.Design_data) > 1):
