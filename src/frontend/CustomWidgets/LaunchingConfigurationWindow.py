@@ -247,5 +247,34 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         warning_dialog.show()
         
     def closeEvent(self, event):
-        self.closed_signal.emit()
-        event.accept()
+        error_msg=f""
+
+        for index,dut in enumerate(self.Duts):
+            if(dut.DesignPath_lineEdit_2.text()==""):
+                error_msg+="Please enter a Design File Path for Dut "+str(index)+"\n"
+            temp=dut.AVB_ListView_2.selectedIndexes()
+            if (len(dut.AVB_ListView_2.selectedIndexes())==0):
+                error_msg+="Please select values for the Avb List for Dut "+str(index)+"\n"
+
+            if(dut.RecordDir_lineEdit_2.text()==""):
+                error_msg+="Please enter a Record Directory path for Dut "+str(index)+"\n" 
+
+            if(dut.ReplyDir_lineEdit_2.text()==""):
+                error_msg+="Please enter a Reply Directory path for Dut "+str(index)+"\n"
+
+            if(dut.ReplySnapshotName_lineEdit_2.text()==""):
+                error_msg+="Please enter a Reply Snapshot Name for Dut "+str(index)+"\n" 
+
+            if(dut.DPILaunchMode_lineEdit_2.text()==""):
+                error_msg+="Please enter a DPI Launch Mode for Dut "+str(index)+"\n"
+            
+        if(error_msg==""):       
+            self.closed_signal.emit()
+            event.accept()
+        else:
+           event.ignore()
+           warning_dialog = QMessageBox(self)
+           warning_dialog.setWindowTitle("Empty input Fields")
+           warning_dialog.setIcon(QMessageBox.Warning)
+           warning_dialog.show()
+           warning_dialog.setText(error_msg)  
