@@ -62,14 +62,16 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
     def get_design(self):
         for design in self.Design_data:
             if design.DesignPath_lineEdit.text()=="" :
-                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Design File Path</b>") 
+                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Design File Path</b>")
+                break 
                 return []
         return self.Design_data
     
     def get_running(self):
         for running in self.Running_data:
             if running.ScriptPath_lineEdit.text()=="" :
-                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Running File Path</b>") 
+                QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Running File Path</b>")
+                break 
                 return []
         return self.Running_data
         

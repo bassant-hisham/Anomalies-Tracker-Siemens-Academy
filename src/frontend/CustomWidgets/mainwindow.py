@@ -327,11 +327,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     self.Job.Jobs_table.removeRow(row)
                     break
                 
-        # try:
-        #     self.JENKINS_APIs.delete_job(job_name)
-        #     raise Exception("Job not in the server to be deleted")
-        # except:
-        #     print("Exception occured")
+        try:
+             self.JENKINS_APIs.delete_job(job_name)
+             raise Exception("Job not in the server to be deleted")
+        except:
+             print("Exception occured")
 
     def refresh_every_5_sec(self) -> QtCore.QTimer:
         timer = QtCore.QTimer(self)

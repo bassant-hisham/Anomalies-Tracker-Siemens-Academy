@@ -5,7 +5,7 @@ from src.frontend.CustomWidgets.commonFunctions import *
 from src.frontend.CustomWidgets.DUTBox import MyDUTGroupBox
 import ast  # Import the ast module for safer evaluation
 from PyQt5.QtGui import QIcon
-
+import os
 
 class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
     closed_signal = QtCore.pyqtSignal()
@@ -28,6 +28,14 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.DeleteEnvButton_master.clicked.connect(lambda: self.delete_last_variable(self.ToolAdditionalEnvValues))
         self.DeleteArgButton_slave.clicked.connect(lambda: self.delete_last_variable(self.AdditionalArg_2))
         self.DeleteEnvButton_slave.clicked.connect(lambda: self.delete_last_variable(self.ToolAdditionalEnvValues_2))
+        
+        self.VE_ENABLE_BUFFERS_STATISTICS_empty = True
+        self.ENABLE_BACKUP_LOG_empty = True
+        self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty = True
+        self.ENABLE_BACKUP_LOG_empty_slave = True
+        self.argument_key_empty = True
+        self.argument_key_slave_empty = True
+        
         
         self.ToolConfig = {}
         self.ToolConfig["launch_tool"]=False
@@ -247,28 +255,82 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         warning_dialog.show()
         
     def closeEvent(self, event):
-        error_msg=f""
+        num = 0
+        dut_index, dut = next(enumerate(self.Duts), (None, None))
+        error_msg = f""
+        
+        if(not self.ToolConfigGroupBox.isChecked()):
+            
+            self.VE_ENABLE_BUFFERS_STATISTICS_empty = False
 
+            self.ENABLE_BACKUP_LOG_empty = False
+
+            self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty= False
+
+            self.ENABLE_BACKUP_LOG_empty_slave= False
+
+            self.argument_key_empty= False
+
+            self.argument_key_slave_empty= False
+
+        
+        self.config_tool_error = False
+        if(self.VE_ENABLE_BUFFERS_STATISTICS_empty or self.ENABLE_BACKUP_LOG_empty or self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty or self.ENABLE_BACKUP_LOG_empty_slave or self.argument_key_empty or self.argument_key_slave_empty):
+            error_msg += "---------------------------------------------\n"
+            error_msg += "Enter the following for Tool Config :" + "\n"
+            error_msg += "---------------------------------------------\n"
+            if(self.VE_ENABLE_BUFFERS_STATISTICS_empty or self.ENABLE_BACKUP_LOG_empty):
+                error_msg+=f"{str(num).rjust(2)}: Environment Variables for master \n"
+                num += 1
+            if(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty or self.ENABLE_BACKUP_LOG_empty_slave):
+                error_msg+=f"{str(num).rjust(2)}: Environment Variables for slave \n"
+                num += 1
+            if(self.argument_key_empty):
+                error_msg+=f"{str(num).rjust(2)}: Argument key for master \n"
+                num += 1
+            if(self.argument_key_slave_empty):
+                error_msg+=f"{str(num).rjust(2)}: Argument key for slave \n"
+                num += 1
+            self.config_tool_error = True 
+            
+        else:
+            error_msg = ""
+        
+        error_msg += "**************************************************\n"
         for index,dut in enumerate(self.Duts):
-            if(dut.DesignPath_lineEdit_2.text()==""):
-                error_msg+="Please enter a Design File Path for Dut "+str(index)+"\n"
+            
+            error_msg += "---------------------------------------------\n"
+            error_msg += f"Enter the following for Dut {index} :" + "\n"
+            error_msg += "---------------------------------------------\n"
+            if(dut.DesignPath_lineEdit_2.text() == "" or not os.path.exists(dut.DesignPath_lineEdit_2.text()) or not os.path.isfile(dut.DesignPath_lineEdit_2.text())):
+                error_msg += f"{str(num).rjust(2)}: Valid Design File Path \n"
+                num += 1
             temp=dut.AVB_ListView_2.selectedIndexes()
             if (len(dut.AVB_ListView_2.selectedIndexes())==0):
-                error_msg+="Please select values for the Avb List for Dut "+str(index)+"\n"
-
-            if(dut.RecordDir_lineEdit_2.text()==""):
-                error_msg+="Please enter a Record Directory path for Dut "+str(index)+"\n" 
-
-            if(dut.ReplyDir_lineEdit_2.text()==""):
-                error_msg+="Please enter a Reply Directory path for Dut "+str(index)+"\n"
-
+                print("###")
+                print(len(temp))
+                error_msg+=f"{str(num).rjust(2)}: Choose values for the AVB List \n"
+                num += 1
+            if(dut.RecordDir_lineEdit_2.text() == "" or not os.path.isdir(dut.RecordDir_lineEdit_2.text())):
+                error_msg+=f"{str(num).rjust(2)}: Valid Record Directory path \n" 
+                num += 1
+            if(dut.ReplyDir_lineEdit_2.text()=="" or not os.path.isdir(dut.ReplyDir_lineEdit_2.text())):
+                error_msg+=f"{str(num).rjust(2)}: Valid Reply Directory path \n"
+                num += 1
             if(dut.ReplySnapshotName_lineEdit_2.text()==""):
-                error_msg+="Please enter a Reply Snapshot Name for Dut "+str(index)+"\n" 
-
+                error_msg+=f"{str(num).rjust(2)}: Snapshot Name \n" 
+                num += 1
             if(dut.DPILaunchMode_lineEdit_2.text()==""):
-                error_msg+="Please enter a DPI Launch Mode for Dut "+str(index)+"\n"
-            
-        if(error_msg==""):       
+                error_msg+=f"{str(num).rjust(2)}: Launch Mode \n"
+                num += 1
+        
+            if(num == 0 and self.config_tool_error == False):
+                error_msg = ""
+                
+        
+                
+        if(error_msg== ""):
+            num = 1       
             self.closed_signal.emit()
             event.accept()
         else:
