@@ -103,7 +103,7 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             self.arguments[argument_key] =argument_value
             self.ToolConfig["master_tool_configuration"]["additional_args"][argument_key] = argument_value
             self.AdditionalArg.append(str(self.arguments))
-
+        
         if(self.argument_key_empty):
             self.showWarningMessage("Argument cannot be empty")
        
@@ -130,10 +130,8 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         ENABLE_BACKUP_LOG = self.EnvVarValue_lineEdit.text()
         if(ENABLE_BACKUP_LOG == ""):
             self.ENABLE_BACKUP_LOG_empty = True
-            print("i am here no value")
         else:
             self.ENABLE_BACKUP_LOG_empty = False
-            print("i am not here")
             
             
         if(not self.VE_ENABLE_BUFFERS_STATISTICS_empty and not self.ENABLE_BACKUP_LOG_empty):
@@ -141,8 +139,9 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             self.arguments[VE_ENABLE_BUFFERS_STATISTICS] =ENABLE_BACKUP_LOG
             self.ToolAdditionalEnvValues.append(str(self.arguments))
         
-        
-        if(self.VE_ENABLE_BUFFERS_STATISTICS_empty  or  self.ENABLE_BACKUP_LOG_empty):
+        if(self.VE_ENABLE_BUFFERS_STATISTICS_empty  and  self.ENABLE_BACKUP_LOG_empty):
+            pass
+        elif(self.VE_ENABLE_BUFFERS_STATISTICS_empty  or  self.ENABLE_BACKUP_LOG_empty):
             self.showWarningMessage("Environment Variable cannot be empty")
         
             
@@ -173,7 +172,10 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         else:
             self.ENABLE_BACKUP_LOG_empty_slave = False
         
-        if(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty  or  self.ENABLE_BACKUP_LOG_empty_slave):
+        if(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty  and  self.ENABLE_BACKUP_LOG_empty_slave):
+            pass
+        
+        elif(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty  or  self.ENABLE_BACKUP_LOG_empty_slave):
             self.showWarningMessage("Environment Variable cannot be empty")
         
         if(not self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty and not self.ENABLE_BACKUP_LOG_empty_slave):
@@ -302,19 +304,17 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             error_msg += "---------------------------------------------\n"
             error_msg += f"Enter the following for Dut {index} :" + "\n"
             error_msg += "---------------------------------------------\n"
-            if(dut.DesignPath_lineEdit_2.text() == "" or not os.path.exists(dut.DesignPath_lineEdit_2.text()) or not os.path.isfile(dut.DesignPath_lineEdit_2.text())):
+            if(dut.DesignPath_lineEdit_2.text() == "" or not os.path.exists(dut.DesignPath_lineEdit_2.text()) or not os.path.isdir(dut.DesignPath_lineEdit_2.text())):
                 error_msg += f"{str(num).rjust(2)}: Valid Design File Path \n"
                 num += 1
             temp=dut.AVB_ListView_2.selectedIndexes()
             if (len(dut.AVB_ListView_2.selectedIndexes())==0):
-                print("###")
-                print(len(temp))
                 error_msg+=f"{str(num).rjust(2)}: Choose values for the AVB List \n"
                 num += 1
-            if(dut.RecordDir_lineEdit_2.text() == "" or not os.path.isdir(dut.RecordDir_lineEdit_2.text())):
+            if(dut.RecordDir_lineEdit_2.text() == "" or not os.path.isdir(dut.RecordDir_lineEdit_2.text()) or not os.path.exists(dut.DesignPath_lineEdit_2.text())):
                 error_msg+=f"{str(num).rjust(2)}: Valid Record Directory path \n" 
                 num += 1
-            if(dut.ReplyDir_lineEdit_2.text()=="" or not os.path.isdir(dut.ReplyDir_lineEdit_2.text())):
+            if(dut.ReplyDir_lineEdit_2.text()=="" or not os.path.isdir(dut.ReplyDir_lineEdit_2.text()) or not os.path.exists(dut.DesignPath_lineEdit_2.text())):
                 error_msg+=f"{str(num).rjust(2)}: Valid Reply Directory path \n"
                 num += 1
             if(dut.ReplySnapshotName_lineEdit_2.text()==""):
@@ -324,8 +324,8 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
                 error_msg+=f"{str(num).rjust(2)}: Launch Mode \n"
                 num += 1
         
-            if(num == 0 and self.config_tool_error == False):
-                error_msg = ""
+        if(num == 0 and self.config_tool_error == False):
+            error_msg = ""
                 
         
                 

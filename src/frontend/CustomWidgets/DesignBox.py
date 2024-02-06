@@ -17,7 +17,7 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations=MyLaunchingConfigWindow()
         self.CompilationConfig_button.clicked.connect(self.open_compilation_config)
-        self.BrowseDesignPath_button.clicked.connect(lambda: showFileDialog(self,self.DesignPath_lineEdit))
+        self.BrowseDesignPath_button.clicked.connect(lambda: showDirectoryDialog(self,self.DesignPath_lineEdit))
         self.delete_pushButton.clicked.connect(self.deleteDesignWidget)
         self.LaunchingConfig_button.clicked.connect(self.open_launching_config)
         self.DesignBox.setCheckable(True)

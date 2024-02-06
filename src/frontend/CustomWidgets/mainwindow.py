@@ -369,35 +369,43 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
              
             if job_status == "SUCCESS":
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
-                label.setStyleSheet("color: green; text-align: center; font-weight: bold;") 
+                label.setStyleSheet("color: green; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter) 
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)  
             elif job_status == "FAILURE":
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label) 
             elif job_status == BuildState.JOB_CREATED.description:
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_CREATED.color}; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_CRASHED.description:
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_CRASHED.color}; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_IN_BATCH.description:
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_IN_BATCH.color}; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_STARTED.description:
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_STARTED.color}; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status[:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description:
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
             else:
                 self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
                 self.Job.Jobs_table.setCellWidget(job_row, 10, label)
                 
     def refresh_all_jobs(self) -> None:
@@ -470,9 +478,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             
             for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
                     
-                    if(not self.Jobslist[taskNu].Jobs_table.isRowHidden(currentJobIndex)):
-                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0)):
-                            if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
+                    
+                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
                                 continue
                         running_dict = running_config.running_configurations
                         compilationConfigData = design.compilation_config.compilation_configurationsdict
@@ -482,11 +489,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
                         
-                        if(self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3)):
-                            previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
+                        previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
                         
-                        if(self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4)):
-                            previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
+                        previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
                         
                         prerequistes={  #############to be changed
                             "prerequisites": {

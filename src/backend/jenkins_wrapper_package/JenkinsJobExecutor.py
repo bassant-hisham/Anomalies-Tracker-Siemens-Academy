@@ -51,9 +51,9 @@ class JenkinsJobExecutor:
             self.All_Jobs_Status[job_name] = job_status
             self.finished_jobs.append((job_name, job_status, job_execution_time))
 
-            message = f"Job '{job_name}' finished with status: {job_status}  , execution time: {job_execution_time}"
-            logging.info(message) 
-            print(message)
+            # message = f"Job '{job_name}' finished with status: {job_status}  , execution time: {job_execution_time}"
+            # logging.info(message) 
+            # print(message)
 
             if config.DELETE_JOB_AFTER_FINISH:
                 jenkins_wrapper.delete_job(job_name)
