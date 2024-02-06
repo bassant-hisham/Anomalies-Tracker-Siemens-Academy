@@ -330,7 +330,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def delete_job(self, job_name: str) -> None:
         
         reply = QMessageBox.question(self, 'Confirm Deletion', 
-                                 f"Are you sure you want to delete the job '{job_name}'?", 
+                                 f"Are you sure you want to delete the job '{job_name}' from the Jenkins Server?", 
                                  QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 
         if reply == QMessageBox.Yes:

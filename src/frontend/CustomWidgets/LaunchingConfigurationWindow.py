@@ -98,14 +98,19 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             
             
         argument_value = self.ArgValue_lineEdit.text()
+        
+        if(argument_value == ""):
+            self.argument_value_empty = True
+        else:
+            self.argument_value_empty = False
             
-        if(not self.argument_key_empty):
+        
+        if(self.argument_key_empty and not self.argument_value_empty):
+            self.showWarningMessage("Cannot put value without key in Additional Arguments")
+        else:
             self.arguments[argument_key] =argument_value
             self.ToolConfig["master_tool_configuration"]["additional_args"][argument_key] = argument_value
             self.AdditionalArg.append(str(self.arguments))
-        
-        if(self.argument_key_empty):
-            self.showWarningMessage("Argument cannot be empty")
        
             
     def add_additional_env_variables(self):
@@ -133,17 +138,15 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         else:
             self.ENABLE_BACKUP_LOG_empty = False
             
-            
-        if(not self.VE_ENABLE_BUFFERS_STATISTICS_empty and not self.ENABLE_BACKUP_LOG_empty):
+        
+        if((self.VE_ENABLE_BUFFERS_STATISTICS_empty and not self.ENABLE_BACKUP_LOG_empty)) or ((not self.VE_ENABLE_BUFFERS_STATISTICS_empty and self.ENABLE_BACKUP_LOG_empty)):
+            self.showWarningMessage("Complete the environment variables")
+        else:
             self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
             self.arguments[VE_ENABLE_BUFFERS_STATISTICS] =ENABLE_BACKUP_LOG
             self.ToolAdditionalEnvValues.append(str(self.arguments))
         
-        if(self.VE_ENABLE_BUFFERS_STATISTICS_empty  and  self.ENABLE_BACKUP_LOG_empty):
-            pass
-        elif(self.VE_ENABLE_BUFFERS_STATISTICS_empty  or  self.ENABLE_BACKUP_LOG_empty):
-            self.showWarningMessage("Environment Variable cannot be empty")
-        
+            
             
             
     def add_additional_env_variables_slave(self):
@@ -172,13 +175,13 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         else:
             self.ENABLE_BACKUP_LOG_empty_slave = False
         
-        if(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty  and  self.ENABLE_BACKUP_LOG_empty_slave):
-            pass
+       
         
-        elif(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty  or  self.ENABLE_BACKUP_LOG_empty_slave):
-            self.showWarningMessage("Environment Variable cannot be empty")
+        if((self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty and not self.ENABLE_BACKUP_LOG_empty_slave)) or ((not self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty and self.ENABLE_BACKUP_LOG_empty_slave)):
+
+            self.showWarningMessage("Complete the slave tool environment Variables")
         
-        if(not self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty and not self.ENABLE_BACKUP_LOG_empty_slave):
+        else:
             self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"][VE_ENABLE_BUFFERS_STATISTICS] = ENABLE_BACKUP_LOG
             self.arguments[VE_ENABLE_BUFFERS_STATISTICS] =ENABLE_BACKUP_LOG
             self.ToolAdditionalEnvValues_2.append(str(self.arguments))
@@ -201,15 +204,22 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         else:
             self.argument_key_slave_empty = False
             
-        argument_value = self.ArgValue_lineEdit_2.text()
+        
             
-        if(not self.argument_key_slave_empty):
+        argument_value = self.ArgValue_lineEdit_2.text()
+        
+        if(argument_value == ""):
+            self.argument_value_slave_empty = True
+        else:
+            self.argument_value_slave_empty = False
+                
+        if(self.argument_key_slave_empty and not self.argument_value_slave_empty):
+            self.showWarningMessage("Cannot put key without value in slave tool additional arguments")
+        else:
             self.arguments[argument_key] =argument_value
             self.ToolConfig["slave_tool_configuration"]["additional_args"][argument_key] = argument_value
             self.AdditionalArg_2.append(str(self.arguments))
 
-        if(self.argument_key_slave_empty):
-            self.showWarningMessage("Environment Variable cannot be empty")
 
     def add_dut_config(self):
         new_dut_box = MyDUTGroupBox(self.Dutconfig_Vlayout,self.Duts,self.Dutconfig_Vlayout.count()+1)
@@ -259,46 +269,9 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
     def closeEvent(self, event):
         num = 0
         dut_index, dut = next(enumerate(self.Duts), (None, None))
-        error_msg = f""
-        
-        if(not self.ToolConfigGroupBox.isChecked()):
-            
-            self.VE_ENABLE_BUFFERS_STATISTICS_empty = False
-
-            self.ENABLE_BACKUP_LOG_empty = False
-
-            self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty= False
-
-            self.ENABLE_BACKUP_LOG_empty_slave= False
-
-            self.argument_key_empty= False
-
-            self.argument_key_slave_empty= False
-
-        
+        error_msg = f""       
         self.config_tool_error = False
-        if(self.VE_ENABLE_BUFFERS_STATISTICS_empty or self.ENABLE_BACKUP_LOG_empty or self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty or self.ENABLE_BACKUP_LOG_empty_slave or self.argument_key_empty or self.argument_key_slave_empty):
-            error_msg += "---------------------------------------------\n"
-            error_msg += "Enter the following for Tool Config :" + "\n"
-            error_msg += "---------------------------------------------\n"
-            if(self.VE_ENABLE_BUFFERS_STATISTICS_empty or self.ENABLE_BACKUP_LOG_empty):
-                error_msg+=f"{str(num).rjust(2)}: Environment Variables for master \n"
-                num += 1
-            if(self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty or self.ENABLE_BACKUP_LOG_empty_slave):
-                error_msg+=f"{str(num).rjust(2)}: Environment Variables for slave \n"
-                num += 1
-            if(self.argument_key_empty):
-                error_msg+=f"{str(num).rjust(2)}: Argument key for master \n"
-                num += 1
-            if(self.argument_key_slave_empty):
-                error_msg+=f"{str(num).rjust(2)}: Argument key for slave \n"
-                num += 1
-            self.config_tool_error = True 
-            
-        else:
-            error_msg = ""
-        
-        error_msg += "**************************************************\n"
+      
         for index,dut in enumerate(self.Duts):
             
             error_msg += "---------------------------------------------\n"
@@ -323,6 +296,8 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             if(dut.DPILaunchMode_lineEdit_2.text()==""):
                 error_msg+=f"{str(num).rjust(2)}: Launch Mode \n"
                 num += 1
+            
+            
         
         if(num == 0 and self.config_tool_error == False):
             error_msg = ""

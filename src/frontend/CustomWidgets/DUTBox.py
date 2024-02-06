@@ -128,7 +128,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                         "terminate_dpi": self.TermianteDPI_checkBox.isChecked(),                    
                         "terminate_dpi_onerror": self.TerminateDPIOnError_checkBox.isChecked(),
                         "avb_list": self.AVB_ListView_2.selectedIndexes(),
-                        "design_path": self.DesignPath_lineEdit_2.text(),
+                        #"avb_list": [index.row() for index in self.AVB_ListView_2.selectedIndexes()],    # gpt suggesstion for the problem
                         "record_replay_configurations":{
                         "record_configurations": {
                         "record_dir": self.RecordDir_lineEdit_2.text(),
