@@ -492,45 +492,45 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             
             for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
                     
-                    
-                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
-                                continue
-                        running_dict = running_config.running_configurations
-                        compilationConfigData = design.compilation_config.compilation_configurationsdict
-                        ToolConfigData = design.launching_configurations.get_ToolConfig()
-                        DutConfigData=[]
-                        buildPath=str(build)
-                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
-                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
-                        
-                        previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
-                        
-                        previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
-                        
-                        prerequistes={  #############to be changed
-                            "prerequisites": {
-                            "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
-                            "previous_job_id": int(previous_job_id) if previous_job_id else 0
-                            },
-                        }
-                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
-                        Duts = design.get_Duts()
-                        for dut in Duts:
-                            DutConfigData.append(dut.collect_data())
-                        
-                        launching_configurations={
-                            "launching_configurations": {
-                                        "$schema": "../schemas/launching_configuration.schema.json",
-                                        "platform": platform,
-                                        "solution": solution, 
-                                        "src_file": buildPath,
-                                        "dut_configuration":DutConfigData,
-                                        "tools_configuration":ToolConfigData,
-                                }
-                                }
-                        
-                        self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
-                        self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0)):
+                            if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
+                                    continue
+                            running_dict = running_config.running_configurations
+                            compilationConfigData = design.compilation_config.compilation_configurationsdict
+                            ToolConfigData = design.launching_configurations.get_ToolConfig()
+                            DutConfigData=[]
+                            buildPath=str(build)
+                            self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
+                            self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                            
+                            previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
+                            
+                            previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
+                            
+                            prerequistes={  #############to be changed
+                                "prerequisites": {
+                                "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
+                                "previous_job_id": int(previous_job_id) if previous_job_id else 0
+                                },
+                            }
+                            self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
+                            Duts = design.get_Duts()
+                            for dut in Duts:
+                                DutConfigData.append(dut.collect_data())
+                            
+                            launching_configurations={
+                                "launching_configurations": {
+                                            "$schema": "../schemas/launching_configuration.schema.json",
+                                            "platform": platform,
+                                            "solution": solution, 
+                                            "src_file": buildPath,
+                                            "dut_configuration":DutConfigData,
+                                            "tools_configuration":ToolConfigData,
+                                    }
+                                    }
+                            
+                            self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
+                            self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
             json.dump(self.JsonData,json_file, indent=2)
             json_file.write("\n")
             
