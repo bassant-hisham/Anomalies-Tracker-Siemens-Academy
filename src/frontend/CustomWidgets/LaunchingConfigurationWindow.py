@@ -280,10 +280,10 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             if(dut.DesignPath_lineEdit_2.text() == "" or not os.path.exists(dut.DesignPath_lineEdit_2.text()) or not os.path.isdir(dut.DesignPath_lineEdit_2.text())):
                 error_msg += f"{str(num).rjust(2)}: Valid Design File Path \n"
                 num += 1
-            temp=dut.AVB_ListView_2.selectedIndexes()
-            if (len(dut.AVB_ListView_2.selectedIndexes())==0):
-                error_msg+=f"{str(num).rjust(2)}: Choose values for the AVB List \n"
-                num += 1
+            # temp=dut.AVB_ListView_2.selectedIndexes()
+            # if (len(dut.AVB_ListView_2.selectedIndexes())==0):
+            #     error_msg+=f"{str(num).rjust(2)}: Choose values for the AVB List \n"
+            #     num += 1
             if(dut.RecordDir_lineEdit_2.text() == "" or not os.path.isdir(dut.RecordDir_lineEdit_2.text()) or not os.path.exists(dut.DesignPath_lineEdit_2.text())):
                 error_msg+=f"{str(num).rjust(2)}: Valid Record Directory path \n" 
                 num += 1
