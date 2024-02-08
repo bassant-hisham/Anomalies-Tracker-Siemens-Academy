@@ -15,7 +15,7 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
         super(MyCompilationConfigWindow, self).__init__()
         self.setupUi(self) # This sets up the UI components from the Compilation Config window
         self.Done_button.clicked.connect(self.saveConfiguration)
-        self.BrowseSource_button.clicked.connect(lambda: showFileDialog(self,self.Source_lineEdit))
+        self.BrowseSource_button.clicked.connect(lambda: showDirectoryDialog(self,self.Source_lineEdit))
         self.BrowseOutput_button.clicked.connect(lambda: showDirectoryDialog(self,self.Output_lineEdit))
         self.compilation_configurationsdict={}
         self.Timeout_lineEdit.setValidator(QIntValidator())
