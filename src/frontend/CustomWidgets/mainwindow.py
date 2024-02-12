@@ -39,16 +39,15 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.CreateJobs_button.clicked.connect(self.createJobs)
         self.new_window = QMainWindow()
         self.design_widget_layout=QVBoxLayout()
-        self.JsonData={}
-        self.JsonData[self.Solution_comboBox.currentText()]={}
+        # self.JsonData={}
+        # self.JsonData[self.Solution_comboBox.currentText()]={}
         self.timer = self.refresh_every_5_sec_for_jobs()
         self.console_timer = self.refresh_every_5_sec()
         self.console_timer.timeout.connect(self.update_console)
         self.combinations=list()
         self.Jobslist=list()
 
-        self.worker_thread = WorkerThread(self, self.JsonData ,)
-        self.worker_thread.error_signal.connect(self.show_error_message)
+        
         
         self.CreateJobs_button.clicked.connect(self.collectData)
         
@@ -201,6 +200,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             taskNu=self.Tasks.currentIndex()
             job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
 
+            
             self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
             col_index += 1 
             self.add_all_jobs_status()
@@ -254,7 +254,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             cell_widget = QWidget()
             cell_widget.setLayout(button_layout)
 
-            self.Job.Jobs_table.setCellWidget(row_index, 11, cell_widget)
+            #self.Job.Jobs_table.setCellWidget(row_index, 11, cell_widget)
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 11 , cell_widget)
             col_index += 1
 
 
@@ -262,14 +263,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                      
 
     def close_console(self, job_name: str):
-        self.Job.scrollArea_console.setVisible(False)
-        self.Job.Close_pushButton.setVisible(False)
+        self.Jobslist[self.Tasks.currentIndex()].scrollArea_console.setVisible(False)
+        self.Jobslist[self.Tasks.currentIndex()].Close_pushButton.setVisible(False)
 
     def open_and_update_console(self, job_name: str):
         self.open_console(job_name)
-        self.Job.scrollArea_console.setVisible(True)
-        self.Job.Close_pushButton.setVisible(True)
-
+        self.Jobslist[self.Tasks.currentIndex()].scrollArea_console.setVisible(True)
+        self.Jobslist[self.Tasks.currentIndex()].Close_pushButton.setVisible(True)
+        print(job_name)
         self.current_job_name = job_name
 
 
@@ -280,23 +281,23 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def open_console(self, job_name: str) -> None:        
         success, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
         if success:
-            self.Job.console_text.setPlainText(console_output)
+            self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(console_output)
         else:
-            self.Job.console_text.setPlainText(f"Job {job_name} has not started.")
+            self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(f"Job {job_name} has not started.")
 
-        scrollbar = self.Job.console_text.verticalScrollBar()
+        scrollbar = self.Jobslist[self.Tasks.currentIndex()].console_text.verticalScrollBar()
         scrollbar.setValue(scrollbar.maximum())
-        self.Job.console_text.repaint()
+        self.Jobslist[self.Tasks.currentIndex()].console_text.repaint()
 
     def abort_job(self, job_name: str) -> None:
         success, message= self.JENKINS_APIs.stop_job(job_name)
 
-        self.Job.scrollArea_console.setVisible(True)
+        self.Jobslist[self.Tasks.currentIndex()].scrollArea_console.setVisible(True)
         if success:
-            self.Job.console_text.setPlainText(f"Job '{job_name}' aborted successfully")
+            self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(f"Job '{job_name}' aborted successfully")
         else:
-            self.Job.console_text.setPlainText(f"Job {job_name} has not started.")
-        self.Job.console_text.repaint()
+            self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(f"Job {job_name} has not started.")
+        self.Jobslist[self.Tasks.currentIndex()].console_text.repaint()
 
 
 
@@ -308,11 +309,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         
         
         for row in range(self.Job.Jobs_table.rowCount()):
-            item = self.Job.Jobs_table.item(row, 2)
+            item = self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2)
             
             if item is not None and item.text() == job_name:
                 self.undoStack.append(row)  # Store only the row number since the row is not being deleted.
-                self.Job.Jobs_table.hideRow(row)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.hideRow(row)
                 break  # Exit the loop after finding and hiding the job.
 
 
@@ -323,7 +324,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             return
 
         row = self.undoStack.pop()  # Get the last hidden row's number.
-        self.Job.Jobs_table.showRow(row)  # Make the row visible again.
+        self.Jobslist[self.Tasks.currentIndex()].Jobs_table.showRow(row)  # Make the row visible again.
 
         print(f"Row {row} restored.")
         
@@ -369,58 +370,58 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
     def refresh_job(self, job_name: str, job_status: str) -> None:
-        number_of_rows = self.Job.Jobs_table.rowCount()
+        number_of_rows = self.Jobslist[self.Tasks.currentIndex()].Jobs_table.rowCount()
         job_row = -1
         for row in range(number_of_rows):
-            if self.Job.Jobs_table.item(row, 2).text() == job_name:
+            if self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2).text() == job_name:
                 job_row = row
                 break
         if job_row >= 0:
-            status_item = QTableWidgetItem("")
+            #status_item = QTableWidgetItem("")
             label = QLabel(job_status)
             
             # match case but needs python 3.10 upwards
              
             if job_status == "SUCCESS":
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: green; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter) 
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label)  
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)  
             elif job_status == "FAILURE":
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label) 
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label) 
             elif job_status == BuildState.JOB_CREATED.description:
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_CREATED.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_CRASHED.description:
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_CRASHED.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_IN_BATCH.description:
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_IN_BATCH.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_STARTED.description:
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_STARTED.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status[:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description:
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             else:
-                self.Job.Jobs_table.setItem(job_row, 10, status_item)
+                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
-                self.Job.Jobs_table.setCellWidget(job_row, 10, label)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
                 
     def refresh_all_jobs(self) -> None:
         original_dict = self.JENKINS_APIs.get_all_status()
@@ -480,6 +481,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         platform=self.Platfrom_comboBox.currentText()
         solution=self.Solution_comboBox.currentText()
         taskNu=self.Tasks.currentIndex()
+        self.JsonData={}
+        self.JsonData[self.Solution_comboBox.currentText()]={}
+        
+        self.worker_thread = WorkerThread(self, self.JsonData ,)
+        self.worker_thread.error_signal.connect(self.show_error_message)
         
         self.JsonData[solution]["task"+str(taskNu+1)]={}
         self.JsonData[solution]["task"+str(taskNu+1)]["id"]=taskNu+1
@@ -487,56 +493,59 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"]=self.BinarySearhState
         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"]={}
 
+        # var = "task" + str(taskNu+1)
+        # file_path = f"./{var}frontEnd.json"    
                        
-        with open(file_path, 'w') as json_file:
+        # with open(file_path, 'w') as json_file:
             
-            for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
-                    
-                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0)):
-                            if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
-                                    continue
-                            running_dict = running_config.running_configurations
-                            compilationConfigData = design.compilation_config.compilation_configurationsdict
-                            ToolConfigData = design.launching_configurations.get_ToolConfig()
-                            DutConfigData=[]
-                            buildPath=str(build)
-                            self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
-                            self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
-                            
-                            previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
-                            
-                            previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
-                            
-                            prerequistes={  #############to be changed
-                                "prerequisites": {
-                                "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
-                                "previous_job_id": int(previous_job_id) if previous_job_id else 0
-                                },
-                            }
-                            self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
-                            Duts = design.get_Duts()
-                            for dut in Duts:
-                                DutConfigData.append(dut.collect_data())
-                            
-                            launching_configurations={
-                                "launching_configurations": {
-                                            "$schema": "../schemas/launching_configuration.schema.json",
-                                            "platform": platform,
-                                            "solution": solution, 
-                                            "src_file": buildPath,
-                                            "dut_configuration":DutConfigData,
-                                            "tools_configuration":ToolConfigData,
-                                    }
-                                    }
-                            
-                            self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
-                            self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
-            json.dump(self.JsonData,json_file, indent=2)
-            json_file.write("\n")
-            
-            
-            self.worker_thread.json_data = self.JsonData
-            self.worker_thread.start()
+        for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
+
+                    if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0)):
+                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
+                                continue
+                        running_dict = running_config.running_configurations
+                        compilationConfigData = design.compilation_config.compilation_configurationsdict
+                        ToolConfigData = design.launching_configurations.get_ToolConfig()
+                        DutConfigData=[]
+                        buildPath=str(build)
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                        
+                        previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
+                        
+                        previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
+                        
+                        prerequistes={  ############# to be changed
+                            "prerequisites": {
+                            "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
+                            "previous_job_id": int(previous_job_id) if previous_job_id else 0
+                            },
+                        }
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
+                        Duts = design.get_Duts()
+                        for dut in Duts:
+                            DutConfigData.append(dut.collect_data())
+                        
+                        launching_configurations={
+                            "launching_configurations": {
+                                        "$schema": "../schemas/launching_configuration.schema.json",
+                                        "platform": platform,
+                                        "solution": solution, 
+                                        "src_file": buildPath,
+                                        "dut_configuration":DutConfigData,
+                                        "tools_configuration":ToolConfigData,
+                                }
+                        }
+                        
+                        self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
+                        self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+        # json.dump(self.JsonData,json_file, indent=2)
+        # json_file.write("\n")
+        
+        
+        self.worker_thread.json_data = self.JsonData
+        
+        self.worker_thread.start()
 
 
     def show_error_message(self, error_message):
@@ -560,3 +569,4 @@ class WorkerThread(QThread, QObject):
             self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data, 3)
         except CircularDependencyException as e:
             self.error_signal.emit(str(e))
+            

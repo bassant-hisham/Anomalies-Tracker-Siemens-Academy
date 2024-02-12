@@ -26,19 +26,22 @@ def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> di
     try:
         json_object = json_handler.handle_data_from_front_end(from_front_end)
         solution_type = get_type_of_solution(json_object)
-        task = list(json_object[solution_type].keys())[0]
-        task_id = json_object["Ethernet"][task]["id"]
-        solution = SolutionHandlerFactory.create_solution_handler(solution_type)
+        
+        # needs to be changed to handle multiple tasks id from the UI 
         job_names = {}
-        if solution is not None:
-            job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object)
-            for job_index, job_id in enumerate(job_ids):
-                # job_names.append(f"{solution_type}-{task_id}-{job_id}")
-                job_names[f"{solution_type}-Task{task_id}-Job{job_id}"] = job_prerequisites[job_index]
-                job_xml = job_xmls[job_index]
-                # with open(f"{solution_type}-Task{task_id}-Job{job_id}.xml") as xmlFile:
-                #     config = xmlFile.read()
-                server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
+        
+        for task in list(json_object[solution_type].keys()):
+            task_id = json_object["Ethernet"][task]["id"]
+            solution = SolutionHandlerFactory.create_solution_handler(solution_type)
+            if solution is not None:
+                job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object)
+                for job_index, job_id in enumerate(job_ids):
+                    # job_names.append(f"{solution_type}-{task_id}-{job_id}")
+                    job_names[f"{solution_type}-Task{task_id}-Job{job_id}"] = job_prerequisites[job_index]
+                    job_xml = job_xmls[job_index]
+                    # with open(f"{solution_type}-Task{task_id}-Job{job_id}.xml") as xmlFile:
+                    #     config = xmlFile.read()
+                    server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
         return job_names
     except Exception as e:
         logging.error(f"Error while creating jobs. Error: {e}")

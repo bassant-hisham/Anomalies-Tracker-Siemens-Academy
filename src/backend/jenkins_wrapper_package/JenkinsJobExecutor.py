@@ -23,6 +23,7 @@ class JenkinsJobExecutor:
         self.All_Jobs_Build_Numbers = {}        
         self.All_Jobs_Status = {}
         self.prerequisites = {}
+        self.dependencies = {}
 
 
     def run_job(self,jenkins_wrapper:JenkinsWrapper, job_name):
@@ -92,16 +93,17 @@ class JenkinsJobExecutor:
     
     
     def is_dependency_failed(self, job):
-        for dependency in self.dependencies[job]:
-            if dependency in self.All_Jobs_Status and (self.All_Jobs_Status[dependency] == "FAILURE" or self.All_Jobs_Status[dependency][:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description):
-                return dependency , True
+        if(job):
+            for dependency in self.dependencies[job]:
+                if dependency in self.All_Jobs_Status and (self.All_Jobs_Status[dependency] == "FAILURE" or self.All_Jobs_Status[dependency][:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description):
+                    return dependency , True
         return "" , False 
 
 
 
     
     def run_jobs_in_batches(self,server , jobs_to_execute, batch_size):
-        self.dependencies = jobs_to_execute
+        self.dependencies.update(jobs_to_execute)
         self.All_Jobs_Status.update({i: BuildState.JOB_CREATED.description for i in jobs_to_execute})
 
 
