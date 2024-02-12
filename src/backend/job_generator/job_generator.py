@@ -309,8 +309,8 @@ class EthernetHandler(SolutionHandler):
             dut_configuration = launching_configurations["dut_configuration"][0]
             launch_dpi = dut_configuration["launch_dpi"]
             if launch_dpi:
-                script = self.get_basic_launch_configuration(launching_configurations, script)
-                script = self.get_dut_configurations(dut_configuration, script)
+                script += self.get_basic_launch_configuration(launching_configurations, script)
+                script += self.get_dut_configurations(dut_configuration, script)
                 record_replay_configurations = dut_configuration["record_replay_configurations"]
                 # script = self.get_record_configurations(record_replay_configurations, script)
                 # script = self.get_replay_configurations(record_replay_configurations, script)
@@ -364,10 +364,10 @@ class EthernetHandler(SolutionHandler):
 
     def generate_script(self, job: dict) -> str:
         try:
-            script = script_handler.start_script()
-            script = self.get_compilation_configurations(job, script)
-            script = self.get_launching_configurations(job, script)
-            script = self.get_running_configurations(job, script)
+            script += script_handler.start_script()
+            script += self.get_compilation_configurations(job, script)
+            script += self.get_launching_configurations(job, script)
+            script += self.get_running_configurations(job, script)
             script += script_handler.end_script()
             return script
         except Exception as e:
