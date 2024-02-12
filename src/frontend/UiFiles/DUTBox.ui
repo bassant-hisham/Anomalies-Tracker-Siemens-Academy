@@ -1354,7 +1354,7 @@ border-radius:13px;
       <string notr="true">background-color:none;</string>
      </property>
      <property name="text">
-      <string>  Lanuch DPI</string>
+      <string>  Launch DPI</string>
      </property>
     </widget>
    </item>
