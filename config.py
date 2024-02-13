@@ -30,7 +30,7 @@ class BuildState(Enum):
 
 
 class JenkinsConfig:
-    JENKINS_URL = "http://localhost:8080/"
+    JENKINS_URL = "http://localhost:9090/"
     JENKINS_USERNAME = "AhmedSh"
     JENKINS_PASSWORD = "#myjenkinsacc#"
 

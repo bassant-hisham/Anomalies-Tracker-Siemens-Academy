@@ -178,22 +178,38 @@ class EthernetHandler(SolutionHandler):
             launch_dpi = dut_configuration["launch_dpi"]
             # terminate_dpi = dut_configuration["terminate_dpi"]
             # terminate_dpi_onerror = dut_configuration["terminate_dpi_onerror"]
+            
+            
+            
             avb_list = dut_configuration["avb_list"]
-            design_path = dut_configuration["design_path"]
+            
+            #design_path = dut_configuration["design_path"]
+            # there is nothing called design_path in the collect data   
+            
             # dpi_launch_mode = dut_configuration["dpi_launch_mode"]
             dpi_launch_type = dut_configuration["dpi_launch_type"]
             # dpi_additional_args = dut_configuration["dpi_additional_args"]
             # ENABLE_BACKUP_LOG = dut_configuration["dpi_additional_env_variables"]["ENABLE_BACKUP_LOG"]
-            # use_custom_comodels_config = dut_configuration["use_custom_comodels_config"]
-            host_name = dut_configuration["custom_comodels_config"][0]["host_name"]
-            domain_id = dut_configuration["custom_comodels_config"][0]["domain_id"]
+            
+            if(dut_configuration["use_custom_comodels_config"]):           
+                host_name = dut_configuration["custom_comodels_config"][0]["host_name"]
+                domain_id = dut_configuration["custom_comodels_config"][0]["domain_id"]
+            
+            print("lolololo")
+            print(len(dut_configuration["custom_comodels_config"]))
+            
+            #script += script_handler.start_stage("DUT Configuration")
             script += script_handler.write_step(f"echo '##################### DUT CONFIG #####################'")
             script += script_handler.write_step(f"echo 'launch_dpi: {launch_dpi}'")
             script += script_handler.write_step(f"echo 'avb_list: {avb_list}'")
-            script += script_handler.write_step(f"echo 'design_path: {design_path}'")
+            #script += script_handler.write_step(f"echo 'design_path: {design_path}'")
             script += script_handler.write_step(f"echo 'dpi_launch_type: {dpi_launch_type}'")
-            script += script_handler.write_step(f"echo 'host_name: {host_name}'")
-            script += script_handler.write_step(f"echo 'domain_id: {domain_id}'")
+            
+            if(dut_configuration["use_custom_comodels_config"]):
+                script += script_handler.write_step(f"echo 'host_name: {host_name}'")
+                script += script_handler.write_step(f"echo 'domain_id: {domain_id}'")   
+            
+            #script += script_handler.end_stage()
             return script
         except Exception as e:
             logging.error(f"Error while getting dut configurations: {e}")
@@ -306,21 +322,33 @@ class EthernetHandler(SolutionHandler):
         """
         try:
             launching_configurations = job["launching_configurations"]
-            dut_configuration = launching_configurations["dut_configuration"][0]
-            launch_dpi = dut_configuration["launch_dpi"]
-            if launch_dpi:
-                script += self.get_basic_launch_configuration(launching_configurations, script)
-                script += self.get_dut_configurations(dut_configuration, script)
-                record_replay_configurations = dut_configuration["record_replay_configurations"]
-                # script = self.get_record_configurations(record_replay_configurations, script)
-                # script = self.get_replay_configurations(record_replay_configurations, script)
-                tools_configuration = launching_configurations["tools_configuration"]
-                launch_tool = tools_configuration["launch_tool"]
-                if launch_tool:
-                    # script = self.get_master_tool_configuration(tools_configuration, script)
-                    # script = self.get_slave_tool_configuration(tools_configuration, script)
-                    pass
-                script += script_handler.end_stage()
+            
+            is_dut_empty = True 
+                       
+            if(len(launching_configurations["dut_configuration"]) != 0):
+                dut_configuration = launching_configurations["dut_configuration"][0]
+                is_dut_empty = False
+                launch_dpi = dut_configuration["launch_dpi"]
+                print("launch dpi is : ")
+                print(launch_dpi)
+            
+            # it return false even when checked
+            
+            
+            #if launch_dpi:
+            script = self.get_basic_launch_configuration(launching_configurations, script)
+            if(not is_dut_empty):
+                script = self.get_dut_configurations(dut_configuration, script)
+        #record_replay_configurations = dut_configuration["record_replay_configurations"]
+        # script = self.get_record_configurations(record_replay_configurations, script)
+        # script = self.get_replay_configurations(record_replay_configurations, script)
+            tools_configuration = launching_configurations["tools_configuration"]
+            launch_tool = tools_configuration["launch_tool"]
+            if launch_tool:
+                # script = self.get_master_tool_configuration(tools_configuration, script)
+                # script = self.get_slave_tool_configuration(tools_configuration, script)
+                pass
+            script += script_handler.end_stage()
             return script
         except Exception as e:
             logging.error(f"Error while getting launching configurations: {e}")
@@ -364,17 +392,17 @@ class EthernetHandler(SolutionHandler):
 
     def generate_script(self, job: dict) -> str:
         try:
-            script += script_handler.start_script()
-            script += self.get_compilation_configurations(job, script)
-            script += self.get_launching_configurations(job, script)
-            script += self.get_running_configurations(job, script)
+            script = script_handler.start_script()
+            script = self.get_compilation_configurations(job, script)
+            script = self.get_launching_configurations(job, script)
+            script = self.get_running_configurations(job, script)
             script += script_handler.end_script()
             return script
         except Exception as e:
             logging.error(f"Error while generating script: {e}")
             return ""
 
-    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = False) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = True) -> tuple:
         try:
             job_ids = []
             job_xmls = []

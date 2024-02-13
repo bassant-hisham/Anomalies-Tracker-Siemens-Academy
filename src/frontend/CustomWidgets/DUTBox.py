@@ -39,7 +39,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.Configvalue_lineEdit.setValidator(QIntValidator())
         regex = QRegExp('\[\d(,\d)*\]')
         self.ConfigValueList_lineEdit.setValidator(QRegExpValidator(regex))
-        self.Dutconfig_Vlayout=Dutconfig_Vlayout
+        self.Dutconfig_Vlayout= Dutconfig_Vlayout
         self.Duts=Duts
         
 
@@ -128,7 +128,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                         "terminate_dpi": self.TermianteDPI_checkBox.isChecked(),                    
                         "terminate_dpi_onerror": self.TerminateDPIOnError_checkBox.isChecked(),
                         #"avb_list": self.AVB_ListView_2.selectedIndexes(),
-                        "avb_list": [index.row() for index in self.AVB_ListView_2.selectedIndexes()],    # gpt suggesstion for the problem
+                        "avb_list": [index.row() for index in self.AVB_ListView_2.selectedIndexes()],    
                         "record_replay_configurations":{
                         "record_configurations": {
                         "record_dir": self.RecordDir_lineEdit_2.text(),
@@ -146,12 +146,11 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
                         "dpi_additional_args":{},
                         "dpi_additional_env_variables":{},
                         "use_custom_comodels_config":self.CustomComConf_checkbox_2.isChecked(),
-                        
+                        "custom_comodels_config" : [],
 
                 }
 
                 if (self.CustomComConf_checkbox_2.isChecked() == True):
-                    self.data["custom_comodels_config"]=[]
                     customGroupBoxesCount=self.CustomCoModels.ConfigVLayout.count() #nu of groupBoxes
                     for CustomgroupBoxIndex in range(customGroupBoxesCount):
                          Host_name=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().HostName_comboBox.currentText()

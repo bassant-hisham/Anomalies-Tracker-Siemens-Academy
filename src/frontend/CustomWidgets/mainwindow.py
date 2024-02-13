@@ -280,10 +280,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def open_console(self, job_name: str) -> None:        
         success, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
-        if success:
-            self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(console_output)
-        else:
-            self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(f"Job {job_name} has not started.")
+        if(self.Jobslist[self.Tasks.currentIndex()].console_text):
+            if success:
+                self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(console_output)
+            else:
+                self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(f"Job {job_name} has not started.")
 
         scrollbar = self.Jobslist[self.Tasks.currentIndex()].console_text.verticalScrollBar()
         scrollbar.setValue(scrollbar.maximum())
@@ -303,18 +304,13 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def hide_job(self, job_name: str) -> None:
         
-        # check status before deletion of jenkins , button disabled  
-        
-        #self.JENKINS_APIs.delete_job(job_name)  # Need confirmation for job deletion in Jenkins server.
-        
-        
         for row in range(self.Job.Jobs_table.rowCount()):
             item = self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2)
             
             if item is not None and item.text() == job_name:
                 self.undoStack.append(row)  # Store only the row number since the row is not being deleted.
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.hideRow(row)
-                break  # Exit the loop after finding and hiding the job.
+                break  
 
 
     
@@ -463,6 +459,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             combinations= list(product(RunningConfigs , Designs, Builds))
         return combinations
         
+
+    
     
     
     def selectallrows(self):
@@ -493,9 +491,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"]=self.BinarySearhState
         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"]={}
 
-        # var = "task" + str(taskNu+1)
-        # file_path = f"./{var}frontEnd.json"    
-                       
+        # file_path = "./frontEnd.json"                           
         # with open(file_path, 'w') as json_file:
             
         for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
@@ -539,6 +535,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                         
                         self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
                         self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+    
         # json.dump(self.JsonData,json_file, indent=2)
         # json_file.write("\n")
         

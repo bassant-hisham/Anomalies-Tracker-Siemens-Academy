@@ -468,51 +468,67 @@ class Ui_DUTConfiguration(object):
         self.AVB_ListView_2.setWordWrap(True)
         self.AVB_ListView_2.setSelectionRectVisible(False)
         self.AVB_ListView_2.setObjectName("AVB_ListView_2")
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         item = QtWidgets.QListWidgetItem()
         item.setCheckState(QtCore.Qt.Unchecked)
         self.AVB_ListView_2.addItem(item)
+        
         self.AVBList_Vlayout_2.addWidget(self.AVB_ListView_2)
         self.gridLayout_8.addLayout(self.AVBList_Vlayout_2, 4, 0, 1, 1)
         self.TermianteDPI_checkBox = QtWidgets.QCheckBox(DUTConfiguration)
@@ -812,7 +828,9 @@ class Ui_DUTConfiguration(object):
         self.retranslateUi(DUTConfiguration)
         self.AVB_ListView_2.setCurrentRow(-1)
         QtCore.QMetaObject.connectSlotsByName(DUTConfiguration)
-
+    
+    
+    
     def retranslateUi(self, DUTConfiguration):
         _translate = QtCore.QCoreApplication.translate
         DUTConfiguration.setWindowTitle(_translate("DUTConfiguration", "GroupBox"))
@@ -867,6 +885,7 @@ class Ui_DUTConfiguration(object):
         item = self.AVB_ListView_2.item(14)
         item.setText(_translate("DUTConfiguration", "15"))
         self.AVB_ListView_2.setSortingEnabled(__sortingEnabled)
+        #self.AVB_ListView_2.itemChanged.connect(self.itemChanged)
         self.TermianteDPI_checkBox.setText(_translate("DUTConfiguration", "  Terminate DPI"))
         self.DPIConf_groupbox.setTitle(_translate("DUTConfiguration", "DPI Configurations"))
         self.DPIAdditionalArg_groupBox_2.setTitle(_translate("DUTConfiguration", "DPI Additional Env Variables"))
@@ -890,3 +909,7 @@ class Ui_DUTConfiguration(object):
         self.DesignPath_label_2.setText(_translate("DUTConfiguration", "Design Path"))
         self.DesignPath_toolButton_2.setText(_translate("DUTConfiguration", "..."))
         self.TerminateDPIOnError_checkBox.setText(_translate("DUTConfiguration", "  Launch DPI"))
+
+#     def itemChanged(self):
+#         self.collect_data()
+      
