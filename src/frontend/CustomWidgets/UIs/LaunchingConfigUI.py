@@ -913,6 +913,7 @@ class Ui_launching_config(object):
 "padding-left:10px;\n"
 "")
         self.Add_PushButton.setObjectName("Add_PushButton")
+        
         self.Add_Hlayout.addWidget(self.Add_PushButton)
         self.lanch_conf_VLayout.addLayout(self.Add_Hlayout)
         self.verticalLayout_3.addLayout(self.lanch_conf_VLayout)

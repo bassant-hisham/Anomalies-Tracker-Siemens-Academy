@@ -332,28 +332,24 @@ class EthernetHandler(SolutionHandler):
                 dut_configuration = launching_configurations["dut_configuration"][0]
                 is_dut_empty = False
                 launch_dpi = dut_configuration["launch_dpi"]
-                print("launch dpi is : ")
-                print(launch_dpi)
             
-            # it return false even when checked
-            
-            #QtCore.Qt.Checked
-            if launch_dpi:
-                print("launch dpi " + launch_dpi)
-                script = self.get_basic_launch_configuration(launching_configurations, script)
-                if(not is_dut_empty):
-                    script = self.get_dut_configurations(dut_configuration, script)
-            #record_replay_configurations = dut_configuration["record_replay_configurations"]
-            # script = self.get_record_configurations(record_replay_configurations, script)
-            # script = self.get_replay_configurations(record_replay_configurations, script)
-                tools_configuration = launching_configurations["tools_configuration"]
-                launch_tool = tools_configuration["launch_tool"]
-                if launch_tool:
-                    # script = self.get_master_tool_configuration(tools_configuration, script)
-                    # script = self.get_slave_tool_configuration(tools_configuration, script)
-                    pass
-                script += script_handler.end_stage()    
+                if launch_dpi:
+                
+                    script = self.get_basic_launch_configuration(launching_configurations, script)
+                    if(not is_dut_empty):
+                        script = self.get_dut_configurations(dut_configuration, script)
+                #record_replay_configurations = dut_configuration["record_replay_configurations"]
+                # script = self.get_record_configurations(record_replay_configurations, script)
+                # script = self.get_replay_configurations(record_replay_configurations, script)
+                    tools_configuration = launching_configurations["tools_configuration"]
+                    launch_tool = tools_configuration["launch_tool"]
+                    if launch_tool:
+                        # script = self.get_master_tool_configuration(tools_configuration, script)
+                        # script = self.get_slave_tool_configuration(tools_configuration, script)
+                        pass
+                    script += script_handler.end_stage()    
             return script
+            
         except Exception as e:
             logging.error(f"Error while getting launching configurations: {e}")
             return ""

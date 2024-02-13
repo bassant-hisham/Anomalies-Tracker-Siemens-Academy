@@ -905,11 +905,12 @@ class Ui_DUTConfiguration(object):
         self.DPILaunchType_comboBox_2.setItemText(2, _translate("DUTConfiguration", "Emulation_Velclkgen"))
         self.DPILaunchType_comboBox_2.setItemText(3, _translate("DUTConfiguration", "Simulation_Velclkgen"))
         self.DPILaunchMode_label_2.setText(_translate("DUTConfiguration", "DPI Launch Mode"))
+        self.LanuchDPI_checkBox.setText(_translate("DUTConfiguration", "  Launch DPI"))
         self.TerminateDPIOnError_checkBox.setText(_translate("DUTConfiguration", "  Terminate DPI on Error"))
         self.DesignPath_label_2.setText(_translate("DUTConfiguration", "Design Path"))
         self.DesignPath_toolButton_2.setText(_translate("DUTConfiguration", "..."))
-        self.LanuchDPI_checkBox.setText(_translate("DUTConfiguration", "  Launch DPI"))
-
+        
+        
 #     def itemChanged(self):
 #         self.collect_data()
-      
+       

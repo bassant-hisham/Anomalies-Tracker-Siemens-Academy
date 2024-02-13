@@ -18,6 +18,9 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.ToolConfigGroupBox.toggled.connect(self.toggle_content)
         self.Add_PushButton.clicked.connect(self.add_dut_config)
+        self.Add_PushButton.setToolTip("Add Dut Configuration")
+        #self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
+
         self.AddArgButton.clicked.connect(self.add_additional_arguments)
         self.AddEnv.clicked.connect(self.add_additional_env_variables)
         self.AddArgButton_2.clicked.connect(self.add_additional_arguments_slave)
