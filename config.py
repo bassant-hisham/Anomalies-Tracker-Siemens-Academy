@@ -23,7 +23,9 @@ class BuildState(Enum):
     JOB_IN_BATCH = ('lightgreen', 'Job In Batch')
     JOB_STARTED = ('orange', 'Job Started')
     JOB_CRASHED = ('lightyellow', 'Job Crashed in Jenkins')
+    BINARY_SEARCH    = ('lightblue', 'BINARY SEARCH MODE')
     CHILD_JOB_FAILED = ('red', 'Dependency Failed')
+    FIRST_FAILURE   = ('red', 'FIRST FAILURE')
     def __init__(self, color, description):
         self.color = color
         self.description = description

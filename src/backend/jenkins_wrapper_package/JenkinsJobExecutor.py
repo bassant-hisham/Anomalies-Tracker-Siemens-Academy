@@ -104,7 +104,7 @@ class JenkinsJobExecutor:
     
     def run_jobs_in_batches(self,server , jobs_to_execute, batch_size):
         self.dependencies.update(jobs_to_execute)
-        self.All_Jobs_Status.update({i: BuildState.JOB_CREATED.description for i in jobs_to_execute})
+        self.All_Jobs_Status.update({job_name: BuildState.JOB_CREATED.description for job_name in jobs_to_execute})
 
 
         # jobs_to_execute = list(jobs_to_execute.keys())
@@ -149,22 +149,26 @@ class JenkinsJobExecutor:
             raise Exception("A cycle was detected in the dependencies , please check")
 
 
-    def binary_search_for_failure(self , jobs_to_execute , xml_configs):
+    def binary_search_for_failure(self , server , jobs_to_execute):
+        jobs_list = list(jobs_to_execute.keys())
+        self.All_Jobs_Status.update({job_name: BuildState.BINARY_SEARCH.description for job_name in jobs_to_execute})
 
         left = 0
-        right = len(jobs_to_execute) - 1
+        right = len(jobs_list) - 1
         first_failure = None
-
+        
         while left <= right:
             mid = left + (right - left) // 2
-            build_status , job_name = self.job_thread(jobs_to_execute[mid] , xml_configs[mid])
+            job_name, build_status, job_execution_time = self.run_job(server, jobs_list[mid])
 
-            if build_status == 'Build Failure': #var
+            if build_status == 'FAILURE': #var
                 first_failure = job_name
                 right = mid - 1
             else:
                 left = mid + 1
 
+        if first_failure:
+            self.All_Jobs_Status[first_failure] = BuildState.FIRST_FAILURE.description
         return first_failure
     
 

@@ -374,48 +374,47 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 job_row = row
                 break
         if job_row >= 0:
-            #status_item = QTableWidgetItem("")
             label = QLabel(job_status)
             
             # match case but needs python 3.10 upwards
-             
+
             if job_status == "SUCCESS":
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: green; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter) 
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)  
             elif job_status == "FAILURE":
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label) 
             elif job_status == BuildState.JOB_CREATED.description:
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_CREATED.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_CRASHED.description:
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_CRASHED.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_IN_BATCH.description:
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_IN_BATCH.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status == BuildState.JOB_STARTED.description:
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet(f"color: {BuildState.JOB_STARTED.color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             elif job_status[:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description:
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
+            elif job_status == BuildState.BINARY_SEARCH.description:
+                label.setStyleSheet("color: rgb(33, 188, 180) ; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
+            elif job_status == BuildState.FIRST_FAILURE.description:
+                label.setStyleSheet("color: red ; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
             else:
-                #self.Job.Jobs_table.setItem(job_row, 10, status_item)
                 label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
@@ -444,16 +443,20 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         for running in RunningConfigs:
             running.collect_running_config()
 
-        self.BinarySearhState=self.Tasks.currentWidget().getBinarySearchValue()
+        self.BinarySearchState=self.Tasks.currentWidget().getBinarySearchValue()
         
-        if(self.BinarySearhState==True):
+        #if(self.BinarySearchState==True):
+            
+        
+        if(self.BinarySearchState==True):
             if(len(RunningConfigs)!=0 and  len(Designs)!=0):
                 RunningConfigsFirstIndex=list()
                 DesignConfigsFirstIndex=list() 
                 RunningConfigsFirstIndex.append(RunningConfigs[0])
                 DesignConfigsFirstIndex.append(Designs[0])
 
-                combinations= list(product(RunningConfigsFirstIndex, DesignConfigsFirstIndex, Builds))
+                combinations= list(product(RunningConfigsFirstIndex, DesignConfigsFirstIndex, Builds))            
+                
             else:
                 combinations= list(product(RunningConfigs , Designs, Builds))
         else:
@@ -489,7 +492,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     #     self.JsonData[solution]["task"+str(taskNu+1)]={}
     #     self.JsonData[solution]["task"+str(taskNu+1)]["id"]=taskNu+1
 
-    #     self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"]=self.BinarySearhState
+    #     self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"]= self.BinarySearchState
     #     self.JsonData[solution]["task"+str(taskNu+1)]["jobs"]={}
 
     #     file_path = "./frontEnd.json"                           
@@ -554,14 +557,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.JsonData={}
         self.JsonData[self.Solution_comboBox.currentText()] = {}
 
-        self.worker_thread = WorkerThread(self, self.JsonData)
+        self.worker_thread = WorkerThread(self, self.JsonData , self.BinarySearchState)
         self.worker_thread.error_signal.connect(self.show_error_message)
         with open(file_path, 'w') as json_file:
             for taskNu in range(self.Tasks.count()):
                 self.JsonData[solution]["task"+str(taskNu+1)] = {}
                 self.JsonData[solution]["task"+str(taskNu+1)]["id"] = taskNu+1
 
-                self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"] = self.BinarySearhState
+                self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"] = self.BinarySearchState
                 self.JsonData[solution]["task"+str(taskNu+1)]["jobs"] = {}
 
                 for currentJobIndex, (running_config, design, build) in enumerate(self.combinations[taskNu]):
@@ -608,6 +611,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             json_file.write("\n")
             
             self.worker_thread.json_data = self.JsonData
+            self.worker_thread.isbinarysearch = self.BinarySearchState
             self.worker_thread.start()
 
 
@@ -623,15 +627,16 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 class WorkerThread(QThread, QObject):
     error_signal = pyqtSignal(str)
 
-    def __init__(self,main_window, json_data):
+    def __init__(self,main_window, json_data, isbinarysearch):
         super().__init__()
         self.main_window = main_window
         self.json_data = json_data
+        self.isbinarysearch = isbinarysearch
 
 
     def run(self):
         try:
-            self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data, 3)
+            self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data,self.isbinarysearch, 3)
         except CircularDependencyException as e:
             self.error_signal.emit(str(e))
             
