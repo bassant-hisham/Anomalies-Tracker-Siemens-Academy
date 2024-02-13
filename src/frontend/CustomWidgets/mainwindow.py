@@ -57,6 +57,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         
         
         self.buttons_db = {}
+
         
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
@@ -366,58 +367,30 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def refresh_job(self, job_name: str, job_status: str) -> None:
         
-        # if(self.Jobslist[self.Tasks.currentIndex()]):
-        number_of_rows = self.Jobslist[self.Tasks.currentIndex()].Jobs_table.rowCount()
-        job_row = -1
-        for row in range(number_of_rows):
-            if self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2).text() == job_name:
-                job_row = row
-                break
-        if job_row >= 0:
-            label = QLabel(job_status)
+        self.check_num_of_rows = False
+        
+        if(self.Jobslist[self.Tasks.currentIndex()]):
+            number_of_rows = self.Jobslist[self.Tasks.currentIndex()].Jobs_table.rowCount()
+            self.check_num_of_rows = True
+            job_row = -1
             
-            # match case but needs python 3.10 upwards
-
-            if job_status == "SUCCESS":
-                label.setStyleSheet("color: green; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter) 
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)  
-            elif job_status == "FAILURE":
-                label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label) 
-            elif job_status == BuildState.JOB_CREATED.description:
-                label.setStyleSheet(f"color: {BuildState.JOB_CREATED.color}; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
-            elif job_status == BuildState.JOB_CRASHED.description:
-                label.setStyleSheet(f"color: {BuildState.JOB_CRASHED.color}; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
-            elif job_status == BuildState.JOB_IN_BATCH.description:
-                label.setStyleSheet(f"color: {BuildState.JOB_IN_BATCH.color}; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
-            elif job_status == BuildState.JOB_STARTED.description:
-                label.setStyleSheet(f"color: {BuildState.JOB_STARTED.color}; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
-            elif job_status[:len(BuildState.CHILD_JOB_FAILED.description)] == BuildState.CHILD_JOB_FAILED.description:
-                label.setStyleSheet("color: red; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
-            elif job_status == BuildState.BINARY_SEARCH.description:
-                label.setStyleSheet("color: rgb(33, 188, 180) ; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
-            elif job_status == BuildState.FIRST_FAILURE.description:
-                label.setStyleSheet("color: red ; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
-            else:
-                label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
-                label.setAlignment(Qt.AlignCenter)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
+            for row in range(number_of_rows):
+                if self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2).text() == job_name:
+                    job_row = row
+                    break
+            if job_row >= 0:
+                label = QLabel(job_status)
+                
+                # match case but needs python 3.10 upwards
+                color = BuildState.get_color_by_description(job_status)
+                if color:
+                    label.setStyleSheet(f"color: {color}; text-align: center; font-weight: bold;")
+                    label.setAlignment(Qt.AlignCenter) 
+                    self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)  
+                else:
+                    label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
+                    label.setAlignment(Qt.AlignCenter)
+                    self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
                 
     def refresh_all_jobs(self) -> None:
         original_dict = self.JENKINS_APIs.get_all_status()
@@ -557,7 +530,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.JsonData={}
         self.JsonData[self.Solution_comboBox.currentText()] = {}
 
-        self.worker_thread = WorkerThread(self, self.JsonData , self.BinarySearchState)
+        self.worker_thread = WorkerThread(self, self.JsonData , self.BinarySearchState, parent=self)
         self.worker_thread.error_signal.connect(self.show_error_message)
         with open(file_path, 'w') as json_file:
             for taskNu in range(self.Tasks.count()):
@@ -627,8 +600,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 class WorkerThread(QThread, QObject):
     error_signal = pyqtSignal(str)
 
-    def __init__(self,main_window, json_data, isbinarysearch):
-        super().__init__()
+    def __init__(self,main_window, json_data, isbinarysearch, parent=None):
+        super().__init__(parent)
         self.main_window = main_window
         self.json_data = json_data
         self.isbinarysearch = isbinarysearch

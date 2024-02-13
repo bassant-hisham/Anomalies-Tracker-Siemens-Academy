@@ -19,16 +19,26 @@ else:
     WAIT_TIMEOUT = 30
 
 class BuildState(Enum):
+    SUCCESS = ('green', 'SUCCESS')
+    FAILURE = ('red', 'FAILURE')
     JOB_CREATED = ('rgb(33, 188, 180)', 'Job Created')
     JOB_IN_BATCH = ('lightgreen', 'Job In Batch')
     JOB_STARTED = ('orange', 'Job Started')
     JOB_CRASHED = ('lightyellow', 'Job Crashed in Jenkins')
-    BINARY_SEARCH    = ('lightblue', 'BINARY SEARCH MODE')
+    BINARY_SEARCH    = ('rgb(33, 188, 180)', 'BINARY SEARCH MODE')
     CHILD_JOB_FAILED = ('red', 'Dependency Failed')
     FIRST_FAILURE   = ('red', 'FIRST FAILURE')
     def __init__(self, color, description):
         self.color = color
         self.description = description
+    
+    @classmethod
+    def get_color_by_description(cls, description):
+        for status in cls:
+            if status.description == description:
+                return status.color
+        return None
+    
 
 
 class JenkinsConfig:
