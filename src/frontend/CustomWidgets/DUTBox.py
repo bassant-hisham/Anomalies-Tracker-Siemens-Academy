@@ -6,6 +6,7 @@ from src.frontend.CustomWidgets.commonFunctions import *
 import ast  # Import the ast module for safer evaluation
 from PyQt5.QtGui import *
 from PyQt5.QtCore import QRegExp
+from PyQt5 import QtCore
 
 
 class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
@@ -37,11 +38,12 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.FromConfigValue_lineEdit.setValidator(QIntValidator())
         self.ToConfigValue_lineEdit.setValidator(QIntValidator())
         self.Configvalue_lineEdit.setValidator(QIntValidator())
+        
         regex = QRegExp('\[\d(,\d)*\]')
         self.ConfigValueList_lineEdit.setValidator(QRegExpValidator(regex))
         self.Dutconfig_Vlayout= Dutconfig_Vlayout
         self.Duts=Duts
-        
+    
 
     def toggle_content(self):
         if self.isChecked():

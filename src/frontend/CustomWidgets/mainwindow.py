@@ -48,7 +48,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.Jobslist=list()
 
         
-        
         self.CreateJobs_button.clicked.connect(self.collectData)
         
         self.undoShortcut = QShortcut(Qt.CTRL + Qt.Key_Z, self)
@@ -280,15 +279,15 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def open_console(self, job_name: str) -> None:        
         success, console_output = self.JENKINS_APIs.get_job_console_output(job_name)
-        if(self.Jobslist[self.Tasks.currentIndex()].console_text):
+        if(self.Jobslist[self.Tasks.currentIndex()]):
             if success:
                 self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(console_output)
             else:
                 self.Jobslist[self.Tasks.currentIndex()].console_text.setPlainText(f"Job {job_name} has not started.")
 
-        scrollbar = self.Jobslist[self.Tasks.currentIndex()].console_text.verticalScrollBar()
-        scrollbar.setValue(scrollbar.maximum())
-        self.Jobslist[self.Tasks.currentIndex()].console_text.repaint()
+            scrollbar = self.Jobslist[self.Tasks.currentIndex()].console_text.verticalScrollBar()
+            scrollbar.setValue(scrollbar.maximum())
+            self.Jobslist[self.Tasks.currentIndex()].console_text.repaint()
 
     def abort_job(self, job_name: str) -> None:
         success, message= self.JENKINS_APIs.stop_job(job_name)
@@ -366,6 +365,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
     def refresh_job(self, job_name: str, job_status: str) -> None:
+        
+        # if(self.Jobslist[self.Tasks.currentIndex()]):
         number_of_rows = self.Jobslist[self.Tasks.currentIndex()].Jobs_table.rowCount()
         job_row = -1
         for row in range(number_of_rows):
@@ -474,75 +475,142 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 0).setCheckState(Qt.Unchecked)
 
 
+    # def GenerateJson(self):
+    #     file_path = "./frontEnd.json"
+    #     platform=self.Platfrom_comboBox.currentText()
+    #     solution=self.Solution_comboBox.currentText()
+    #     taskNu=self.Tasks.currentIndex()
+    #     self.JsonData={}
+    #     self.JsonData[self.Solution_comboBox.currentText()]={}
+        
+    #     self.worker_thread = WorkerThread(self, self.JsonData ,)
+    #     self.worker_thread.error_signal.connect(self.show_error_message)
+        
+    #     self.JsonData[solution]["task"+str(taskNu+1)]={}
+    #     self.JsonData[solution]["task"+str(taskNu+1)]["id"]=taskNu+1
+
+    #     self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"]=self.BinarySearhState
+    #     self.JsonData[solution]["task"+str(taskNu+1)]["jobs"]={}
+
+    #     file_path = "./frontEnd.json"                           
+    #     with open(file_path, 'w') as json_file:
+        
+    #             for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
+
+    #                         if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0)):
+    #                             if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
+    #                                     continue
+    #                             running_dict = running_config.running_configurations
+    #                             compilationConfigData = design.compilation_config.compilation_configurationsdict
+    #                             ToolConfigData = design.launching_configurations.get_ToolConfig()
+    #                             DutConfigData=[]
+    #                             buildPath=str(build)
+    #                             self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
+    #                             self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                                
+    #                             previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
+                                
+    #                             previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
+                                
+    #                             prerequistes={  ############# to be changed
+    #                                 "prerequisites": {
+    #                                 "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
+    #                                 "previous_job_id": int(previous_job_id) if previous_job_id else 0
+    #                                 },
+    #                             }
+    #                             self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
+    #                             Duts = design.get_Duts()
+    #                             for dut in Duts:
+    #                                 DutConfigData.append(dut.collect_data())
+                                
+    #                             launching_configurations={
+    #                                 "launching_configurations": {
+    #                                             "$schema": "../schemas/launching_configuration.schema.json",
+    #                                             "platform": platform,
+    #                                             "solution": solution, 
+    #                                             "src_file": buildPath,
+    #                                             "dut_configuration":DutConfigData,
+    #                                             "tools_configuration":ToolConfigData,
+    #                                     }
+    #                             }
+                                
+    #                             self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
+    #                             self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+            
+    #             json.dump(self.JsonData,json_file, indent=2)
+    #             json_file.write("\n")
+                
+                
+    #             self.worker_thread.json_data = self.JsonData
+                
+    #             self.worker_thread.start()
+
+
     def GenerateJson(self):
         file_path = "./frontEnd.json"
-        platform=self.Platfrom_comboBox.currentText()
-        solution=self.Solution_comboBox.currentText()
-        taskNu=self.Tasks.currentIndex()
+        platform = self.Platfrom_comboBox.currentText()
+        solution = self.Solution_comboBox.currentText()
+
         self.JsonData={}
-        self.JsonData[self.Solution_comboBox.currentText()]={}
-        
-        self.worker_thread = WorkerThread(self, self.JsonData ,)
+        self.JsonData[self.Solution_comboBox.currentText()] = {}
+
+        self.worker_thread = WorkerThread(self, self.JsonData)
         self.worker_thread.error_signal.connect(self.show_error_message)
-        
-        self.JsonData[solution]["task"+str(taskNu+1)]={}
-        self.JsonData[solution]["task"+str(taskNu+1)]["id"]=taskNu+1
+        with open(file_path, 'w') as json_file:
+            for taskNu in range(self.Tasks.count()):
+                self.JsonData[solution]["task"+str(taskNu+1)] = {}
+                self.JsonData[solution]["task"+str(taskNu+1)]["id"] = taskNu+1
 
-        self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"]=self.BinarySearhState
-        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"]={}
+                self.JsonData[solution]["task"+str(taskNu+1)]["binary_search"] = self.BinarySearhState
+                self.JsonData[solution]["task"+str(taskNu+1)]["jobs"] = {}
 
-        # file_path = "./frontEnd.json"                           
-        # with open(file_path, 'w') as json_file:
-            
-        for currentJobIndex,(running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()] ):
-
-                    if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0)):
-                        if(self.Jobslist[taskNu].Jobs_table.item(currentJobIndex,0).checkState() != 2):
-                                continue
+                for currentJobIndex, (running_config, design, build) in enumerate(self.combinations[taskNu]):
+                    if self.Jobslist[taskNu].Jobs_table.item(currentJobIndex, 0):
+                        if self.Jobslist[taskNu].Jobs_table.item(currentJobIndex, 0).checkState() != 2:
+                            continue
                         running_dict = running_config.running_configurations
                         compilationConfigData = design.compilation_config.compilation_configurationsdict
                         ToolConfigData = design.launching_configurations.get_ToolConfig()
-                        DutConfigData=[]
-                        buildPath=str(build)
-                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]={}
+                        DutConfigData = []
+                        buildPath = str(build)
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)] = {}
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
                         
-                        previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,3).text()
+                        previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex, 3).text()
+                        previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex, 4).text()
                         
-                        previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex,4).text()
-                        
-                        prerequistes={  ############# to be changed
+                        prerequistes = {
                             "prerequisites": {
-                            "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
-                            "previous_job_id": int(previous_job_id) if previous_job_id else 0
-                            },
+                                "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
+                                "previous_job_id": int(previous_job_id) if previous_job_id else 0
+                            }
                         }
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
                         Duts = design.get_Duts()
                         for dut in Duts:
                             DutConfigData.append(dut.collect_data())
                         
-                        launching_configurations={
+                        launching_configurations = {
                             "launching_configurations": {
-                                        "$schema": "../schemas/launching_configuration.schema.json",
-                                        "platform": platform,
-                                        "solution": solution, 
-                                        "src_file": buildPath,
-                                        "dut_configuration":DutConfigData,
-                                        "tools_configuration":ToolConfigData,
-                                }
+                                "$schema": "../schemas/launching_configuration.schema.json",
+                                "platform": platform,
+                                "solution": solution, 
+                                "src_file": buildPath,
+                                "dut_configuration": DutConfigData,
+                                "tools_configuration": ToolConfigData,
+                            }
                         }
                         
-                        self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
-                        self.JsonData[solution][ "task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
-    
-        # json.dump(self.JsonData,json_file, indent=2)
-        # json_file.write("\n")
-        
-        
-        self.worker_thread.json_data = self.JsonData
-        
-        self.worker_thread.start()
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+            
+            json.dump(self.JsonData, json_file, indent=2)
+            json_file.write("\n")
+            
+            self.worker_thread.json_data = self.JsonData
+            self.worker_thread.start()
+
+
 
 
     def show_error_message(self, error_message):

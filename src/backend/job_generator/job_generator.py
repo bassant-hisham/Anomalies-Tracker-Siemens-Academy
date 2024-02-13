@@ -34,7 +34,7 @@ def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> di
             task_id = json_object["Ethernet"][task]["id"]
             solution = SolutionHandlerFactory.create_solution_handler(solution_type)
             if solution is not None:
-                job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object)
+                job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object, task)
                 for job_index, job_id in enumerate(job_ids):
                     # job_names.append(f"{solution_type}-{task_id}-{job_id}")
                     job_names[f"{solution_type}-Task{task_id}-Job{job_id}"] = job_prerequisites[job_index]
@@ -89,7 +89,7 @@ class SolutionHandler(ABC):
         """
 
     @abstractmethod
-    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = False) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict,task:str , debug: bool = True) -> tuple:
         """
         Generate xml config files for all jobs in given json file
         :param json_object:       jobs dictionary with all jobs
@@ -122,25 +122,28 @@ class EthernetHandler(SolutionHandler):
         :param script:    groovy script to be filled
         """
         try:
-            compilation_configurations = job["compilation_configurations"]
-            compile_design = compilation_configurations["compile_design"]
-            source_design_path = compilation_configurations["source_design_path"]
-            output_directory = compilation_configurations["output_directory"]
-            machine = compilation_configurations["machine"]
-            force = compilation_configurations["force"]
-            timeout = compilation_configurations["timeout"]
+            if(job["compilation_configurations"]):
+                compilation_configurations = job["compilation_configurations"]
+                compile_design = compilation_configurations["compile_design"]
+                source_design_path = compilation_configurations["source_design_path"]
+                output_directory = compilation_configurations["output_directory"]
+                machine = compilation_configurations["machine"]
+                force = compilation_configurations["force"]
+                timeout = compilation_configurations["timeout"]
+            
+                
             #compiling_command = "sh 'g++ -g  /home/vmarwan/Documents/JB/script.c++ -o /home/vmarwan/Documents/JB/script.out'"
-            if compile_design:
-                script += script_handler.start_stage("Compiling")
-                script += script_handler.write_step(f"echo 'compile_design: {compile_design}'")
-                script += script_handler.write_step(f"echo 'source_design_path: {source_design_path}'")
-                script += script_handler.write_step(f"echo 'output_directory: {output_directory}'")
-                script += script_handler.write_step(f"echo 'machine: {machine}'")
-                script += script_handler.write_step(f"echo 'force: {force}'")
-                script += script_handler.write_step(f"echo 'timeout: {timeout}'")
-                #script += script_handler.write_step(compiling_command)
-                script += script_handler.end_stage()
-            return script
+                if compile_design:
+                    script += script_handler.start_stage("Compiling")
+                    script += script_handler.write_step(f"echo 'compile_design: {compile_design}'")
+                    script += script_handler.write_step(f"echo 'source_design_path: {source_design_path}'")
+                    script += script_handler.write_step(f"echo 'output_directory: {output_directory}'")
+                    script += script_handler.write_step(f"echo 'machine: {machine}'")
+                    script += script_handler.write_step(f"echo 'force: {force}'")
+                    script += script_handler.write_step(f"echo 'timeout: {timeout}'")
+                    #script += script_handler.write_step(compiling_command)
+                    script += script_handler.end_stage()
+                return script
         except Exception as e:
             logging.error(f"Error while getting compilation configurations: {e}")
             return ""
@@ -195,8 +198,8 @@ class EthernetHandler(SolutionHandler):
                 host_name = dut_configuration["custom_comodels_config"][0]["host_name"]
                 domain_id = dut_configuration["custom_comodels_config"][0]["domain_id"]
             
-            print("lolololo")
-            print(len(dut_configuration["custom_comodels_config"]))
+            # print("lolololo")
+            #print(len(dut_configuration["custom_comodels_config"]))
             
             #script += script_handler.start_stage("DUT Configuration")
             script += script_handler.write_step(f"echo '##################### DUT CONFIG #####################'")
@@ -334,21 +337,22 @@ class EthernetHandler(SolutionHandler):
             
             # it return false even when checked
             
-            
-            #if launch_dpi:
-            script = self.get_basic_launch_configuration(launching_configurations, script)
-            if(not is_dut_empty):
-                script = self.get_dut_configurations(dut_configuration, script)
-        #record_replay_configurations = dut_configuration["record_replay_configurations"]
-        # script = self.get_record_configurations(record_replay_configurations, script)
-        # script = self.get_replay_configurations(record_replay_configurations, script)
-            tools_configuration = launching_configurations["tools_configuration"]
-            launch_tool = tools_configuration["launch_tool"]
-            if launch_tool:
-                # script = self.get_master_tool_configuration(tools_configuration, script)
-                # script = self.get_slave_tool_configuration(tools_configuration, script)
-                pass
-            script += script_handler.end_stage()
+            #QtCore.Qt.Checked
+            if launch_dpi:
+                print("launch dpi " + launch_dpi)
+                script = self.get_basic_launch_configuration(launching_configurations, script)
+                if(not is_dut_empty):
+                    script = self.get_dut_configurations(dut_configuration, script)
+            #record_replay_configurations = dut_configuration["record_replay_configurations"]
+            # script = self.get_record_configurations(record_replay_configurations, script)
+            # script = self.get_replay_configurations(record_replay_configurations, script)
+                tools_configuration = launching_configurations["tools_configuration"]
+                launch_tool = tools_configuration["launch_tool"]
+                if launch_tool:
+                    # script = self.get_master_tool_configuration(tools_configuration, script)
+                    # script = self.get_slave_tool_configuration(tools_configuration, script)
+                    pass
+                script += script_handler.end_stage()    
             return script
         except Exception as e:
             logging.error(f"Error while getting launching configurations: {e}")
@@ -402,12 +406,11 @@ class EthernetHandler(SolutionHandler):
             logging.error(f"Error while generating script: {e}")
             return ""
 
-    def generate_all_pipeline_job_xml(self, json_object: dict, debug: bool = True) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict,task:str , debug: bool = True) -> tuple:
         try:
             job_ids = []
             job_xmls = []
             job_prerequisites = []
-            task = list(json_object["Ethernet"].keys())[0]
             task_id = json_object["Ethernet"][task]["id"]
             jobs = json_object["Ethernet"][task]["jobs"]
             for job_num, job in jobs.items():
