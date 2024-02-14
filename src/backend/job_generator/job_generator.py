@@ -122,7 +122,7 @@ class EthernetHandler(SolutionHandler):
         :param script:    groovy script to be filled
         """
         try:
-            if(job["compilation_configurations"]):
+            if(job.get("compilation_configurations") is not None):
                 compilation_configurations = job["compilation_configurations"]
                 compile_design = compilation_configurations["compile_design"]
                 source_design_path = compilation_configurations["source_design_path"]
@@ -130,10 +130,9 @@ class EthernetHandler(SolutionHandler):
                 machine = compilation_configurations["machine"]
                 force = compilation_configurations["force"]
                 timeout = compilation_configurations["timeout"]
-            
                 
             #compiling_command = "sh 'g++ -g  /home/vmarwan/Documents/JB/script.c++ -o /home/vmarwan/Documents/JB/script.out'"
-                if compile_design:
+                if compile_design and source_design_path and output_directory:
                     script += script_handler.start_stage("Compiling")
                     script += script_handler.write_step(f"echo 'compile_design: {compile_design}'")
                     script += script_handler.write_step(f"echo 'source_design_path: {source_design_path}'")
@@ -141,9 +140,10 @@ class EthernetHandler(SolutionHandler):
                     script += script_handler.write_step(f"echo 'machine: {machine}'")
                     script += script_handler.write_step(f"echo 'force: {force}'")
                     script += script_handler.write_step(f"echo 'timeout: {timeout}'")
-                    #script += script_handler.write_step(compiling_command)
+
                     script += script_handler.end_stage()
-                return script
+    
+            return script
         except Exception as e:
             logging.error(f"Error while getting compilation configurations: {e}")
             return ""

@@ -6,6 +6,7 @@ from src.frontend.CustomWidgets.DUTBox import MyDUTGroupBox
 import ast  # Import the ast module for safer evaluation
 from PyQt5.QtGui import QIcon
 import os
+from PyQt5.QtWidgets import QApplication
 
 class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
     closed_signal = QtCore.pyqtSignal()
@@ -20,7 +21,6 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.Add_PushButton.clicked.connect(self.add_dut_config)
         self.Add_PushButton.setToolTip("Add Dut Configuration")
         #self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
-
         self.AddArgButton.clicked.connect(self.add_additional_arguments)
         self.AddEnv.clicked.connect(self.add_additional_env_variables)
         self.AddArgButton_2.clicked.connect(self.add_additional_arguments_slave)

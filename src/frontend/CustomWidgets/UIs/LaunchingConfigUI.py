@@ -908,10 +908,17 @@ class Ui_launching_config(object):
         sizePolicy.setHeightForWidth(self.Add_PushButton.sizePolicy().hasHeightForWidth())
         self.Add_PushButton.setSizePolicy(sizePolicy)
         self.Add_PushButton.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.Add_PushButton.setStyleSheet("    background-color:#1b1d23;\n"
-"padding-right:10px;\n"
-"padding-left:10px;\n"
-"")
+        self.Add_PushButton.setToolTip("Add Dut Configuration")
+        self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
+        self.Add_PushButton.setStyleSheet(
+        "background-color:#1b1d23;"
+        "padding-right:10px;"
+        "padding-left:10px;"
+        "QToolTip {"
+        "    color: black;"
+        "}"
+        )
+
         self.Add_PushButton.setObjectName("Add_PushButton")
         
         self.Add_Hlayout.addWidget(self.Add_PushButton)
