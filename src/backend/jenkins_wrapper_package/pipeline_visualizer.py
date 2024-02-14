@@ -4,9 +4,11 @@ import json
 jenkins_url = 'http://localhost:9090'
 pipeline_name = 'Ethernet-Task1-Job1'
 username = 'AhmedSh'
-api_token = '114b7687f31196a9655f472320e628af6e'
+api_token = '114b7687f31196a9655f472320e628af6e'   # from the jenkins server 
+latest_build = '404'
 
-url = f'{jenkins_url}/blue/rest/organizations/jenkins/pipelines/{pipeline_name}/runs/404/'
+
+url = f'{jenkins_url}/blue/rest/organizations/jenkins/pipelines/{pipeline_name}/runs/{latest_build}/'
 response = requests.get(url, auth=('AhmedSh', '114b7687f31196a9655f472320e628af6e'))
 
 
@@ -17,9 +19,9 @@ if response.status_code == 200:
     
     if nodes_response.status_code == 200:
         stages = nodes_response.json()
-        results_first_char = []  # Initialize an empty list to store the first characters
+        results_first_char = []  
         for stage in stages:
-            first_char = stage['result'][0] if stage['result'] else 'N/A'  # Get first char or use 'N/A'
+            first_char = stage['result'][0] if stage['result'] else 'N/A'  
             results_first_char.append(first_char)
             print(f"Stage: {stage['displayName']}, Result: {first_char}, Status: {stage['state']}, Duration: {stage['durationInMillis']} ms")
     else:
