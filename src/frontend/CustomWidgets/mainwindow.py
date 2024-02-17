@@ -383,14 +383,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 
                 # match case but needs python 3.10 upwards
                 color = BuildState.get_color_by_description(job_status)
-                if color:
-                    label.setStyleSheet(f"color: {color}; text-align: center; font-weight: bold;")
-                    label.setAlignment(Qt.AlignCenter) 
-                    self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)  
-                else:
-                    label.setStyleSheet("color: grey; text-align: center; font-weight: bold;")
-                    label.setAlignment(Qt.AlignCenter)
-                    self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)
+                label.setStyleSheet(f"color: {color}; text-align: center; font-weight: bold;")
+                label.setAlignment(Qt.AlignCenter) 
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(job_row, 10, label)  
                 
     def refresh_all_jobs(self) -> None:
         original_dict = self.JENKINS_APIs.get_all_status()

@@ -18,35 +18,41 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
         self.BrowseSource_button.clicked.connect(lambda: showDirectoryDialog(self,self.Source_lineEdit))
         self.BrowseOutput_button.clicked.connect(lambda: showDirectoryDialog(self,self.Output_lineEdit))
         self.compilation_configurationsdict={}
+        self.compilation_configurationsdict['compile_design'] = False
         self.Timeout_lineEdit.setValidator(QIntValidator())
         
     def saveConfiguration(self):
-        self.compilation_configurationsdict['compilation_configurations']={}
-        self.compilation_configurationsdict['compilation_configurations']['compile_design'] = self.CompileDesign_checkBox.isChecked()
+        self.compilation_configurationsdict['compile_design'] = self.CompileDesign_checkBox.isChecked()
         
-        
-        source_path = self.Source_lineEdit.text()
-        directory_path = self.Output_lineEdit.text()
-        self.compile_design_empty = True
-        self.output_directory_empty = True
-        if source_path == "":
-            self.showWarningMessage("Source path cannot be empty")
-        else:
-            self.compile_design_empty = False
-            self.compilation_configurationsdict['compilation_configurations']['source_design_path'] = source_path
-        
-        if ((directory_path == "") and not self.compile_design_empty) :
-             self.showWarningMessage("Directory path cannot be empty")
-        else:
-            self.output_directory_empty = False
-            self.compilation_configurationsdict['compilation_configurations']['output_directory'] = directory_path
+        if(self.CompileDesign_checkBox.isChecked()):
+            self.compilation_configurationsdict['compilation_configurations']={}
+            source_path = self.Source_lineEdit.text()
+            directory_path = self.Output_lineEdit.text()
+            self.compile_design_empty = True
+            self.output_directory_empty = True
+            if source_path == "":
+                self.showWarningMessage("Source path cannot be empty")
+            else:
+                self.compile_design_empty = False
+                self.compilation_configurationsdict['compilation_configurations']['source_design_path'] = source_path
             
-        self.compilation_configurationsdict['compilation_configurations']['machine'] = self.Machine_comboBox.currentText()
-        self.compilation_configurationsdict['compilation_configurations']['force'] = self.Force_checkBox.isChecked()
-        self.compilation_configurationsdict['compilation_configurations']['timeout'] = self.Timeout_lineEdit.text()
-        if(not self.compile_design_empty and not self.output_directory_empty):
+            if ((directory_path == "") and not self.compile_design_empty) :
+                self.showWarningMessage("Directory path cannot be empty")
+            else:
+                self.output_directory_empty = False
+                self.compilation_configurationsdict['compilation_configurations']['output_directory'] = directory_path
+                
+            self.compilation_configurationsdict['compilation_configurations']['machine'] = self.Machine_comboBox.currentText()
+            self.compilation_configurationsdict['compilation_configurations']['force'] = self.Force_checkBox.isChecked()
+            self.compilation_configurationsdict['compilation_configurations']['timeout'] = self.Timeout_lineEdit.text()
+            if(not self.compile_design_empty and not self.output_directory_empty):
+                self.close()
+            return self.compilation_configurationsdict
+        else:
+            self.compilation_configurationsdict = {}
+            self.compilation_configurationsdict['compile_design'] = False
             self.close()
-        return self.compilation_configurationsdict
+            return self.compilation_configurationsdict
     
     def showWarningMessage(self , input):
         warning_dialog = QMessageBox(self)

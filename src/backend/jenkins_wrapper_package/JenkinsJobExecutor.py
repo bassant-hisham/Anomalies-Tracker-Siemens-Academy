@@ -149,28 +149,7 @@ class JenkinsJobExecutor:
             raise Exception("A cycle was detected in the dependencies , please check")
 
 
-    def binary_search_for_failure(self , server , jobs_to_execute):
-        jobs_list = list(jobs_to_execute.keys())
-        self.All_Jobs_Status.update({job_name: BuildState.BINARY_SEARCH.description for job_name in jobs_to_execute})
 
-        left = 0
-        right = len(jobs_list) - 1
-        first_failure = None
-        
-        while left <= right:
-            mid = left + (right - left) // 2
-            job_name, build_status, job_execution_time = self.run_job(server, jobs_list[mid])
-
-            if build_status == 'FAILURE': #var
-                first_failure = job_name
-                right = mid - 1
-            else:
-                left = mid + 1
-
-        if first_failure:
-            self.All_Jobs_Status[first_failure] = BuildState.FIRST_FAILURE.description
-        return first_failure
-    
 
     def get_build_number(self, job_name):
         return self.All_Jobs_Build_Numbers.get(job_name)

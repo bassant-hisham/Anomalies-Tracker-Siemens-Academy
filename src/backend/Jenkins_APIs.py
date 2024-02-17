@@ -26,10 +26,7 @@ class Jenkins:
 
     def start_jobs_in_batches(self, json_object ,isbinarysearch, batch_size = 10):
         job_names = create_jobs(json_object,JENKINS_SERVER.server)
-        if isbinarysearch:
-            self.job_executor.binary_search_for_failure(JENKINS_SERVER, job_names)
-        else:
-            self.job_executor.run_jobs_in_batches(JENKINS_SERVER, job_names, batch_size)
+        self.job_executor.run_jobs_in_batches(JENKINS_SERVER, job_names, batch_size)
 
 #2
     def stop_job(self, job_name):

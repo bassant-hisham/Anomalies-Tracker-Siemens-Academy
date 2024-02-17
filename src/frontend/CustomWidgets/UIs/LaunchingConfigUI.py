@@ -909,13 +909,16 @@ class Ui_launching_config(object):
         self.Add_PushButton.setSizePolicy(sizePolicy)
         self.Add_PushButton.setLayoutDirection(QtCore.Qt.RightToLeft)
         self.Add_PushButton.setToolTip("Add Dut Configuration")
-        self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
+        #self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
         self.Add_PushButton.setStyleSheet(
-        "background-color:#1b1d23;"
-        "padding-right:10px;"
-        "padding-left:10px;"
-        "QToolTip {"
-        "    color: black;"
+        "QPushButton {"
+        "    background-color: #1b1d23;"
+        "    color: white;"  # Set the text color to white
+        "    padding-right: 10px;"
+        "    padding-left: 10px;"
+        "}"
+        "QPushButton::tooltip {"
+        "    color: black;"  # Set the tooltip text color to white
         "}"
         )
 

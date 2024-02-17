@@ -29,6 +29,7 @@ if response.status_code == 200:
 else:
     print(f"Error: {response.status_code}")
 
+# results_first_char[0] = 'F'
 
 result = ""
 for i in results_first_char:

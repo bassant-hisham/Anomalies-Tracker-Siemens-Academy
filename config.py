@@ -2,12 +2,8 @@ from enum import Enum
 import logging
 import os
 
-
 DEBUG_MODE = True
-
 DELETE_JOB_AFTER_FINISH = False
-
-
 
 if DEBUG_MODE:
     ENABLE_LOGGER = True   
@@ -25,7 +21,6 @@ class BuildState(Enum):
     JOB_IN_BATCH = ('lightgreen', 'Job In Batch')
     JOB_STARTED = ('orange', 'Job Started')
     JOB_CRASHED = ('lightyellow', 'Job Crashed in Jenkins')
-    BINARY_SEARCH    = ('rgb(33, 188, 180)', 'BINARY SEARCH MODE')
     CHILD_JOB_FAILED = ('red', 'Dependency Failed')
     FIRST_FAILURE   = ('red', 'FIRST FAILURE')
     def __init__(self, color, description):
@@ -33,11 +28,12 @@ class BuildState(Enum):
         self.description = description
     
     @classmethod
-    def get_color_by_description(cls, description):
+    def get_color_by_description(cls, description , default_color='#808080'):
         for status in cls:
             if status.description == description:
                 return status.color
-        return None
+            
+        return default_color   # return grey color
     
 
 

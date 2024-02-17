@@ -12,7 +12,6 @@ def topological_sort_in_batches(graph:dict, batch_size:int):
     :return: list of lists. Each inner list represents a batch of nodes that can be processed in parallel,
     according to the topological sorting order.
     """
-    print("Graph is :", graph)
     def invert_dependency(graph_dict):
         inverted_graph = {node: [] for node in graph_dict.keys()}
 

@@ -41,7 +41,7 @@ def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> di
                     job_xml = job_xmls[job_index]
                     # with open(f"{solution_type}-Task{task_id}-Job{job_id}.xml") as xmlFile:
                     #     config = xmlFile.read()
-                    #server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
+                    server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
         return job_names
     except Exception as e:
         logging.error(f"Error while creating jobs. Error: {e}")
@@ -122,9 +122,9 @@ class EthernetHandler(SolutionHandler):
         :param script:    groovy script to be filled
         """
         try:
+            compile_design = job["compile_design"]
             if(job.get("compilation_configurations") is not None):
                 compilation_configurations = job["compilation_configurations"]
-                compile_design = compilation_configurations["compile_design"]
                 source_design_path = compilation_configurations["source_design_path"]
                 output_directory = compilation_configurations["output_directory"]
                 machine = compilation_configurations["machine"]
@@ -362,11 +362,16 @@ class EthernetHandler(SolutionHandler):
         :param script:                          groovy script to be filled
         """
         try:
-            run_script = job["running_configurations"]["run_script"]
-            error_type = job["running_configurations"]["error_type"]
-            crashed_process = job["running_configurations"]["crash_configurations"]["crashed_process"]
-            attach_gdb = job["running_configurations"]["crash_configurations"]["attach_gdb"]
-            script_path = job["running_configurations"]["script_path"]
+            run_script = job["run_script"]
+            print(run_script)
+            if(job.get("running_configurations") is not None):
+                if(job["running_configurations"].get("error_type") is not None):
+                    error_type = job["running_configurations"]["error_type"]
+                    crashed_process = job["running_configurations"]["crash_configurations"]["crashed_process"]
+                    attach_gdb = job["running_configurations"]["crash_configurations"]["attach_gdb"]
+                    script_path = job["running_configurations"]["script_path"]
+            
+                
             #running_command = "sh '/home/vmarwan/Documents/JB/script.out'"
             #running_command_with_gdb = "sh 'sudo gdb -ex=r --args /home/vmarwan/Documents/JB/script.out'"
             if run_script:
