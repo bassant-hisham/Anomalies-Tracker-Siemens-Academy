@@ -49,11 +49,11 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"] = {}
 
         self.ToolConfig["slave_tool_configuration"]={}
-        self.ToolConfig["slave_tool_configuration"]['launch_behavior'] =""
-        self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"]=""
-        self.ToolConfig["slave_tool_configuration"]["additional_args"]={} 
-        self.ToolConfig["slave_tool_configuration"]["additional_args"] = {}
-        self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"] = {}
+        # self.ToolConfig["slave_tool_configuration"]['launch_behavior'] =""
+        # self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"]=""
+        # self.ToolConfig["slave_tool_configuration"]["additional_args"]={} 
+        # self.ToolConfig["slave_tool_configuration"]["additional_args"] = {}
+        # self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"] = {}
         self.Duts = []
 
     def toggle_content(self):
@@ -71,21 +71,12 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             self.DPIAdditionalArg_2.clear()
         self.arguments[self.ArgName_HSpacer_mid_lineEdit_2.text()] = self.ArgValue_lineEdit_2.text()
         self.DPIAdditionalArg_2.append(str(self.arguments))
-    
-    # def get_arguments(self):
-    #     text_content = self.DPIAdditionalArg_2.toPlainText()
-    #     if not text_content:
-    #         self.arguments = {}
-    #     else:
-    #         self.arguments = ast.literal_eval(text_content)
-    #         self.DPIAdditionalArg_2.clear()
-    #     self.arguments[self.ArgName_HSpacer_mid_lineEdit_2.text()] = self.ArgValue_lineEdit_2.text()
-    #     self.DPIAdditionalArg_2.append(str(self.arguments))
-        
+            
     def add_additional_arguments(self):
         self.argument_key_empty = True
         self.argument_value_empty = True
         text_content = self.AdditionalArg.toPlainText()
+        
         if not text_content:
             self.arguments = {}
         else:
@@ -242,17 +233,15 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         self.ToolConfig["launch_tool"] = self.LaunchToolCheckBox.isChecked()
         self.ToolConfig["master_tool_configuration"]["tool_name"] = self.ToolName_comboBox.currentText()
         self.ToolConfig["master_tool_configuration"]["tool_launch_mode"] = self.ToolLaunch_comboBox.currentText()
-        #self.ToolConfig["master_tool_configuration"]["additional_args"]["argument_key"] = self.ArgName_HSpacer_mid_lineEdit.text()
-        #self.ToolConfig["master_tool_configuration"]["additional_args"]["argument_value"] = self.ArgValue_lineEdit.text()
-        #self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"]["VE_ENABLE_BUFFERS_STATISTICS"] = self.EnvVarName_HSpacer_mid_lineEdit.text()
-        #self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"]["ENABLE_BACKUP_LOG"] = self.EnvVarValue_lineEdit.text()
         self.ToolConfig["master_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox.isChecked()
         self.ToolConfig["master_tool_configuration"]["terminate_tool_onerror"] = self.TerminateTool_checkBox.isChecked()
 
-        self.ToolConfig["slave_tool_configuration"]["launch_behavior"] = self.ToolName_comboBox_2.currentText()
-        self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"] = self.ToolLaunch_comboBox_2.currentText()
-        self.ToolConfig["slave_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox_2.isChecked()
-        self.ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"] = self.TerminateTool_checkBox_2.isChecked()
+        if(self.ToolName_comboBox.currentText() != "EPGM"):
+            self.ToolConfig["slave_tool_configuration"]["launch_behavior"] = self.ToolName_comboBox_2.currentText()
+            self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"] = self.ToolLaunch_comboBox_2.currentText()
+            self.ToolConfig["slave_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox_2.isChecked()
+            self.ToolConfig["slave_tool_configuration"]["terminate_tool_onerror"] = self.TerminateTool_checkBox_2.isChecked()
+            
         return self.ToolConfig
         
     def delete_last_variable(self, textbox):

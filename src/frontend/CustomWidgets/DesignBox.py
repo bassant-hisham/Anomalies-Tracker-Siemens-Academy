@@ -14,10 +14,10 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         self.setupUi(self)  # This sets up the UI components from the Design box
         self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
         self.DesignBox.setTitle("Design " + str(id))
+        self.BrowseDesignPath_button.clicked.connect(lambda: showDirectoryDialog(self,self.DesignPath_lineEdit))
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations=MyLaunchingConfigWindow()
         self.CompilationConfig_button.clicked.connect(self.open_compilation_config)
-        self.BrowseDesignPath_button.clicked.connect(lambda: showDirectoryDialog(self,self.DesignPath_lineEdit))
         self.delete_pushButton.clicked.connect(self.deleteDesignWidget)
         self.LaunchingConfig_button.clicked.connect(self.open_launching_config)
         self.DesignBox.setCheckable(True)
@@ -35,10 +35,16 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
             self.setMaximumHeight(40)
             
     def open_compilation_config(self):
-        self.compilation_config.show()
-        self.compilation_config.closed_signal.connect(self.handle_another_window_closed)
-        grandparent = self.get_grandparent(self)
-        grandparent.setEnabled(False)
+        
+        if(self.DesignPath_lineEdit.text()!=""):
+            self.compilation_config.show()
+            self.compilation_config.Output_lineEdit.setText(f"{self.DesignPath_lineEdit.text()}/output_directory")
+            self.compilation_config.closed_signal.connect(self.handle_another_window_closed)
+            grandparent = self.get_grandparent(self)
+            grandparent.setEnabled(False)
+        else:
+            QMessageBox.warning(self, "Enter Source Design Path first", f"<b>Cannot open compilation configuration before putting design path</b>")
+        
     
     def get_grandparent(self, widget):
         grandparent = widget.myparent

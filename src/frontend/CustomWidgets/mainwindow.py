@@ -32,10 +32,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.CreateJobs_button.hide()
         self.CreateTask_button.clicked.connect(self.createTaskTabWidget)
         self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
+        
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations = MyLaunchingConfigWindow()
-        
         self.design=MyDesignBox("",[],"")
+        
         self.CreateJobs_button.clicked.connect(self.createJobs)
         self.new_window = QMainWindow()
         self.design_widget_layout=QVBoxLayout()
@@ -46,16 +47,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.console_timer.timeout.connect(self.update_console)
         self.combinations=list()
         self.Jobslist=list()
-
-        
         self.CreateJobs_button.clicked.connect(self.collectData)
-        
         self.undoShortcut = QShortcut(Qt.CTRL + Qt.Key_Z, self)
         self.undoShortcut.activated.connect(self.undo_hide_job)
         self.undoStack = []
-        
-        
-        
         self.buttons_db = {}
 
         
@@ -97,8 +92,9 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         if(parent_directory != ""):
             bash_files = [file for file in os.listdir(parent_directory) if file.endswith('.bash')]
         
-        if(not bash_files):
+        if(parent_directory != "" and not bash_files):
             QMessageBox.warning(self, "Missing Bash files", f"<b>There are no bash files in the directory</b>")
+        
             
                     
         for running in self.Tasks.currentWidget().Running_data:
@@ -208,8 +204,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
 
             
+            
             self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
-            col_index += 1 
+            col_index += 1
+            
+            #self.refresh_job(job_name_str, "New Job Created")
             self.add_all_jobs_status()
 
             button_size = QSize(40, 14)
@@ -361,8 +360,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         jobs = [{job:status} for job, status in original_dict.items()]
         
         
-    #    for job_index in range(len(jobs)):
-    #         self.add_job(jobs[job_index])
     def showWarningMessage(self , input):
         warning_dialog = QMessageBox(self)
         warning_dialog.setIcon(QMessageBox.Warning)
@@ -387,8 +384,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                     break
             if job_row >= 0:
                 label = QLabel(job_status)
-                
-                # match case but needs python 3.10 upwards
                 color = BuildState.get_color_by_description(job_status)
                 label.setStyleSheet(f"color: {color}; text-align: center; font-weight: bold;")
                 label.setAlignment(Qt.AlignCenter) 
@@ -525,6 +520,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
     def GenerateJson(self):
+        
+        
         file_path = "./frontEnd.json"
         platform = self.Platfrom_comboBox.currentText()
         solution = self.Solution_comboBox.currentText()
@@ -551,19 +548,24 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                         ToolConfigData = design.launching_configurations.get_ToolConfig()
                         DutConfigData = []
                         buildPath = str(build)
-                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)] = {}
-                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
-                        
                         previous_task_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex, 3).text()
                         previous_job_id = self.Jobslist[taskNu].Jobs_table.cellWidget(currentJobIndex, 4).text()
                         
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)] = {}
+
                         prerequistes = {
                             "prerequisites": {
                                 "previous_task_id": int(previous_task_id) if previous_task_id else taskNu+1,
-                                "previous_job_id": int(previous_job_id) if previous_job_id else 0
+                                "previous_job_id": int(previous_job_id) if previous_job_id else 0,
+                                
                             }
+                            
                         }
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(prerequistes)
+                        
+                        
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(compilationConfigData)
+                        
                         Duts = design.get_Duts()
                         for dut in Duts:
                             DutConfigData.append(dut.collect_data())
@@ -576,13 +578,13 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                                 "solution": solution, 
                                 "src_file": buildPath,
                                 "tools_configuration": ToolConfigData,
-                                "DUT-launch-dpi" : DutConfigData[0]["launch_dpi"]
+                                #"DUT-launch-dpi" : DutConfigData[0]["launch_dpi"]
                             }
                         }
                         
                         
-                        if DutConfigData[0]["launch_dpi"] is True:
-                            launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData
+                        # if DutConfigData[0]["launch_dpi"] is True:
+                        #     launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData
                         
                         self.DUT_Id += 1
                         
