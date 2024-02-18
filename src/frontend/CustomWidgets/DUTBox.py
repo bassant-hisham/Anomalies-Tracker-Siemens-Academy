@@ -43,7 +43,10 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.ConfigValueList_lineEdit.setValidator(QRegExpValidator(regex))
         self.Dutconfig_Vlayout= Dutconfig_Vlayout
         self.Duts=Duts
-    
+        
+        self.data = {
+            "launch_dpi": self.LaunchDPI_checkBox.isChecked()
+        }
 
     def toggle_content(self):
         if self.isChecked():
@@ -85,6 +88,11 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         text_content.popitem()
         textbox.append(str(text_content))
         
+    def get_launch_dpi(self):
+        if(self.LaunchDPI_checkBox.isChecked()):
+            return True
+        return False
+        
     def handleSnapshotsNu(self) -> None:
         if (self.ConfigType_comboBox.currentIndex()==0):  #range
             self.FromConfigValue_lineEdit.show()
@@ -124,53 +132,58 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
             self.Duts[index].id=index+1
             self.Duts[index].setTitle("DUT Configuration " + str(index+1))
 
+
     def collect_data(self):
+                
+        
+                    
                 self.data = {
-                        "launch_dpi": self.LanuchDPI_checkBox.isChecked(),
-                        "terminate_dpi": self.TermianteDPI_checkBox.isChecked(),                    
-                        "terminate_dpi_onerror": self.TerminateDPIOnError_checkBox.isChecked(),
-                        #"avb_list": self.AVB_ListView_2.selectedIndexes(),
-                        "avb_list": [index.row() for index in self.AVB_ListView_2.selectedIndexes()],    
-                        "record_replay_configurations":{
-                        "record_configurations": {
-                        "record_dir": self.RecordDir_lineEdit_2.text(),
-                        "snapshots_number":{
-                            "config_type":self.ConfigType_comboBox.currentText(),
-                        },
-                        },
-                        "replay_configurations": {
-                            "replay_dir": self.ReplyDir_lineEdit_2.text(),  
-                            "replay_snapshot_name": self.ReplySnapshotName_lineEdit_2.text(),
-                        },                          
-                        },
-                        "dpi_launch_mode": self.DPILaunchMode_lineEdit_2.text(),
-                        "dpi_launch_type": self.DPILaunchType_comboBox_2.currentText(),
-                        "dpi_additional_args":{},
-                        "dpi_additional_env_variables":{},
-                        "use_custom_comodels_config":self.CustomComConf_checkbox_2.isChecked(),
-                        "custom_comodels_config" : [],
-
-                }
-
-                if (self.CustomComConf_checkbox_2.isChecked() == True):
-                    customGroupBoxesCount=self.CustomCoModels.ConfigVLayout.count() #nu of groupBoxes
-                    for CustomgroupBoxIndex in range(customGroupBoxesCount):
-                         Host_name=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().HostName_comboBox.currentText()
-                         Domain_id=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().DomainId_comboBox.currentText()
-                         self.data["custom_comodels_config"].append({"host_name":Host_name,"domain_id":Domain_id})
-                self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[]
-                if (self.ConfigType_comboBox.currentText()=="Range"  and self.FromConfigValue_lineEdit.text()!='' and self.ToConfigValue_lineEdit.text()!=''):
-                    self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[int(self.FromConfigValue_lineEdit.text()),int(self.ToConfigValue_lineEdit.text())]
-                elif (self.ConfigType_comboBox.currentText()=="Value" and self.Configvalue_lineEdit.text()!='' ):
-                    self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=int(self.Configvalue_lineEdit.text())
-                elif(self.ConfigType_comboBox.currentText()=="List" and self.ConfigValueList_lineEdit.text()!='' ):  
+                            "launch_dpi": self.LaunchDPI_checkBox.isChecked(),
+                            "terminate_dpi": self.TermianteDPI_checkBox.isChecked(),                    
+                            "terminate_dpi_onerror": self.TerminateDPIOnError_checkBox.isChecked(),
+                            #"avb_list": self.AVB_ListView_2.selectedIndexes(),
+                            "avb_list": [index.row() for index in self.AVB_ListView_2.selectedIndexes()],    
+                            "record_replay_configurations":{
+                            "record_configurations": {
+                            "record_dir": self.RecordDir_lineEdit_2.text(),
+                            "snapshots_number":{
+                                "config_type":self.ConfigType_comboBox.currentText(),
+                            },
+                            },
+                            "replay_configurations": {
+                                "replay_dir": self.ReplyDir_lineEdit_2.text(),  
+                                "replay_snapshot_name": self.ReplySnapshotName_lineEdit_2.text(),
+                            },                          
+                            },
+                            "dpi_launch_mode": self.DPILaunchMode_lineEdit_2.text(),
+                            "dpi_launch_type": self.DPILaunchType_comboBox_2.currentText(),
+                            "dpi_additional_args":{},
+                            "dpi_additional_env_variables":{},
+                            "use_custom_comodels_config":self.CustomComConf_checkbox_2.isChecked(),
+                            "custom_comodels_config" : [],
+                    }
+                    
+            
+                if(self.LaunchDPI_checkBox.isChecked()):
+                    if (self.CustomComConf_checkbox_2.isChecked() == True):
+                        customGroupBoxesCount=self.CustomCoModels.ConfigVLayout.count() #nu of groupBoxes
+                        for CustomgroupBoxIndex in range(customGroupBoxesCount):
+                            Host_name=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().HostName_comboBox.currentText()
+                            Domain_id=self.CustomCoModels.ConfigVLayout.itemAt(CustomgroupBoxIndex).widget().DomainId_comboBox.currentText()
+                            self.data["custom_comodels_config"].append({"host_name":Host_name,"domain_id":Domain_id})
                     self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[]
-                    for num in self.ConfigValueList_lineEdit.text()[1:len(self.ConfigValueList_lineEdit.text())-1].split(','):
-                        self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"].append(int(num)) 
-                if(self.DPIAdditionalEnvValues_2.toPlainText()):
-                    self. data["dpi_additional_env_variables"]=eval(self.DPIAdditionalEnvValues_2.toPlainText())
-                elif(self.DPIAdditionalArg_2.toPlainText()):
-                     self.data["dpi_additional_args"]=eval(self.DPIAdditionalArg_2.toPlainText())
+                    if (self.ConfigType_comboBox.currentText()=="Range"  and self.FromConfigValue_lineEdit.text()!='' and self.ToConfigValue_lineEdit.text()!=''):
+                        self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[int(self.FromConfigValue_lineEdit.text()),int(self.ToConfigValue_lineEdit.text())]
+                    elif (self.ConfigType_comboBox.currentText()=="Value" and self.Configvalue_lineEdit.text()!='' ):
+                        self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=int(self.Configvalue_lineEdit.text())
+                    elif(self.ConfigType_comboBox.currentText()=="List" and self.ConfigValueList_lineEdit.text()!='' ):  
+                        self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"]=[]
+                        for num in self.ConfigValueList_lineEdit.text()[1:len(self.ConfigValueList_lineEdit.text())-1].split(','):
+                            self.data["record_replay_configurations"]["record_configurations"]["snapshots_number"]["config_value"].append(int(num)) 
+                    if(self.DPIAdditionalEnvValues_2.toPlainText()):
+                        self. data["dpi_additional_env_variables"]=eval(self.DPIAdditionalEnvValues_2.toPlainText())
+                    elif(self.DPIAdditionalArg_2.toPlainText()):
+                        self.data["dpi_additional_args"]=eval(self.DPIAdditionalArg_2.toPlainText())
             
                 return self.data
     

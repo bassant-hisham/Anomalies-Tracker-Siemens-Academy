@@ -87,12 +87,19 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def checkError(self):
 
         current_index = self.Tasks.currentWidget().stacked_widget.currentIndex() #use it to know which of dir or file is used (0->Dir , 1->File)
-
+        parent_directory = self.Tasks.currentWidget().ParentDir_lineEdit.text()
         if current_index == 1:
             if (self.Tasks.currentWidget().FilePath_lineEdit.text()==""):  
                 QMessageBox.warning(self, "Empty File Path", f"<b>Please enter build's File Path</b>")
-        elif (self.Tasks.currentWidget().ParentDir_lineEdit.text() ==""):
+        elif (parent_directory ==""):
                 QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
+        
+        if(parent_directory != ""):
+            bash_files = [file for file in os.listdir(parent_directory) if file.endswith('.bash')]
+        
+        if(not bash_files):
+            QMessageBox.warning(self, "Missing Bash files", f"<b>There are no bash files in the directory</b>")
+            
                     
         for running in self.Tasks.currentWidget().Running_data:
                 if running.ScriptPath_lineEdit.text()=="" :
@@ -521,7 +528,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         file_path = "./frontEnd.json"
         platform = self.Platfrom_comboBox.currentText()
         solution = self.Solution_comboBox.currentText()
-
+        self.DUT_Id = 0
         self.JsonData={}
         self.JsonData[self.Solution_comboBox.currentText()] = {}
 
@@ -560,6 +567,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                         Duts = design.get_Duts()
                         for dut in Duts:
                             DutConfigData.append(dut.collect_data())
+                            
                         
                         launching_configurations = {
                             "launching_configurations": {
@@ -567,11 +575,20 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                                 "platform": platform,
                                 "solution": solution, 
                                 "src_file": buildPath,
-                                "dut_configuration": DutConfigData,
                                 "tools_configuration": ToolConfigData,
+                                "DUT-launch-dpi" : DutConfigData[0]["launch_dpi"]
                             }
                         }
                         
+                        
+                        if DutConfigData[0]["launch_dpi"] is True:
+                            launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData
+                        
+                        self.DUT_Id += 1
+                        
+                        print("-----------------------------------")
+                        print(DutConfigData)
+                        print("##########################")
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
             

@@ -31,10 +31,10 @@ def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> di
         job_names = {}
         
         for task in list(json_object[solution_type].keys()):
-            task_id = json_object["Ethernet"][task]["id"]
+            task_id = json_object[solution_type][task]["id"]
             solution = SolutionHandlerFactory.create_solution_handler(solution_type)
             if solution is not None:
-                job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object, task)
+                job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object, task , solution_type )
                 for job_index, job_id in enumerate(job_ids):
                     # job_names.append(f"{solution_type}-{task_id}-{job_id}")
                     job_names[f"{solution_type}-Task{task_id}-Job{job_id}"] = job_prerequisites[job_index]
@@ -331,7 +331,7 @@ class EthernetHandler(SolutionHandler):
             if(len(launching_configurations["dut_configuration"]) != 0):
                 dut_configuration = launching_configurations["dut_configuration"][0]
                 is_dut_empty = False
-                launch_dpi = dut_configuration["launch_dpi"]
+                launch_dpi = job["launch_dpi"]
             
                 if launch_dpi:
                 
@@ -407,13 +407,13 @@ class EthernetHandler(SolutionHandler):
             logging.error(f"Error while generating script: {e}")
             return ""
 
-    def generate_all_pipeline_job_xml(self, json_object: dict,task:str , debug: bool = True) -> tuple:
+    def generate_all_pipeline_job_xml(self, json_object: dict,task:str , solution_type: str , debug: bool = True) -> tuple:
         try:
             job_ids = []
             job_xmls = []
             job_prerequisites = []
-            task_id = json_object["Ethernet"][task]["id"]
-            jobs = json_object["Ethernet"][task]["jobs"]
+            task_id = json_object[solution_type][task]["id"]
+            jobs = json_object[solution_type][task]["jobs"]
             for job_num, job in jobs.items():
                 job_ids.append(job_num)
                 previous_task_id, previous_job_id = self.get_prerequisites(job)
@@ -422,12 +422,12 @@ class EthernetHandler(SolutionHandler):
                     job_prerequisites.append([])
                     job_xml = xml_handler.generate_pipeline_job_xml(script_text, job_num)
                 else:
-                    job_prerequisites.append([f"Ethernet-Task{previous_task_id}-Job{previous_job_id}"])
+                    job_prerequisites.append([f"{solution_type}-Task{previous_task_id}-Job{previous_job_id}"])
                     job_xml = xml_handler.generate_pipeline_job_xml(script_text, job_num,
                                                                     projects_to_watch=[
-                                                                        f"Ethernet-Task{previous_task_id}-Job{previous_job_id}"])
+                                                                        f"{solution_type}-Task{previous_task_id}-Job{previous_job_id}"])
                 if debug:
-                    with open(f"Ethernet-Task{task_id}-Job{job_num}.xml", "w") as new_job:
+                    with open(f"{solution_type}-Task{task_id}-Job{job_num}.xml", "w") as new_job:
                         new_job.write(job_xml)
                 job_xmls.append(job_xml)
             logging.info("XML configuration files generated successfully.")
