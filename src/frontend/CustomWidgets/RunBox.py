@@ -42,7 +42,7 @@ class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
         self.myparent=self.parent()
         self.RunningList=Running
         self.RunningLayout=scrollLayoutRunning
-
+    
     def check_error_conf_visibility(self, selected_text):
         if selected_text in ["Crash", "Hang"]:
             self.ErrorConf.show()

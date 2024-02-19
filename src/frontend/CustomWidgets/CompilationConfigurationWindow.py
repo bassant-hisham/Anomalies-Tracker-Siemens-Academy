@@ -5,7 +5,7 @@ from src.frontend.CustomWidgets.commonFunctions import *
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QIcon
-
+import os 
 class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
     closed_signal = QtCore.pyqtSignal()
     def __init__(self):
@@ -59,7 +59,9 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
             #     self.showWarningMessage("Directory path cannot be empty")
             # else:
             #     self.output_directory_empty = False
-            self.compilation_configurationsdict['compilation_configurations']['output_directory'] = directory_path    
+            
+            self.Check_Output_Directory_Exist(directory_path)
+            self.compilation_configurationsdict['compilation_configurations']['output_directory'] = directory_path
             self.compilation_configurationsdict['compilation_configurations']['machine'] = self.Machine_comboBox.currentText()
             self.compilation_configurationsdict['compilation_configurations']['force'] = self.Force_checkBox.isChecked()
             self.compilation_configurationsdict['compilation_configurations']['timeout'] = self.Timeout_lineEdit.text()
@@ -70,6 +72,18 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
             self.compilation_configurationsdict['compile_design'] = False
             self.close()
             return self.compilation_configurationsdict
+    
+    
+    def Check_Output_Directory_Exist(self , directory_path):
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+            print(f"Directory {directory_path} created")
+            return True
+        
+        else:
+            print(f"Directory {directory_path} already exists")
+            return False
+    
     
     def showWarningMessage(self , input):
         warning_dialog = QMessageBox(self)

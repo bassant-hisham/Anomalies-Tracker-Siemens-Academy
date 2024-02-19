@@ -6,7 +6,7 @@ from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingC
 from src.frontend.CustomWidgets.UIs.DesignBoxUI import Ui_DesignBoxWidget
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QIcon
-
+import os
 class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
     closed_signal = QtCore.pyqtSignal()
     def __init__(self,id:int,Designs:list,DesignsLayout:QVBoxLayout):
@@ -38,7 +38,8 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         
         if(self.DesignPath_lineEdit.text()!=""):
             self.compilation_config.show()
-            self.compilation_config.Output_lineEdit.setText(f"{self.DesignPath_lineEdit.text()}/output_directory")
+            self.design_speed_name = os.path.basename(self.DesignPath_lineEdit.text())
+            self.compilation_config.Output_lineEdit.setText(f"{self.DesignPath_lineEdit.text()}/{self.design_speed_name}_Output_Directory")
             self.compilation_config.closed_signal.connect(self.handle_another_window_closed)
             grandparent = self.get_grandparent(self)
             grandparent.setEnabled(False)
@@ -53,10 +54,14 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         return grandparent
     
     def open_launching_config(self):
-        self.launching_configurations.show()
-        self.launching_configurations.closed_signal.connect(self.handle_another_window_closed)
-        grandparent = self.get_grandparent(self)
-        grandparent.setEnabled(False)
+        
+        if(self.DesignPath_lineEdit.text()!=""):
+            self.launching_configurations.show()
+            self.launching_configurations.closed_signal.connect(self.handle_another_window_closed)
+            grandparent = self.get_grandparent(self)
+            grandparent.setEnabled(False)
+        else:
+            QMessageBox.warning(self, "Enter Source Design Path first", f"<b>Cannot open launching configuration before putting design path</b>")
     
     def handle_another_window_closed(self):
         grandparent = self.get_grandparent(self)

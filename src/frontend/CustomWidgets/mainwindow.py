@@ -83,186 +83,195 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         current_index = self.Tasks.currentWidget().stacked_widget.currentIndex() #use it to know which of dir or file is used (0->Dir , 1->File)
         parent_directory = self.Tasks.currentWidget().ParentDir_lineEdit.text()
+        
+        self.error_free = True  
+        
         if current_index == 1:
             if (self.Tasks.currentWidget().FilePath_lineEdit.text()==""):  
                 QMessageBox.warning(self, "Empty File Path", f"<b>Please enter build's File Path</b>")
+                self.error_free = False
         elif (parent_directory ==""):
                 QMessageBox.warning(self, "Empty Directory Path", f"<b>Please enter build's directory</b>")
+                self.error_free = False
         
         if(parent_directory != ""):
             bash_files = [file for file in os.listdir(parent_directory) if file.endswith('.bash')]
         
         if(parent_directory != "" and not bash_files):
-            QMessageBox.warning(self, "Missing Bash files", f"<b>There are no bash files in the directory</b>")
-        
+            QMessageBox.warning(self, "Missing Bash Files", f"<b>There are no bash files in the parent directory in \'Enviroments\' tab</b>")
+            self.error_free = False
             
                     
         for running in self.Tasks.currentWidget().Running_data:
-                if running.ScriptPath_lineEdit.text()=="" :
-                    QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Running File Path</b>") 
+                if running.ScriptPath_lineEdit.text()=="":
+                    QMessageBox.warning(self, "Empty Running Script", f"<b>Please enter a Running File Path</b>") 
 
         for design in self.Tasks.currentWidget().Design_data:
                 if design.DesignPath_lineEdit.text()=="" :
-                    QMessageBox.warning(self, "Empty File Path", f"<b>Please enter a Design File Path</b>") 
+                    QMessageBox.warning(self, "Empty Design path", f"<b>Please enter a Design Path</b>")
+                    self.error_free = False 
 
 
     def createJobs(self):
         current_widget = self.Tasks.currentWidget()
         self.runningwindows=[]
-        
-        if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
-            self.Job = MyJobs()
-            self.Jobslist[self.Tasks.currentIndex()]=self.Job
-            current_widget.Task_tabWidget.addTab(self.Job,"Jobs")
-
-        self.Jobslist[self.Tasks.currentIndex()].Run_pushButton.clicked.connect(self.GenerateJson)
-        self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
-        self.Jobslist[self.Tasks.currentIndex()].unselectall_pushButton.clicked.connect(self.unselectallrows)
-
-        self.Job.Close_pushButton.clicked.connect(self.close_console)
-        
-
-        self.combinations[self.Tasks.currentIndex()]=self.collectData()
-        
-        self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-        self.Job.Jobs_table.verticalHeader().setVisible(False)
-        self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-        self.Job.Jobs_table.verticalHeader().setVisible(False)
-        self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-        self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
         self.checkError()
         
+        if(self.error_free):
+            if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
+                self.Job = MyJobs()
+                self.Jobslist[self.Tasks.currentIndex()]=self.Job
+                
+                current_widget.Task_tabWidget.addTab(self.Job,"Jobs")
+
+            self.Jobslist[self.Tasks.currentIndex()].Run_pushButton.clicked.connect(self.GenerateJson)
+            self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
+            self.Jobslist[self.Tasks.currentIndex()].unselectall_pushButton.clicked.connect(self.unselectallrows)
+
+            self.Job.Close_pushButton.clicked.connect(self.close_console)
+            
+
+            self.combinations[self.Tasks.currentIndex()]=self.collectData()
+            
+            self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
+            self.Job.Jobs_table.verticalHeader().setVisible(False)
+            self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
+            self.Job.Jobs_table.verticalHeader().setVisible(False)
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
+            
+            
 
 
-        for row_index,(running_config, design, build )in enumerate(self.combinations[self.Tasks.currentIndex()]) :
-            
-            checkbox_item = QTableWidgetItem()
-            checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
-            checkbox_item.setCheckState(Qt.Unchecked)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 0, checkbox_item)
-            
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index+1)))
-            
-            
-            lineEdit_PrerequisiteTask = QTableWidgetItem()
-            lineEdit_PrerequisiteTask.setFlags(lineEdit_PrerequisiteTask.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteTask)
+            for row_index,(running_config, design, build )in enumerate(self.combinations[self.Tasks.currentIndex()]) :
+                
+                checkbox_item = QTableWidgetItem()
+                checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
+                checkbox_item.setCheckState(Qt.Unchecked)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 0, checkbox_item)
+                
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index+1)))
+                
+                
+                lineEdit_PrerequisiteTask = QTableWidgetItem()
+                lineEdit_PrerequisiteTask.setFlags(lineEdit_PrerequisiteTask.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteTask)
 
-            # Create a QLineEdit and set it as the cell widget
-            text_box = QLineEdit(self.Job)
-            text_box.setStyleSheet("QLineEdit { color: white; }")
-            validator = QIntValidator()
-            text_box.setValidator(validator)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 3, text_box)
-            
-            lineEdit_PrerequisiteJob = QTableWidgetItem()
-            lineEdit_PrerequisiteJob.setFlags(lineEdit_PrerequisiteJob.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 4, lineEdit_PrerequisiteJob)
+                # Create a QLineEdit and set it as the cell widget
+                text_box = QLineEdit(self.Job)
+                text_box.setStyleSheet("QLineEdit { color: white; }")
+                validator = QIntValidator()
+                text_box.setValidator(validator)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 3, text_box)
+                
+                lineEdit_PrerequisiteJob = QTableWidgetItem()
+                lineEdit_PrerequisiteJob.setFlags(lineEdit_PrerequisiteJob.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 4, lineEdit_PrerequisiteJob)
 
-            # Create a QLineEdit and set it as the cell widget
-            text_box = QLineEdit(self.Job)
-            text_box.setStyleSheet("QLineEdit { color: white; }")
-            validator = QIntValidator()
-            text_box.setValidator(validator)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 4, text_box)
-            
-            running_dict = running_config.running_configurations
-            col_index = 5
-            scriptPath = running_dict['running_configurations']['script_path']
+                # Create a QLineEdit and set it as the cell widget
+                text_box = QLineEdit(self.Job)
+                text_box.setStyleSheet("QLineEdit { color: white; }")
+                validator = QIntValidator()
+                text_box.setValidator(validator)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 4, text_box)
+                
+                running_dict = running_config.running_configurations
+                col_index = 5
+                scriptPath = running_dict['running_configurations']['script_path']
 
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
-            col_index += 1
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+                col_index += 1
 
-            
-            item = QTableWidgetItem(str(os.path.basename(scriptPath)))
-            item.setToolTip(scriptPath)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
-            col_index += 1
+                
+                item = QTableWidgetItem(str(os.path.basename(scriptPath)))
+                item.setToolTip(scriptPath)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
+                col_index += 1
 
-            DesignPath = design.DesignPath_lineEdit.text()
-            item = QTableWidgetItem(str(os.path.basename(DesignPath)))
-            item.setToolTip(DesignPath)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
-            col_index += 1
+                DesignPath = design.DesignPath_lineEdit.text()
+                item = QTableWidgetItem(str(os.path.basename(DesignPath)))
+                item.setToolTip(DesignPath)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
+                col_index += 1
 
-            ShowRunningConfigB = QPushButton("Show")
-            ShowRunningConfigB.setStyleSheet("color: white;")
-            self.ShowRun = MyRunBox(0,[],"")
-            self.runningwindows.append(self.ShowRun)
-            ShowRunningConfigB.clicked.connect(lambda _, ShowRun=self.ShowRun,r=running_config,rd=running_dict: self.show_running(ShowRun,r,rd))
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
-            col_index += 1
-        
-            ShowDesignConfigB = QPushButton("Show")
-            ShowDesignConfigB.setStyleSheet("color: white;")
-            ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
-            col_index += 1           
+                ShowRunningConfigB = QPushButton("Show")
+                ShowRunningConfigB.setStyleSheet("color: white;")
+                self.ShowRun = MyRunBox(0,[],"")
+                self.runningwindows.append(self.ShowRun)
+                ShowRunningConfigB.clicked.connect(lambda _, ShowRun=self.ShowRun,r=running_config,rd=running_dict: self.show_running(ShowRun,r,rd))
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
+                col_index += 1
+            
+                ShowDesignConfigB = QPushButton("Show")
+                ShowDesignConfigB.setStyleSheet("color: white;")
+                ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
+                col_index += 1           
 
-            solution=self.Solution_comboBox.currentText()
-            taskNu=self.Tasks.currentIndex()
-            job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
+                solution=self.Solution_comboBox.currentText()
+                taskNu=self.Tasks.currentIndex()
+                job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
 
-            
-            
-            self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
-            col_index += 1
-            
-            #self.refresh_job(job_name_str, "New Job Created")
-            self.add_all_jobs_status()
+                
+                
+                self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
+                col_index += 1
+                
+                #self.refresh_job(job_name_str, "New Job Created")
+                self.add_all_jobs_status()
 
-            button_size = QSize(40, 14)
-            ShowConsole = QPushButton(" 👁️ ")
-            ShowConsole.setStyleSheet("color: white;")
-            ShowConsole.setFixedSize(button_size)
-            self.ShowRun1 = MyRunBox(0, [], "")
-            self.runningwindows.append(self.ShowRun1)
-            ShowConsole.clicked.connect(lambda _, job_name=job_name_str: self.open_and_update_console(job_name))
-            ShowConsole.setToolTip("Show Output")  
-            ShowConsole.setStyleSheet("color: rgb(37, 40, 50);")
-            
-            abort = QPushButton(" ❌ ")
-            abort.setStyleSheet("color: white;")
-            self.ShowRun2 = MyRunBox(0, [], "")
-            abort.setFixedSize(button_size)
-            self.runningwindows.append(self.ShowRun2)
-            abort.clicked.connect(lambda _, job_name=job_name_str: self.abort_job(job_name))
-            abort.setToolTip("Abort")
-            abort.setStyleSheet("color: rgb(37, 40, 50);")
-            
-            
-            trash = QPushButton(" 🗑️  ")
-            trash.setStyleSheet("color: white;")
-            self.ShowRun3 = MyRunBox(0, [], "")
-            trash.setFixedSize(button_size)
-            self.runningwindows.append(self.ShowRun3)
-            trash.clicked.connect(lambda _, job_name= job_name_str: self.delete_job(job_name))
-            trash.setToolTip("Delete")  
-            trash.setStyleSheet("color: rgb(37, 40, 50);")
-            
-            
-            hide = QPushButton("🚫")
-            hide.setStyleSheet("color: white;")
-            self.ShowRun4 = MyRunBox(0, [], "")
-            hide.setFixedSize(button_size)
-            self.runningwindows.append(self.ShowRun4)
-            hide.clicked.connect(lambda _, job_name= job_name_str: self.hide_job(job_name))
-            hide.setToolTip("Hide")  
-            hide.setStyleSheet("color: rgb(37, 40, 50);")
-            # Create a horizontal layout
-            button_layout = QHBoxLayout()
-            button_layout.addWidget(ShowConsole)
-            button_layout.addWidget(abort)
-            button_layout.addWidget(hide)
-            button_layout.addWidget(trash)
+                button_size = QSize(40, 14)
+                ShowConsole = QPushButton(" 👁️ ")
+                ShowConsole.setStyleSheet("color: white;")
+                ShowConsole.setFixedSize(button_size)
+                self.ShowRun1 = MyRunBox(0, [], "")
+                self.runningwindows.append(self.ShowRun1)
+                ShowConsole.clicked.connect(lambda _, job_name=job_name_str: self.open_and_update_console(job_name))
+                ShowConsole.setToolTip("Show Output")  
+                ShowConsole.setStyleSheet("color: rgb(37, 40, 50);")
+                
+                abort = QPushButton(" ❌ ")
+                abort.setStyleSheet("color: white;")
+                self.ShowRun2 = MyRunBox(0, [], "")
+                abort.setFixedSize(button_size)
+                self.runningwindows.append(self.ShowRun2)
+                abort.clicked.connect(lambda _, job_name=job_name_str: self.abort_job(job_name))
+                abort.setToolTip("Abort")
+                abort.setStyleSheet("color: rgb(37, 40, 50);")
+                
+                
+                trash = QPushButton(" 🗑️  ")
+                trash.setStyleSheet("color: white;")
+                self.ShowRun3 = MyRunBox(0, [], "")
+                trash.setFixedSize(button_size)
+                self.runningwindows.append(self.ShowRun3)
+                trash.clicked.connect(lambda _, job_name= job_name_str: self.delete_job(job_name))
+                trash.setToolTip("Delete")  
+                trash.setStyleSheet("color: rgb(37, 40, 50);")
+                
+                
+                hide = QPushButton("🚫")
+                hide.setStyleSheet("color: white;")
+                self.ShowRun4 = MyRunBox(0, [], "")
+                hide.setFixedSize(button_size)
+                self.runningwindows.append(self.ShowRun4)
+                hide.clicked.connect(lambda _, job_name= job_name_str: self.hide_job(job_name))
+                hide.setToolTip("Hide")  
+                hide.setStyleSheet("color: rgb(37, 40, 50);")
+                # Create a horizontal layout
+                button_layout = QHBoxLayout()
+                button_layout.addWidget(ShowConsole)
+                button_layout.addWidget(abort)
+                button_layout.addWidget(hide)
+                button_layout.addWidget(trash)
 
-            # Set the layout as the cell widget
-            cell_widget = QWidget()
-            cell_widget.setLayout(button_layout)
+                # Set the layout as the cell widget
+                cell_widget = QWidget()
+                cell_widget.setLayout(button_layout)
 
-            #self.Job.Jobs_table.setCellWidget(row_index, 11, cell_widget)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 11 , cell_widget)
-            col_index += 1
+                #self.Job.Jobs_table.setCellWidget(row_index, 11, cell_widget)
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 11 , cell_widget)
+                col_index += 1
 
 
 
@@ -582,17 +591,16 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                             }
                         }
                         
+                        print("TOOLS CONFIG : --------")
+                        print(ToolConfigData)
                         
                         # if DutConfigData[0]["launch_dpi"] is True:
-                        #     launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData
-                        
-                        self.DUT_Id += 1
-                        
-                        print("-----------------------------------")
-                        print(DutConfigData)
-                        print("##########################")
+                        #      launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData
+        
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
+                        
+                        
             
             json.dump(self.JsonData, json_file, indent=2)
             json_file.write("\n")

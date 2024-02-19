@@ -22,7 +22,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.CustomComConf_checkbox_2.stateChanged.connect(self.add_custom_comodel)
         
         # showDirectoryDialog
-        self.DesignPath_toolButton_2.clicked.connect(lambda: showDirectoryDialog(self,self.DesignPath_lineEdit_2))
+        #self.DesignPath_toolButton_2.clicked.connect(lambda: showDirectoryDialog(self,self.DesignPath_lineEdit_2))
         self.RecordDir_toolButton_2.clicked.connect(lambda: showDirectoryDialog(self,self.RecordDir_lineEdit_2))
         self.ReplyDir_toolButton_2.clicked.connect(lambda: showDirectoryDialog(self,self.ReplyDir_lineEdit_2))
         self.Dut_pushButton.clicked.connect(self.deleteDutWidget)

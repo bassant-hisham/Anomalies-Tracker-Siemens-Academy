@@ -41,14 +41,19 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         
         
         self.ToolConfig = {}
-        self.ToolConfig["launch_tool"]=False
+        # self.ToolConfig["launch_tool"]=False
+        
         self.ToolConfig['master_tool_configuration'] = {}
-        self.ToolConfig["master_tool_configuration"]["tool_name"]=""
-        self.ToolConfig["master_tool_configuration"]["tool_launch_mode"]="" 
-        self.ToolConfig["master_tool_configuration"]["additional_args"] = {}
-        self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"] = {}
+        
+        # self.ToolConfig["master_tool_configuration"]["tool_name"]=""
+        # self.ToolConfig["master_tool_configuration"]["tool_launch_mode"]="" 
+        # self.ToolConfig["master_tool_configuration"]["additional_args"] = {}
+        # self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"] = {}
 
+        self.LaunchToolCheckBox.setChecked(True)
+        
         self.ToolConfig["slave_tool_configuration"]={}
+        
         # self.ToolConfig["slave_tool_configuration"]['launch_behavior'] =""
         # self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"]=""
         # self.ToolConfig["slave_tool_configuration"]["additional_args"]={} 
@@ -144,7 +149,9 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             
             
     def add_additional_env_variables_slave(self):
+        
         self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty = True
+        
         self.ENABLE_BACKUP_LOG_empty_slave = True
         
         text_content = self.ToolAdditionalEnvValues_2.toPlainText()
@@ -169,7 +176,7 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         else:
             self.ENABLE_BACKUP_LOG_empty_slave = False
         
-       
+        
         
         if((self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty and not self.ENABLE_BACKUP_LOG_empty_slave)) or ((not self.VE_ENABLE_BUFFERS_STATISTICS_slave_empty and self.ENABLE_BACKUP_LOG_empty_slave)):
 
@@ -231,6 +238,7 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         
     def get_ToolConfig(self):
         self.ToolConfig["launch_tool"] = self.LaunchToolCheckBox.isChecked()
+        
         self.ToolConfig["master_tool_configuration"]["tool_name"] = self.ToolName_comboBox.currentText()
         self.ToolConfig["master_tool_configuration"]["tool_launch_mode"] = self.ToolLaunch_comboBox.currentText()
         self.ToolConfig["master_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox.isChecked()
@@ -269,17 +277,17 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
             error_msg += "---------------------------------------------\n"
             error_msg += f"Enter the following for Dut {index} :" + "\n"
             error_msg += "---------------------------------------------\n"
-            if(dut.DesignPath_lineEdit_2.text() == "" or not os.path.exists(dut.DesignPath_lineEdit_2.text()) or not os.path.isdir(dut.DesignPath_lineEdit_2.text())):
-                error_msg += f"{str(num).rjust(2)}: Valid Design File Path \n"
-                num += 1
+            # if(dut.DesignPath_lineEdit_2.text() == "" or not os.path.exists(dut.DesignPath_lineEdit_2.text()) or not os.path.isdir(dut.DesignPath_lineEdit_2.text())):
+            #     error_msg += f"{str(num).rjust(2)}: Valid Design File Path \n"
+            #     num += 1
             # temp=dut.AVB_ListView_2.selectedIndexes()
             # if (len(dut.AVB_ListView_2.selectedIndexes())==0):
             #     error_msg+=f"{str(num).rjust(2)}: Choose values for the AVB List \n"
             #     num += 1
-            if(dut.RecordDir_lineEdit_2.text() == "" or not os.path.isdir(dut.RecordDir_lineEdit_2.text()) or not os.path.exists(dut.DesignPath_lineEdit_2.text())):
+            if(dut.RecordDir_lineEdit_2.text() == "" or not os.path.isdir(dut.RecordDir_lineEdit_2.text())):
                 error_msg+=f"{str(num).rjust(2)}: Valid Record Directory path \n" 
                 num += 1
-            if(dut.ReplyDir_lineEdit_2.text()=="" or not os.path.isdir(dut.ReplyDir_lineEdit_2.text()) or not os.path.exists(dut.DesignPath_lineEdit_2.text())):
+            if(dut.ReplyDir_lineEdit_2.text()=="" or not os.path.isdir(dut.ReplyDir_lineEdit_2.text()) ):
                 error_msg+=f"{str(num).rjust(2)}: Valid Reply Directory path \n"
                 num += 1
             if(dut.ReplySnapshotName_lineEdit_2.text()==""):

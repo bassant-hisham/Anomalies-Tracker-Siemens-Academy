@@ -766,40 +766,43 @@ class Ui_DUTConfiguration(object):
         self.gridLayout_8.addWidget(self.LaunchDPI_checkBox, 3, 0, 1, 1)
         self.DesignPath_Hlayout_2 = QtWidgets.QHBoxLayout()
         self.DesignPath_Hlayout_2.setObjectName("DesignPath_Hlayout_2")
-        self.DesignPath_label_2 = QtWidgets.QLabel(DUTConfiguration)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(20)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.DesignPath_label_2.sizePolicy().hasHeightForWidth())
-        self.DesignPath_label_2.setSizePolicy(sizePolicy)
-        self.DesignPath_label_2.setStyleSheet("font-size:22px;\n"
-"font:normal;\n"
-"")
-        self.DesignPath_label_2.setObjectName("DesignPath_label_2")
-        self.DesignPath_Hlayout_2.addWidget(self.DesignPath_label_2)
-        self.DesignPath_lineEdit_2 = QtWidgets.QLineEdit(DUTConfiguration)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(50)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.DesignPath_lineEdit_2.sizePolicy().hasHeightForWidth())
-        self.DesignPath_lineEdit_2.setSizePolicy(sizePolicy)
-        self.DesignPath_lineEdit_2.setStyleSheet("background-color: #1b1d23;\n"
-"font:normal;\n"
-"")
-        self.DesignPath_lineEdit_2.setObjectName("DesignPath_lineEdit_2")
-        self.DesignPath_Hlayout_2.addWidget(self.DesignPath_lineEdit_2)
-        self.DesignPath_toolButton_2 = QtWidgets.QToolButton(DUTConfiguration)
-        self.DesignPath_toolButton_2.setStyleSheet("QToolButton{\n"
-"background-color:none;\n"
-"border:none;\n"
-"}\n"
-"QToolButton:hover{\n"
-"background-color: #394150;\n"
-"border-radius:13px;\n"
-"}")
-        self.DesignPath_toolButton_2.setObjectName("DesignPath_toolButton_2")
-        self.DesignPath_Hlayout_2.addWidget(self.DesignPath_toolButton_2)
-        self.gridLayout_8.addLayout(self.DesignPath_Hlayout_2, 5, 0, 1, 1)
+        
+#         self.DesignPath_label_2 = QtWidgets.QLabel(DUTConfiguration)
+#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+#         sizePolicy.setHorizontalStretch(20)
+#         sizePolicy.setVerticalStretch(0)
+#         sizePolicy.setHeightForWidth(self.DesignPath_label_2.sizePolicy().hasHeightForWidth())
+#         self.DesignPath_label_2.setSizePolicy(sizePolicy)
+#         self.DesignPath_label_2.setStyleSheet("font-size:22px;\n"
+# "font:normal;\n"
+# "")
+#         self.DesignPath_label_2.setObjectName("DesignPath_label_2")
+#         self.DesignPath_Hlayout_2.addWidget(self.DesignPath_label_2)
+#         self.DesignPath_lineEdit_2 = QtWidgets.QLineEdit(DUTConfiguration)
+#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+#         sizePolicy.setHorizontalStretch(50)
+#         sizePolicy.setVerticalStretch(0)
+#         sizePolicy.setHeightForWidth(self.DesignPath_lineEdit_2.sizePolicy().hasHeightForWidth())
+#         self.DesignPath_lineEdit_2.setSizePolicy(sizePolicy)
+#         self.DesignPath_lineEdit_2.setStyleSheet("background-color: #1b1d23;\n"
+# "font:normal;\n"
+# "")
+#         self.DesignPath_lineEdit_2.setObjectName("DesignPath_lineEdit_2")
+#         self.DesignPath_Hlayout_2.addWidget(self.DesignPath_lineEdit_2)
+#         self.DesignPath_toolButton_2 = QtWidgets.QToolButton(DUTConfiguration)
+#         self.DesignPath_toolButton_2.setStyleSheet("QToolButton{\n"
+# "background-color:none;\n"
+# "border:none;\n"
+# "}\n"
+# "QToolButton:hover{\n"
+# "background-color: #394150;\n"
+# "border-radius:13px;\n"
+# "}")
+#         self.DesignPath_toolButton_2.setObjectName("DesignPath_toolButton_2")
+#         self.DesignPath_Hlayout_2.addWidget(self.DesignPath_toolButton_2)
+#         self.gridLayout_8.addLayout(self.DesignPath_Hlayout_2, 5, 0, 1, 1)
+        
+        
         self.TerminateDPIOnError_checkBox = QtWidgets.QCheckBox(DUTConfiguration)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(20)
@@ -907,8 +910,8 @@ class Ui_DUTConfiguration(object):
         self.DPILaunchMode_label_2.setText(_translate("DUTConfiguration", "DPI Launch Mode"))
         self.LaunchDPI_checkBox.setText(_translate("DUTConfiguration", "  Launch DPI"))
         self.TerminateDPIOnError_checkBox.setText(_translate("DUTConfiguration", "  Terminate DPI on Error"))
-        self.DesignPath_label_2.setText(_translate("DUTConfiguration", "Design Path"))
-        self.DesignPath_toolButton_2.setText(_translate("DUTConfiguration", "..."))
+        #self.DesignPath_label_2.setText(_translate("DUTConfiguration", "Design Path"))
+        #self.DesignPath_toolButton_2.setText(_translate("DUTConfiguration", "..."))
         
         
 #     def itemChanged(self):
