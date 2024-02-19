@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Jobs</class>
+ <widget class="QWidget" name="Jobs">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>796</width>
+    <height>606</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+background-color:rgb(37, 40, 50);
+	color: white;
+}
+QScrollBar:horizontal {
+	border: none;
+	background: rgb(52, 59, 72);
+	height: 14px;
+	margin: 0px 21px 0 21px;
+	border-radius: 0px;
+}
+QFrame QScrollBar:vertical {
+	border: none;
+	background: rgb(52, 59, 72);
+	width: 14px;
+	margin: 21px 0 21px 0;
+	border-radius: 0px;
+}
+
+QScrollBar::handle:horizontal {
+	background: rgb(85, 170, 255);
+	min-width: 25px;
+	border-radius: 7px
+}
+QScrollBar::add-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: right;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:horizontal {
+	border: none;
+	background: rgb(55, 63, 77);
+	width: 20px;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	subcontrol-position: left;
+	subcontrol-origin: margin;
+}
+QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal
+{
+	background: none;
+}
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
+	background: none;
+}
+QScrollBar::handle:vertical {
+	background: rgb(85, 170, 255);
+	min-height: 25px;
+	border-radius: 7px
+}
+QScrollBar::add-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	subcontrol-position: bottom;
+	subcontrol-origin: margin;
+}
+QScrollBar::sub-line:vertical {
+	border: none;
+	background: rgb(55, 63, 77);
+	height: 20px;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	subcontrol-position: top;
+	subcontrol-origin: margin;
+}
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+	background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+	background: none;
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="styleSheet">
+      <string notr="true">color:rgb(37, 40, 50);
+QTableWidget::item{
+background-color:rgb(37, 40, 50);
+
+}</string>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="Jobs_scrollArea">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>776</width>
+        <height>586</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget::pane{
+border-color:none;
+
+background-color:rgb(37, 40, 50);
+}
+
+</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <widget class="QWidget" name="selectall_widget" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="selectall_horizontalLayout">
+            <item>
+             <spacer name="selectall_Spacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>500</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="unselectall_pushButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border: 0px solid rgb(52, 59, 72);
+	color: rgb(255, 255, 255);
+	border-radius: 10px;
+    background-color: rgb(33, 188, 180);
+	color: rgb(255, 255, 255);
+	margin:10px;
+	padding:5px;
+font:bold 20px;
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 5px solid transparent;
+}
+QPushButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 7px solid transparent;
+}
+QPushButton:disabled {
+	background-color: rgb(102, 109, 122);
+	color: rgb(168, 168, 168);
+}</string>
+              </property>
+              <property name="text">
+               <string>  Unselect All  </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="selectall_pushButton">
+              <property name="minimumSize">
+               <size>
+                <width>143</width>
+                <height>54</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+	border: 0px solid rgb(52, 59, 72);
+	color: rgb(255, 255, 255);
+	border-radius: 10px;
+    background-color: rgb(33, 188, 180);
+	color: rgb(255, 255, 255);
+	margin:10px;
+	padding:5px;
+font:bold 20px;
+}
+QPushButton:hover {
+	background-color: rgb(57, 65, 80);
+	border: 5px solid transparent;
+}
+QPushButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 7px solid transparent;
+}
+QPushButton:disabled {
+	background-color: rgb(102, 109, 122);
+	color: rgb(168, 168, 168);
+}</string>
+              </property>
+              <property name="text">
+               <string>Select All</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>580</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="Run_pushButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>35</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+	background-color: red;
+	color:White;
+	margin-right:5px;
+	border-radius: 10px;
+	border: 0px solid rgb(52, 59, 72);
+	font-size:16px;
+	font-weight:bold;
+}
+QPushButton:hover {
+	background-color: rgb(230, 96, 96);
+	border: 5px solid transparent;
+}
+QPushButton:pressed {
+	background-color: rgb(35, 40, 49);
+	border: 7px solid transparent;
+}
+
+
+</string>
+           </property>
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTableWidget" name="Jobs_table">
+         <property name="styleSheet">
+          <string notr="true">QTableWidget::item {
+background-color:rgb(37, 40, 50);
+color:white;
+}</string>
+         </property>
+         <column>
+          <property name="text">
+           <string>Include</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Job name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Prerequisite Task</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Prerequisite Job</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Build Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Script Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Design Path</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Running Configurations</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Design Configurations</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Job Status</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Show Console</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
