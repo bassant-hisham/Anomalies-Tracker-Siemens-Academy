@@ -20,14 +20,22 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         self.CompilationConfig_button.clicked.connect(self.open_compilation_config)
         self.delete_pushButton.clicked.connect(self.deleteDesignWidget)
         self.LaunchingConfig_button.clicked.connect(self.open_launching_config)
+        self.CompileDesign_checkBox.stateChanged.connect(self.show_Compilation_Config)
         self.DesignBox.setCheckable(True)
         self.DesignBox.setChecked(True)
         self.DesignBox.toggled.connect(self.toggle_content)
         self.myparent=self.parent()
         self.DesignsList=Designs
         self.DesignsLayout=DesignsLayout
-        
+        self.CompilationConfig_button.hide()
 
+    
+    def show_Compilation_Config(self):
+        if self.CompileDesign_checkBox.isChecked():
+            self.CompilationConfig_button.show()
+        else:
+            self.CompilationConfig_button.hide()
+    
     def toggle_content(self):
         if self.DesignBox.isChecked():
             self.setMaximumHeight(16777215)

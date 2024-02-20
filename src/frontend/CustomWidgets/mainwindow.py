@@ -21,8 +21,10 @@ import config
 from PyQt5.QtGui import QIcon
 from config import BuildState
 from PyQt5.QtCore import Qt, QThread, QObject, pyqtSignal
-from src.common.exception import CircularDependencyException
+from src.common.DeadLock_Dependency import CircularDependencyException
 from PyQt5.QtCore import QSize
+
+
 class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
     def __init__(self):
         super(MyMainWindow,self).__init__()
@@ -40,8 +42,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.CreateJobs_button.clicked.connect(self.createJobs)
         self.new_window = QMainWindow()
         self.design_widget_layout=QVBoxLayout()
+        
         # self.JsonData={}
         # self.JsonData[self.Solution_comboBox.currentText()]={}
+        
+        
         self.timer = self.refresh_every_5_sec_for_jobs()
         self.console_timer = self.refresh_every_5_sec()
         self.console_timer.timeout.connect(self.update_console)
@@ -413,6 +418,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         timer.start(5000)
         return timer
     
+    
+    
     def collectData(self):
 
         Designs = self.Tasks.currentWidget().get_design()
@@ -586,13 +593,16 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                                 "platform": platform,
                                 "solution": solution, 
                                 "src_file": buildPath,
-                                "tools_configuration": ToolConfigData,
                                 #"DUT-launch-dpi" : DutConfigData[0]["launch_dpi"]
                             }
                         }
                         
                         print("TOOLS CONFIG : --------")
                         print(ToolConfigData)
+                        
+                        if(ToolConfigData['launch_tool']):
+                            launching_configurations["launching_configurations"]["launch_tool"] = True
+                            launching_configurations["launching_configurations"]["tools_configuration"] = ToolConfigData
                         
                         # if DutConfigData[0]["launch_dpi"] is True:
                         #      launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData

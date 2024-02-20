@@ -224,6 +224,9 @@ class Ui_DesignBoxWidget(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         spacerItem1 = QtWidgets.QSpacerItem(20, 23, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         self.verticalLayout.addItem(spacerItem1)
+        
+        
+        
         self.DesignPath_horizontalLayout = QtWidgets.QHBoxLayout()
         self.DesignPath_horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.DesignPath_horizontalLayout.setObjectName("DesignPath_horizontalLayout")
@@ -250,11 +253,26 @@ class Ui_DesignBoxWidget(object):
         self.BrowseDesignPath_button.setObjectName("BrowseDesignPath_button")
         self.DesignPath_horizontalLayout.addWidget(self.BrowseDesignPath_button)
         self.verticalLayout.addLayout(self.DesignPath_horizontalLayout)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 51, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        spacerItem2 = QtWidgets.QSpacerItem(10, 11, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         self.verticalLayout.addItem(spacerItem2)
         self.Configurations_horizontalLayout = QtWidgets.QHBoxLayout()
         self.Configurations_horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.Configurations_horizontalLayout.setObjectName("Configurations_horizontalLayout")
+        
+        
+        self.Compilation_Config_Layout = QtWidgets.QHBoxLayout()
+        self.Compilation_Config_Layout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
+        self.Compilation_Config_Layout.setObjectName("horizontalLayout")
+        
+        self.CompileDesign_checkBox = QtWidgets.QCheckBox(self.DesignBox)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.CompileDesign_checkBox.setFont(font)
+        self.CompileDesign_checkBox.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.CompileDesign_checkBox.setObjectName("CompileDesign_checkBox")
+        self.Compilation_Config_Layout.addWidget(self.CompileDesign_checkBox) 
+        
         self.CompilationConfig_button = QtWidgets.QPushButton(self.DesignBox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -269,7 +287,10 @@ class Ui_DesignBoxWidget(object):
         self.CompilationConfig_button.setFocusPolicy(QtCore.Qt.NoFocus)
         self.CompilationConfig_button.setStyleSheet("")
         self.CompilationConfig_button.setObjectName("CompilationConfig_button")
-        self.Configurations_horizontalLayout.addWidget(self.CompilationConfig_button)
+        self.Compilation_Config_Layout.addWidget(self.CompilationConfig_button)
+        
+        self.verticalLayout.addLayout(self.Compilation_Config_Layout)
+        
         self.LaunchingConfig_button = QtWidgets.QPushButton(self.DesignBox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -299,5 +320,6 @@ class Ui_DesignBoxWidget(object):
         self.DesignBox.setTitle(_translate("DesignBoxWidget", "Design"))
         self.DesignPath_label.setText(_translate("DesignBoxWidget", "Design Path"))
         self.BrowseDesignPath_button.setText(_translate("DesignBoxWidget", "..."))
+        self.CompileDesign_checkBox.setText(_translate("DesignBoxWidget", "Check to Compile Design"))
         self.CompilationConfig_button.setText(_translate("DesignBoxWidget", "Compilation configuration"))
         self.LaunchingConfig_button.setText(_translate("DesignBoxWidget", "Launching Configuration"))

@@ -917,8 +917,9 @@ class Ui_launching_config(object):
         "    padding-right: 10px;"
         "    padding-left: 10px;"
         "}"
-        "QPushButton::tooltip {"
-        "    color: black;"  # Set the tooltip text color to white
+        "QToolTip {" 
+        "    color: black;"
+        "    background-color : white ;" # Set the tooltip text color to white
         "}"
         )
 

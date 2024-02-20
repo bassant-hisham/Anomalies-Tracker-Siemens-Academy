@@ -1,6 +1,6 @@
 from collections import defaultdict, deque
 
-from src.common.exception import CircularDependencyException
+from src.common.DeadLock_Dependency import CircularDependencyException
 def topological_sort_in_batches(graph:dict, batch_size:int):
     """
     topological sort on a directed acyclic graph in batches, where each batch contains a specified number of nodes that can be run in parallel.
