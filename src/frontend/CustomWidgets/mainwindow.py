@@ -59,7 +59,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
-        self.temp = self.Tasks.TaskTab.last_processed
+        
         self.combinations.append([])
         self.Jobslist.append([])
         if not self.Tasks.isVisible():
@@ -135,7 +135,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Jobslist[self.Tasks.currentIndex()].Close_pushButton.clicked.connect(self.close_console)
             
 
-            self.combinations[self.Tasks.currentIndex()] = (self.collectData())
+            self.combinations[self.Tasks.currentIndex()] += (self.collectData())
             
             print(f" length of the combination is  {len(self.combinations[self.Tasks.currentIndex()])}")
             
@@ -146,19 +146,15 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
             
-            # [start_index:], start=start_index
-            # start_index = self.temp + 1 
-            # current_index = self.Tasks.currentIndex()
-            # self.temp = len(self.combinations[current_index]) - 1
             
-            # print(f"start index is {start_index} and current index is {current_index} and temp is {self.temp}")
+            current_index = self.Tasks.currentIndex()            
+            start_index = self.Tasks.currentWidget().last_processed + 1
             
-            # print("length of the combination is ", len(self.combinations[current_index][start_index:]))
-
-
             
-            for row_index, (running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()]):                
+            
+            for row_index, (running_config, design, build) in enumerate(self.combinations[current_index][start_index:], start=start_index):                
                 
+               
                 
                 checkbox_item = QTableWidgetItem()
                 checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
@@ -231,9 +227,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 solution=self.Solution_comboBox.currentText()
                 taskNu=self.Tasks.currentIndex()
                 job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
-                
-                
-                self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
+                                
+                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
                 col_index += 1
                 
                 self.refresh_job(job_name_str, "New Job Created")
@@ -291,7 +286,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 col_index += 1
             
             
-
+            self.Tasks.currentWidget().last_processed  = len(self.combinations[current_index]) - 1
 
 
                      

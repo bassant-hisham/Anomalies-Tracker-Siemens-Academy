@@ -20,7 +20,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.gridLayout_4.addWidget(self.stacked_widget)
         self.gridLayout_4.removeWidget(self.Directory_widget) #.hide()
         self.gridLayout_4.removeWidget(self.File_widget) #.hide()
-        
+        self.first_create = 1
         self.AddDesign_button.clicked.connect(self.add_design)
         self.AddRunningConfig_button.clicked.connect(self.add_running_config)
         self.scrollLayout = QVBoxLayout(self.Designs_scrollAreaWidget)
@@ -47,6 +47,7 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.Running_data[0].delete_pushButton.setDisabled(True)
         self.All_radioButton.setChecked(True)
         self.last_processed = -1
+        self.jobs_set = set()
                  
     def toggle_directory(self):
         self.stacked_widget.setCurrentIndex(0)
