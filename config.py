@@ -17,7 +17,7 @@ else:
 class BuildState(Enum):
     SUCCESS = ('green', 'SUCCESS')
     FAILURE = ('red', 'FAILURE')
-    JOB_CREATED = ('rgb(33, 188, 180)', 'Job Created')
+    JOB_CREATED = ('rgb(33, 188, 180)', 'New Job Created')
     JOB_IN_BATCH = ('lightgreen', 'Job In Batch')
     JOB_STARTED = ('orange', 'Job Started')
     JOB_CRASHED = ('lightyellow', 'Job Crashed in Jenkins')
@@ -28,7 +28,7 @@ class BuildState(Enum):
         self.description = description
     
     @classmethod
-    def get_color_by_description(cls, description , default_color='#808080'):
+    def get_color_by_description(cls, description , default_color='red'):
         for status in cls:
             if status.description == description:
                 return status.color

@@ -105,6 +105,7 @@ class SolutionHandlerFactory:
         # elif solution_type == "5G":
         #     # Add 5G solution handler implementation
         #     # return None
+        
         else:
             raise ValueError(f"Unsupported solution type: {solution_type}")
 
@@ -123,14 +124,14 @@ class EthernetHandler(SolutionHandler):
         """
         try:
             compile_design = job["compile_design"]
-            if(job.get("compilation_configurations") is not None):
+            if(compile_design):
+                
                 compilation_configurations = job["compilation_configurations"]
                 source_design_path = compilation_configurations["source_design_path"]
                 output_directory = compilation_configurations["output_directory"]
                 machine = compilation_configurations["machine"]
                 force = compilation_configurations["force"]
                 timeout = compilation_configurations["timeout"]
-                
             #compiling_command = "sh 'g++ -g  /home/vmarwan/Documents/JB/script.c++ -o /home/vmarwan/Documents/JB/script.out'"
                 if compile_design and source_design_path and output_directory:
                     script += script_handler.start_stage("Compiling")
@@ -343,12 +344,12 @@ class EthernetHandler(SolutionHandler):
             #record_replay_configurations = dut_configuration["record_replay_configurations"]
             # script = self.get_record_configurations(record_replay_configurations, script)
             # script = self.get_replay_configurations(record_replay_configurations, script)
-                tools_configuration = launching_configurations["tools_configuration"]
-                launch_tool = tools_configuration["launch_tool"]
-                if launch_tool:
-                    # script = self.get_master_tool_configuration(tools_configuration, script)
-                    # script = self.get_slave_tool_configuration(tools_configuration, script)
-                    pass
+                # tools_configuration = launching_configurations["tools_configuration"]
+                # launch_tool = tools_configuration["launch_tool"]
+                # if launch_tool:
+                #     # script = self.get_master_tool_configuration(tools_configuration, script)
+                #     # script = self.get_slave_tool_configuration(tools_configuration, script)
+                #     pass
                 script += script_handler.end_stage()    
             return script
             
@@ -438,14 +439,3 @@ class EthernetHandler(SolutionHandler):
             logging.error(f"Error while generating pipeline jobs: {e}")
             return ()
 
-
-#####################################################################################################################################################
-# Main
-def main():
-    server = initialize_jenkins_server('http://localhost:8080', username="marwansallam88", password="1738")
-    # can be a file name or a dictionary object
-    from_front_end = "front_end.json"
-
-
-if __name__ == "__main__":
-    main()

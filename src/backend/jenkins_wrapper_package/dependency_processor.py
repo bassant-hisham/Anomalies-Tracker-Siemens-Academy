@@ -1,6 +1,7 @@
 from collections import defaultdict, deque
 
-from src.common.DeadLock_Dependency import CircularDependencyException
+from src.common.DeadLock_Dependency import CircularDependencyException , Out_Of_Range_DependencyException
+
 def topological_sort_in_batches(graph:dict, batch_size:int):
     """
     topological sort on a directed acyclic graph in batches, where each batch contains a specified number of nodes that can be run in parallel.
@@ -17,7 +18,10 @@ def topological_sort_in_batches(graph:dict, batch_size:int):
 
         for node, dependencies in graph_dict.items():
             for dependency in dependencies:
-                inverted_graph[dependency].append(node)
+                if(dependency in inverted_graph):
+                    inverted_graph[dependency].append(node)
+                else:
+                    raise Out_Of_Range_DependencyException(node)
 
         return inverted_graph
     

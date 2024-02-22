@@ -21,7 +21,7 @@ import config
 from PyQt5.QtGui import QIcon
 from config import BuildState
 from PyQt5.QtCore import Qt, QThread, QObject, pyqtSignal
-from src.common.DeadLock_Dependency import CircularDependencyException
+from src.common.DeadLock_Dependency import CircularDependencyException , Out_Of_Range_DependencyException
 from PyQt5.QtCore import QSize
 
 
@@ -655,5 +655,7 @@ class WorkerThread(QThread, QObject):
         try:
             self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data,self.isbinarysearch, 3)
         except CircularDependencyException as e:
+            self.error_signal.emit(str(e))
+        except Out_Of_Range_DependencyException as e:
             self.error_signal.emit(str(e))
             
