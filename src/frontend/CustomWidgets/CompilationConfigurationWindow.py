@@ -34,9 +34,8 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
                  self.showWarningMessage("Source path cannot be empty")
             else:
                 self.compile_design_empty = False
+                self.compilation_configurationsdict['compile_design'] = True
                 self.compilation_configurationsdict['compilation_configurations']['source_design_path'] = source_path
-    
-                self.Check_Output_Directory_Exist(directory_path)
                 self.compilation_configurationsdict['compilation_configurations']['output_directory'] = directory_path
                 self.compilation_configurationsdict['compilation_configurations']['machine'] = self.Machine_comboBox.currentText()
                 self.compilation_configurationsdict['compilation_configurations']['force'] = self.Force_checkBox.isChecked()
@@ -44,6 +43,7 @@ class MyCompilationConfigWindow(QtWidgets.QWidget, Ui_CompilationConfig_Form):
                 self.close()
                 return self.compilation_configurationsdict
         
+                #self.Check_Output_Directory_Exist(directory_path)
     
     
     def Check_Output_Directory_Exist(self , directory_path):

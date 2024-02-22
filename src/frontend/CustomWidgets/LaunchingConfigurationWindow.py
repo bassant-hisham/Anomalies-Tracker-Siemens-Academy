@@ -238,7 +238,6 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         
     def get_ToolConfig(self):
         self.ToolConfig["launch_tool"] = self.LaunchToolCheckBox.isChecked()
-        
         self.ToolConfig["master_tool_configuration"]["tool_name"] = self.ToolName_comboBox.currentText()
         self.ToolConfig["master_tool_configuration"]["tool_launch_mode"] = self.ToolLaunch_comboBox.currentText()
         self.ToolConfig["master_tool_configuration"]["terminate_tool"] = self.TerminateOnErr_checkBox.isChecked()

@@ -39,13 +39,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.launching_configurations = MyLaunchingConfigWindow()
         self.design=MyDesignBox("",[],"")
         
+
         self.CreateJobs_button.clicked.connect(self.createJobs)
         self.new_window = QMainWindow()
         self.design_widget_layout=QVBoxLayout()
-        
-        # self.JsonData={}
-        # self.JsonData[self.Solution_comboBox.currentText()]={}
-        
+    
         
         self.timer = self.refresh_every_5_sec_for_jobs()
         self.console_timer = self.refresh_every_5_sec()
@@ -57,10 +55,11 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.undoShortcut.activated.connect(self.undo_hide_job)
         self.undoStack = []
         self.buttons_db = {}
-
+        
         
     def createTaskTabWidget(self):
         self.Tasks.TaskTab = MyTaskTab()
+        self.temp = self.Tasks.TaskTab.last_processed
         self.combinations.append([])
         self.Jobslist.append([])
         if not self.Tasks.isVisible():
@@ -133,22 +132,33 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
             self.Jobslist[self.Tasks.currentIndex()].unselectall_pushButton.clicked.connect(self.unselectallrows)
 
-            self.Job.Close_pushButton.clicked.connect(self.close_console)
+            self.Jobslist[self.Tasks.currentIndex()].Close_pushButton.clicked.connect(self.close_console)
             
 
-            self.combinations[self.Tasks.currentIndex()]=self.collectData()
+            self.combinations[self.Tasks.currentIndex()] = (self.collectData())
             
-            self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-            self.Job.Jobs_table.verticalHeader().setVisible(False)
-            self.Job.Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-            self.Job.Jobs_table.verticalHeader().setVisible(False)
+            print(f" length of the combination is  {len(self.combinations[self.Tasks.currentIndex()])}")
+            
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
+            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
             self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
             
+            # [start_index:], start=start_index
+            # start_index = self.temp + 1 
+            # current_index = self.Tasks.currentIndex()
+            # self.temp = len(self.combinations[current_index]) - 1
             
+            # print(f"start index is {start_index} and current index is {current_index} and temp is {self.temp}")
+            
+            # print("length of the combination is ", len(self.combinations[current_index][start_index:]))
 
 
-            for row_index,(running_config, design, build )in enumerate(self.combinations[self.Tasks.currentIndex()]) :
+            
+            for row_index, (running_config, design, build) in enumerate(self.combinations[self.Tasks.currentIndex()]):                
+                
                 
                 checkbox_item = QTableWidgetItem()
                 checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
@@ -157,12 +167,14 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index+1)))
                 
+                # FIXME: THIS IS THE PROBLEM OF THE ID BEING OVERRIDEN AGAIN , the problem is in Row_index
+                
+                
                 
                 lineEdit_PrerequisiteTask = QTableWidgetItem()
                 lineEdit_PrerequisiteTask.setFlags(lineEdit_PrerequisiteTask.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteTask)
 
-                # Create a QLineEdit and set it as the cell widget
                 text_box = QLineEdit(self.Job)
                 text_box.setStyleSheet("QLineEdit { color: white; }")
                 validator = QIntValidator()
@@ -186,12 +198,12 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
                 col_index += 1
-
                 
                 item = QTableWidgetItem(str(os.path.basename(scriptPath)))
                 item.setToolTip(scriptPath)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
                 col_index += 1
+                
 
                 DesignPath = design.DesignPath_lineEdit.text()
                 item = QTableWidgetItem(str(os.path.basename(DesignPath)))
@@ -199,6 +211,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
                 col_index += 1
 
+                
                 ShowRunningConfigB = QPushButton("Show")
                 ShowRunningConfigB.setStyleSheet("color: white;")
                 self.ShowRun = MyRunBox(0,[],"")
@@ -206,23 +219,24 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 ShowRunningConfigB.clicked.connect(lambda _, ShowRun=self.ShowRun,r=running_config,rd=running_dict: self.show_running(ShowRun,r,rd))
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
                 col_index += 1
-            
+
+                
                 ShowDesignConfigB = QPushButton("Show")
                 ShowDesignConfigB.setStyleSheet("color: white;")
                 ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
                 col_index += 1           
-
+                
+                
                 solution=self.Solution_comboBox.currentText()
                 taskNu=self.Tasks.currentIndex()
                 job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
-
                 
                 
                 self.Job.Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
                 col_index += 1
                 
-                #self.refresh_job(job_name_str, "New Job Created")
+                self.refresh_job(job_name_str, "New Job Created")
                 self.add_all_jobs_status()
 
                 button_size = QSize(40, 14)
@@ -263,20 +277,20 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 hide.clicked.connect(lambda _, job_name= job_name_str: self.hide_job(job_name))
                 hide.setToolTip("Hide")  
                 hide.setStyleSheet("color: rgb(37, 40, 50);")
-                # Create a horizontal layout
+                
                 button_layout = QHBoxLayout()
                 button_layout.addWidget(ShowConsole)
                 button_layout.addWidget(abort)
                 button_layout.addWidget(hide)
                 button_layout.addWidget(trash)
 
-                # Set the layout as the cell widget
                 cell_widget = QWidget()
                 cell_widget.setLayout(button_layout)
 
-                #self.Job.Jobs_table.setCellWidget(row_index, 11, cell_widget)
                 self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 11 , cell_widget)
                 col_index += 1
+            
+            
 
 
 
@@ -393,9 +407,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
             job_row = -1
             
             for row in range(number_of_rows):
-                if self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2).text() == job_name:
-                    job_row = row
-                    break
+                if(self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2)):
+                    if self.Jobslist[self.Tasks.currentIndex()].Jobs_table.item(row, 2).text() == job_name:
+                        job_row = row
+                        break
             if job_row >= 0:
                 label = QLabel(job_status)
                 color = BuildState.get_color_by_description(job_status)
@@ -547,6 +562,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
         self.worker_thread = WorkerThread(self, self.JsonData , self.BinarySearchState, parent=self)
         self.worker_thread.error_signal.connect(self.show_error_message)
+        
+        
         with open(file_path, 'w') as json_file:
             for taskNu in range(self.Tasks.count()):
                 self.JsonData[solution]["task"+str(taskNu+1)] = {}
@@ -593,21 +610,22 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                                 "platform": platform,
                                 "solution": solution, 
                                 "src_file": buildPath,
-                                #"DUT-launch-dpi" : DutConfigData[0]["launch_dpi"]
+                                
                             }
                         }
-                        
-                        print("TOOLS CONFIG : --------")
-                        print(ToolConfigData)
                         
                         if(ToolConfigData['launch_tool']):
                             launching_configurations["launching_configurations"]["launch_tool"] = True
                             launching_configurations["launching_configurations"]["tools_configuration"] = ToolConfigData
+                            launching_configurations["launching_configurations"]["launch-dpi"] = False
                         
-                        # if DutConfigData[0]["launch_dpi"] is True:
-                        #      launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData
-        
+                        if(len(DutConfigData) != 0 and DutConfigData[0]["launch_dpi"]):
+                            launching_configurations["launching_configurations"]["dut_configuration"] = DutConfigData
+                            launching_configurations["launching_configurations"]["launch-dpi"] = launching_configurations["launching_configurations"]["dut_configuration"][0]["launch_dpi"]
+                    
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(launching_configurations)
+                        self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)]["launching_configurations"]["tools_configuration"].pop("launch_tool", None)
+                        
                         self.JsonData[solution]["task"+str(taskNu+1)]["jobs"][str(currentJobIndex+1)].update(running_dict)
                         
                         
@@ -624,7 +642,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
     def show_error_message(self, error_message):
         QMessageBox.warning(self, "Dependency Failure", f"<b>{error_message}</b>")
-
 
 
 

@@ -23,6 +23,8 @@ def topological_sort_in_batches(graph:dict, batch_size:int):
     
     graph = invert_dependency(graph)
 
+    print(f"dependency is {graph}")
+    
     in_degree = defaultdict(int)
     for node in graph:
         for neighbor in graph[node]:

@@ -46,7 +46,8 @@ class MyTaskTab(QtWidgets.QWidget, Ui_Task_Tab):
         self.add_running_config()
         self.Running_data[0].delete_pushButton.setDisabled(True)
         self.All_radioButton.setChecked(True)
-
+        self.last_processed = -1
+                 
     def toggle_directory(self):
         self.stacked_widget.setCurrentIndex(0)
             
