@@ -14,12 +14,12 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         super(MyLaunchingConfigWindow, self).__init__()
         self.setupUi(self) # This sets up the UI components from the Launching Config window
         self.ToolConfigGroupBox.setCheckable(True)
-        self.ToolConfigGroupBox.setChecked(False)
+        self.ToolConfigGroupBox.setChecked(True)
         self.toggle_content()
         self.setWindowIcon(QIcon('src/frontend/IconsImages/siemens_logo_icon.png'))
-        self.ToolConfigGroupBox.toggled.connect(self.toggle_content)
-        self.Add_PushButton.clicked.connect(self.add_dut_config)
-        self.Add_PushButton.setToolTip("Add Dut Configuration")
+        #self.ToolConfigGroupBox.toggled.connect(self.toggle_content)
+        #self.Add_PushButton.clicked.connect(self.add_dut_config)
+        #self.Add_PushButton.setToolTip("Add Dut Configuration")
         #self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
         self.AddArgButton.clicked.connect(self.add_additional_arguments)
         self.AddEnv.clicked.connect(self.add_additional_env_variables)
@@ -41,24 +41,13 @@ class MyLaunchingConfigWindow(QtWidgets.QWidget, Ui_launching_config):
         
         
         self.ToolConfig = {}
-        # self.ToolConfig["launch_tool"]=False
         
         self.ToolConfig['master_tool_configuration'] = {}
-        
-        # self.ToolConfig["master_tool_configuration"]["tool_name"]=""
-        # self.ToolConfig["master_tool_configuration"]["tool_launch_mode"]="" 
-        # self.ToolConfig["master_tool_configuration"]["additional_args"] = {}
-        # self.ToolConfig["master_tool_configuration"]["tool_additional_env_variables"] = {}
 
         self.LaunchToolCheckBox.setChecked(True)
         
         self.ToolConfig["slave_tool_configuration"]={}
-        
-        # self.ToolConfig["slave_tool_configuration"]['launch_behavior'] =""
-        # self.ToolConfig["slave_tool_configuration"]["tool_launch_mode"]=""
-        # self.ToolConfig["slave_tool_configuration"]["additional_args"]={} 
-        # self.ToolConfig["slave_tool_configuration"]["additional_args"] = {}
-        # self.ToolConfig["slave_tool_configuration"]["tool_additional_env_variables"] = {}
+
         self.Duts = []
 
     def toggle_content(self):

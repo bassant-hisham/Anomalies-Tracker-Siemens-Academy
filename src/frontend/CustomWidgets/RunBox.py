@@ -16,6 +16,9 @@ class MyRunBox(QtWidgets.QWidget,Ui_RunningConfiguration):
         self.ScriptPath_lineEdit.hide()
         # #self.widget_resize()
         # #self.ui.groupBox.resizeEvent = lambda event: self.window_resize()
+        
+        self.LaunchingBox.setTitle("Launching Configuration")
+        
         self.groupBox.setTitle("Running Configuration " + str(id))        
         self.RunC=self.RunC_2
         

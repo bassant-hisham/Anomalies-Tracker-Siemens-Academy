@@ -112,7 +112,7 @@ class JenkinsJobExecutor:
         jobs_to_execute = topological_sort_in_batches(jobs_to_execute, batch_size)
             
             
-            #try catch exceptions here , 2 choices --> error msg , ob status --> DjEADLOCK
+            #try catch exceptions here , 2 choices --> error msg , ob status --> DEADLOCK
             
             
             # batches = [jobs_to_execute[i:i + batch_size] for i in range(0, len(jobs_to_execute), batch_size)

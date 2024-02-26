@@ -116,6 +116,149 @@ class Ui_RunningConfiguration(object):
 "")
         self.verticalLayout = QtWidgets.QVBoxLayout(RunningConfiguration)
         self.verticalLayout.setObjectName("verticalLayout")
+        
+        
+        
+        
+        self.LaunchingBox = QtWidgets.QGroupBox(RunningConfiguration)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.LaunchingBox.setFont(font)
+        self.LaunchingBox.setStyleSheet("QWidget{\n"
+"    border-radius: 15px;\n"
+"    background-color: rgb(37, 40, 50);\n"
+"}\n"
+"QCheckBox{\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-size: 11pt;\n"
+"}\n"
+"QComboBox {\n"
+"    background-color: rgb(52, 59, 72);\n"
+"    border: 1px solid rgb(49, 54, 65);\n"
+"    height: 30px;\n"
+"    border-radius: 10px;\n"
+"    padding-left: 10px;\n"
+"    padding-right: 15px;\n"
+"    color: rgb(255, 255, 255);\n"
+"}\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color:rgb(27, 29, 35);\n"
+"    border: 0px;\n"
+"    color: #fff;\n"
+"    selection-background-color: rgb(22, 51, 79);\n"
+"    outline: none;\n"
+"}\n"
+"QComboBox QAbstractItemView::item:selected {\n"
+"    background-color: rgb(22, 51, 79);\n"
+"}\n"
+"QComboBox:on {\n"
+"    border: 0px solid rgb(61, 70, 86);\n"
+"    background-color: rgb(57, 65, 80)\n"
+"}\n"
+"QComboBox QListView {\n"
+"    background-color: rgb(27, 29, 35);\n"
+"    border-radius: 10px;\n"
+"    color: #FFF;\n"
+"    padding: 10px;\n"
+"}\n"
+"QComboBox:disabled {\n"
+"    background-color: #808080;\n"
+"}\n"
+"/* Label */\n"
+"QLabel{\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-size: 11pt;\n"
+"\n"
+"}\n"
+"QLineEdit{\n"
+"    border: 0px solid rgb(37, 39, 48);\n"
+"    height: 30px;\n"
+"    border-radius: 15px;\n"
+"    color: white;\n"
+"    padding-left: 20px;\n"
+"    padding-right: 20px;\n"
+"    background-color: rgb(27, 29, 35);\n"
+"}\n"
+"QLineEdit:hover{\n"
+"    border: 2px solid rgb(64, 71, 88)\n"
+"}\n"
+"QLineEdit:focus{\n"
+"    border: 3px solid rgb(91, 101, 124);\n"
+"    color: white;\n"
+"}\n"
+"QLineEdit:disabled {\n"
+"    background-color: #808080;\n"
+"}\n"
+"/* QGroupBox  */\n"
+"QGroupBox{\n"
+"    margin-top: 10px;\n"
+"    background-color: transparent;\n"
+"    border: 1px solid rgb(255, 255, 255);\n"
+"    padding-top: 20px;\n"
+"}\n"
+"QGroupBox::title{\n"
+"    color: rgb(255, 255, 255);\n"
+"    font-size: 12pt;\n"
+"    margin-top: 10px;\n"
+"    bottom: 20px;\n"
+"    font-style:bold;\n"
+"\n"
+"}\n"
+"/* Button */\n"
+"QPushButton {\n"
+"    border: 0px solid rgb(52, 59, 72);\n"
+"    background-color: rgb(52, 59, 72);\n"
+"    color: rgb(255, 255, 255);\n"
+"    border-radius: 10px;\n"
+"    margin-right:10px;\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(57, 65, 80);\n"
+"    border: 5px solid transparent;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(35, 40, 49);\n"
+"    border: 7px solid transparent;\n"
+"}\n"
+"QPushButton:disabled {\n"
+"    background-color: rgb(102, 109, 122);\n"
+"    color: rgb(168, 168, 168);\n"
+"}\n"
+"")
+        self.LaunchingBox.setObjectName("LaunchingBox")
+        self.Launching_vertical_Layout = QtWidgets.QVBoxLayout(self.LaunchingBox)
+        self.Launching_vertical_Layout.setObjectName("Launching_vertical_Layout")
+                
+        self.Launching_Configuration_Layout = QtWidgets.QHBoxLayout()
+        self.Launching_Configuration_Layout.setContentsMargins(-1, 0, -1, -1)
+        self.Launching_Configuration_Layout.setObjectName("Launching_Configuration_horizontalLayout")
+        
+        self.Launching_Label = QtWidgets.QLabel(self.LaunchingBox)
+        self.Launching_Label.setObjectName("Launching_Label")
+        self.Launching_Configuration_Layout.addWidget(self.Launching_Label)
+        
+# Launching Configuration Button UI element
+        
+        self.LaunchingConfig_button = QtWidgets.QPushButton(self.LaunchingBox)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.LaunchingConfig_button.sizePolicy().hasHeightForWidth())
+        self.LaunchingConfig_button.setSizePolicy(sizePolicy)
+        self.LaunchingConfig_button.setMinimumSize(QtCore.QSize(150, 35))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        self.LaunchingConfig_button.setFont(font)
+        self.LaunchingConfig_button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.LaunchingConfig_button.setStyleSheet("")
+        self.LaunchingConfig_button.setObjectName("LaunchingConfig_button")
+        self.Launching_Configuration_Layout.addWidget(self.LaunchingConfig_button) 
+        
+        self.Launching_vertical_Layout.addLayout(self.Launching_Configuration_Layout)
+        
+        
         self.groupBox = QtWidgets.QGroupBox(RunningConfiguration)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -225,6 +368,7 @@ class Ui_RunningConfiguration(object):
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.groupBox)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -308,6 +452,8 @@ class Ui_RunningConfiguration(object):
         self.verticalLayout_2.addLayout(self.ErrorType_horizontalLayout)
         spacerItem3 = QtWidgets.QSpacerItem(20, 47, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         self.verticalLayout_2.addItem(spacerItem3)
+        
+        self.verticalLayout.addWidget(self.LaunchingBox)
         self.verticalLayout.addWidget(self.groupBox)
 
         self.retranslateUi(RunningConfiguration)
@@ -316,6 +462,10 @@ class Ui_RunningConfiguration(object):
     def retranslateUi(self, RunningConfiguration):
         _translate = QtCore.QCoreApplication.translate
         RunningConfiguration.setWindowTitle(_translate("RunningConfiguration", "Running Configuration"))
+        
+        self.LaunchingBox.setTitle(_translate("RunningConfiguration", "Launching Configuration"))
+        self.Launching_Label.setText(_translate("RunningConfiguration", "Tool Launching Configuration"))
+        self.LaunchingConfig_button.setText(_translate("RunningConfiguration", "Configure"))
         self.groupBox.setTitle(_translate("RunningConfiguration", "Running Configuration 1"))
         self.RunC_2.setText(_translate("RunningConfiguration", "Run Script"))
         self.ScriptPath_label.setText(_translate("RunningConfiguration", "Script Path"))

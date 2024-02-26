@@ -44,9 +44,9 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         self.Dutconfig_Vlayout= Dutconfig_Vlayout
         self.Duts=Duts
         
-        self.data = {
-            "launch_dpi": self.LaunchDPI_checkBox.isChecked()
-        }
+        # self.data = {
+        #      "launch_dpi": self.LaunchDPI_checkBox.isChecked()
+        # }
 
     def toggle_content(self):
         if self.isChecked():
@@ -138,7 +138,7 @@ class MyDUTGroupBox(QtWidgets.QGroupBox, Ui_DUTConfiguration):
         
                     
                 self.data = {
-                            "launch_dpi": self.LaunchDPI_checkBox.isChecked(),
+                            "launch_dpi": True,
                             "terminate_dpi": self.TermianteDPI_checkBox.isChecked(),                    
                             "terminate_dpi_onerror": self.TerminateDPIOnError_checkBox.isChecked(),
                             #"avb_list": self.AVB_ListView_2.selectedIndexes(),

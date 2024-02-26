@@ -174,6 +174,7 @@ class Ui_CompilationConfig_Form(object):
         self.Browse_verticalLayout.addWidget(self.BrowseSource_button)
         self.BrowseOutput_button = QtWidgets.QToolButton(self.CompilationConfig_widget)
         self.BrowseOutput_button.setObjectName("BrowseOutput_button")
+        self.BrowseOutput_button.setEnabled(False)
         self.Browse_verticalLayout.addWidget(self.BrowseOutput_button)
         
         self.Source_Output_horizontalLayout.addLayout(self.Browse_verticalLayout)

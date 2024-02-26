@@ -3,6 +3,8 @@ from PyQt5 import QtWidgets,QtCore
 from src.frontend.CustomWidgets.commonFunctions import *
 from src.frontend.CustomWidgets.CompilationConfigurationWindow import MyCompilationConfigWindow 
 from src.frontend.CustomWidgets.LaunchingConfigurationWindow import MyLaunchingConfigWindow
+from src.frontend.CustomWidgets.DUTBox import MyDUTGroupBox
+
 from src.frontend.CustomWidgets.UIs.DesignBoxUI import Ui_DesignBoxWidget
 from PyQt5.QtCore import QPoint
 from PyQt5.QtGui import QIcon
@@ -17,10 +19,16 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         self.BrowseDesignPath_button.clicked.connect(lambda: showDirectoryDialog(self,self.DesignPath_lineEdit))
         self.compilation_config = MyCompilationConfigWindow()
         self.launching_configurations=MyLaunchingConfigWindow()
+        
+        self.Duts = []
+        self.dut_configurations = MyDUTGroupBox(self.Dutconfig_Vlayout,self.Duts,self.Dutconfig_Vlayout.count()+1)
+        
         self.CompilationConfig_button.clicked.connect(self.open_compilation_config)
         self.delete_pushButton.clicked.connect(self.deleteDesignWidget)
-        self.LaunchingConfig_button.clicked.connect(self.open_launching_config)
+        #self.LaunchingConfig_button.clicked.connect(self.open_launching_config)
         self.CompileDesign_checkBox.stateChanged.connect(self.show_Compilation_Config)
+        self.LaunchDpi_checkBox.stateChanged.connect(self.show_dpi_configuration)
+        self.LaunchDpi_button.clicked.connect(self.add_dut_config)
         self.DesignBox.setCheckable(True)
         self.DesignBox.setChecked(True)
         self.DesignBox.toggled.connect(self.toggle_content)
@@ -28,6 +36,7 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         self.DesignsList=Designs
         self.DesignsLayout=DesignsLayout
         self.CompilationConfig_button.hide()
+        self.LaunchDpi_button.hide()
 
     
     def show_Compilation_Config(self):
@@ -36,12 +45,29 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
         else:
             self.CompilationConfig_button.hide()
     
+    def show_dpi_configuration(self):
+        if self.LaunchDpi_checkBox.isChecked():
+            self.LaunchDpi_button.show()
+        else:
+            self.LaunchDpi_button.hide()
+    
     def toggle_content(self):
         if self.DesignBox.isChecked():
             self.setMaximumHeight(16777215)
         else:
             self.setMaximumHeight(40)
             
+    def get_grandparent(self, widget):
+        grandparent = widget.myparent
+        while grandparent and grandparent.parent():
+            grandparent = grandparent.parent()
+        return grandparent
+    
+    
+    def add_dut_config(self):
+        
+        self.dut_configurations.show()
+    
     def open_compilation_config(self):
         
         if(self.DesignPath_lineEdit.text()!=""):
@@ -55,15 +81,10 @@ class MyDesignBox(QtWidgets.QWidget,Ui_DesignBoxWidget):
             QMessageBox.warning(self, "Enter Source Design Path first", f"<b>Cannot open compilation configuration before putting design path</b>")
         
     
-    def get_grandparent(self, widget):
-        grandparent = widget.myparent
-        while grandparent and grandparent.parent():
-            grandparent = grandparent.parent()
-        return grandparent
     
     def open_launching_config(self):
         
-        if(self.DesignPath_lineEdit.text()!=""):
+        if(self.DesignPath_lineEdit.text() != ""):
             self.launching_configurations.show()
             self.launching_configurations.closed_signal.connect(self.handle_another_window_closed)
             grandparent = self.get_grandparent(self)

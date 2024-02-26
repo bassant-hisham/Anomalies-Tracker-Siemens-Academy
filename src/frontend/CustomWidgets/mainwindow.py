@@ -117,37 +117,37 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 
     def createJobs(self):
+        
         current_widget = self.Tasks.currentWidget()
         self.runningwindows=[]
+        current_index = self.Tasks.currentIndex()   
         self.checkError()
         
         if(self.error_free):
             if isinstance(current_widget, MyTaskTab) and current_widget.Task_tabWidget.count() < 4:
                 self.Job = MyJobs()
-                self.Jobslist[self.Tasks.currentIndex()]=self.Job
+                self.Jobslist[current_index]=self.Job
                 
                 current_widget.Task_tabWidget.addTab(self.Job,"Jobs")
 
-            self.Jobslist[self.Tasks.currentIndex()].Run_pushButton.clicked.connect(self.GenerateJson)
-            self.Jobslist[self.Tasks.currentIndex()].selectall_pushButton.clicked.connect(self.selectallrows)
-            self.Jobslist[self.Tasks.currentIndex()].unselectall_pushButton.clicked.connect(self.unselectallrows)
+            self.Jobslist[current_index].Run_pushButton.clicked.connect(self.GenerateJson)
+            self.Jobslist[current_index].selectall_pushButton.clicked.connect(self.selectallrows)
+            self.Jobslist[current_index].unselectall_pushButton.clicked.connect(self.unselectallrows)
 
-            self.Jobslist[self.Tasks.currentIndex()].Close_pushButton.clicked.connect(self.close_console)
+            self.Jobslist[current_index].Close_pushButton.clicked.connect(self.close_console)
             
 
-            self.combinations[self.Tasks.currentIndex()] += (self.collectData())
-            
-            print(f" length of the combination is  {len(self.combinations[self.Tasks.currentIndex()])}")
-            
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setRowCount(len(self.combinations[self.Tasks.currentIndex()]))
-            self.Jobslist[self.Tasks.currentIndex()].Jobs_table.verticalHeader().setVisible(False)
+            self.combinations[current_index] += (self.collectData())
             
             
-            current_index = self.Tasks.currentIndex()            
+            self.Jobslist[current_index].Jobs_table.setRowCount(len(self.combinations[current_index]))
+            self.Jobslist[current_index].Jobs_table.verticalHeader().setVisible(False)
+            self.Jobslist[current_index].Jobs_table.setRowCount(len(self.combinations[current_index]))
+            self.Jobslist[current_index].Jobs_table.verticalHeader().setVisible(False)
+            self.Jobslist[current_index].Jobs_table.setRowCount(len(self.combinations[current_index]))
+            self.Jobslist[current_index].Jobs_table.verticalHeader().setVisible(False)
+            
+                     
             start_index = self.Tasks.currentWidget().last_processed + 1
             
             
@@ -159,9 +159,10 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 checkbox_item = QTableWidgetItem()
                 checkbox_item.setFlags(Qt.ItemIsUserCheckable | Qt.ItemIsEnabled)
                 checkbox_item.setCheckState(Qt.Unchecked)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 0, checkbox_item)
                 
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index+1)))
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, 0, checkbox_item)
+                
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, 1, QTableWidgetItem(str(row_index+1)))
                 
                 # FIXME: THIS IS THE PROBLEM OF THE ID BEING OVERRIDEN AGAIN , the problem is in Row_index
                 
@@ -169,42 +170,43 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 
                 lineEdit_PrerequisiteTask = QTableWidgetItem()
                 lineEdit_PrerequisiteTask.setFlags(lineEdit_PrerequisiteTask.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteTask)
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, 3, lineEdit_PrerequisiteTask)
 
                 text_box = QLineEdit(self.Job)
                 text_box.setStyleSheet("QLineEdit { color: white; }")
                 validator = QIntValidator()
                 text_box.setValidator(validator)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 3, text_box)
+                self.Jobslist[current_index].Jobs_table.setCellWidget(row_index, 3, text_box)
                 
                 lineEdit_PrerequisiteJob = QTableWidgetItem()
                 lineEdit_PrerequisiteJob.setFlags(lineEdit_PrerequisiteJob.flags() & ~Qt.ItemIsEditable)  # Make the cell not editable
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 4, lineEdit_PrerequisiteJob)
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, 4, lineEdit_PrerequisiteJob)
 
                 # Create a QLineEdit and set it as the cell widget
                 text_box = QLineEdit(self.Job)
                 text_box.setStyleSheet("QLineEdit { color: white; }")
                 validator = QIntValidator()
                 text_box.setValidator(validator)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 4, text_box)
+                self.Jobslist[current_index].Jobs_table.setCellWidget(row_index, 4, text_box)
                 
                 running_dict = running_config.running_configurations
                 col_index = 5
                 scriptPath = running_dict['running_configurations']['script_path']
 
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, col_index , QTableWidgetItem(str(build)))
                 col_index += 1
                 
                 item = QTableWidgetItem(str(os.path.basename(scriptPath)))
+                item.setTextAlignment(QtCore.Qt.AlignCenter)
                 item.setToolTip(scriptPath)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, col_index, item)
                 col_index += 1
                 
 
                 DesignPath = design.DesignPath_lineEdit.text()
                 item = QTableWidgetItem(str(os.path.basename(DesignPath)))
                 item.setToolTip(DesignPath)
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, col_index, item)
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, col_index, item)
                 col_index += 1
 
                 
@@ -213,22 +215,22 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 self.ShowRun = MyRunBox(0,[],"")
                 self.runningwindows.append(self.ShowRun)
                 ShowRunningConfigB.clicked.connect(lambda _, ShowRun=self.ShowRun,r=running_config,rd=running_dict: self.show_running(ShowRun,r,rd))
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
+                self.Jobslist[current_index].Jobs_table.setCellWidget(row_index, col_index, ShowRunningConfigB)
                 col_index += 1
 
                 
                 ShowDesignConfigB = QPushButton("Show")
                 ShowDesignConfigB.setStyleSheet("color: white;")
                 ShowDesignConfigB.clicked.connect(lambda _, d=design,: self.show_design(d))
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
+                self.Jobslist[current_index].Jobs_table.setCellWidget(row_index, col_index, ShowDesignConfigB)
                 col_index += 1           
                 
                 
                 solution=self.Solution_comboBox.currentText()
-                taskNu=self.Tasks.currentIndex()
+                taskNu=current_index
                 job_name_str = f"{solution}-Task{taskNu+1}-Job{row_index+1}"
                                 
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
+                self.Jobslist[current_index].Jobs_table.setItem(row_index, 2 , QTableWidgetItem(job_name_str))
                 col_index += 1
                 
                 self.refresh_job(job_name_str, "New Job Created")
@@ -282,7 +284,7 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
                 cell_widget = QWidget()
                 cell_widget.setLayout(button_layout)
 
-                self.Jobslist[self.Tasks.currentIndex()].Jobs_table.setCellWidget(row_index, 11 , cell_widget)
+                self.Jobslist[current_index].Jobs_table.setCellWidget(row_index, 11 , cell_widget)
                 col_index += 1
             
             
@@ -555,6 +557,8 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
         self.JsonData={}
         self.JsonData[self.Solution_comboBox.currentText()] = {}
 
+        
+
         self.worker_thread = WorkerThread(self, self.JsonData , self.BinarySearchState, parent=self)
         self.worker_thread.error_signal.connect(self.show_error_message)
         
@@ -643,7 +647,6 @@ class MyMainWindow(QtWidgets.QMainWindow,Ui_MainWindow):
 
 class WorkerThread(QThread, QObject):
     error_signal = pyqtSignal(str)
-
     def __init__(self,main_window, json_data, isbinarysearch, parent=None):
         super().__init__(parent)
         self.main_window = main_window
@@ -653,7 +656,7 @@ class WorkerThread(QThread, QObject):
 
     def run(self):
         try:
-            self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data,self.isbinarysearch, 3)
+            self.main_window.JENKINS_APIs.start_jobs_in_batches(self.json_data,self.isbinarysearch, 4)
         except CircularDependencyException as e:
             self.error_signal.emit(str(e))
         except Out_Of_Range_DependencyException as e:

@@ -257,8 +257,7 @@ class Ui_DesignBoxWidget(object):
         self.verticalLayout.addItem(spacerItem2)
         self.Configurations_horizontalLayout = QtWidgets.QHBoxLayout()
         self.Configurations_horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
-        self.Configurations_horizontalLayout.setObjectName("Configurations_horizontalLayout")
-        
+        self.Configurations_horizontalLayout.setObjectName("Configurations_horizontalLayout")        
         
         self.Compilation_Config_Layout = QtWidgets.QHBoxLayout()
         self.Compilation_Config_Layout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
@@ -291,22 +290,53 @@ class Ui_DesignBoxWidget(object):
         
         self.verticalLayout.addLayout(self.Compilation_Config_Layout)
         
-        self.LaunchingConfig_button = QtWidgets.QPushButton(self.DesignBox)
+        self.Dutconfig_Vlayout = QtWidgets.QVBoxLayout()
+        self.Dutconfig_Vlayout.setObjectName("Dutconfig_Vlayout")
+        
+        
+        
+# Launching Configuration Layout UI element
+        
+        self.launch_dpi_configuration = QtWidgets.QHBoxLayout()
+        self.launch_dpi_configuration.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
+        self.launch_dpi_configuration.setObjectName("horizontalLayout")
+   
+        
+# Launching DPI Checkbox UI element
+
+        self.LaunchDpi_checkBox = QtWidgets.QCheckBox(self.DesignBox)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.LaunchDpi_checkBox.setFont(font)
+        self.LaunchDpi_checkBox.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.LaunchDpi_checkBox.setObjectName("LaunchDpi_checkBox")
+        self.launch_dpi_configuration.addWidget(self.LaunchDpi_checkBox) 
+        
+        
+# Launching DPI Button UI element
+
+        self.LaunchDpi_button = QtWidgets.QPushButton(self.DesignBox)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.LaunchingConfig_button.sizePolicy().hasHeightForWidth())
-        self.LaunchingConfig_button.setSizePolicy(sizePolicy)
-        self.LaunchingConfig_button.setMinimumSize(QtCore.QSize(150, 35))
+        sizePolicy.setHeightForWidth(self.LaunchDpi_button.sizePolicy().hasHeightForWidth())
+        self.LaunchDpi_button.setSizePolicy(sizePolicy)
+        self.LaunchDpi_button.setMinimumSize(QtCore.QSize(150, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
-        self.LaunchingConfig_button.setFont(font)
-        self.LaunchingConfig_button.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.LaunchingConfig_button.setStyleSheet("")
-        self.LaunchingConfig_button.setObjectName("LaunchingConfig_button")
-        self.Configurations_horizontalLayout.addWidget(self.LaunchingConfig_button)
-        self.verticalLayout.addLayout(self.Configurations_horizontalLayout)
+        self.LaunchDpi_button.setFont(font)
+        self.LaunchDpi_button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.LaunchDpi_button.setStyleSheet("")
+        self.LaunchDpi_button.setObjectName("LaunchDpi_button")
+        self.launch_dpi_configuration.addWidget(self.LaunchDpi_button)
+        self.verticalLayout.addLayout(self.launch_dpi_configuration)
+        
+        
+
+        
+        
         spacerItem3 = QtWidgets.QSpacerItem(20, 41, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         self.verticalLayout.addItem(spacerItem3)
         self.verticalLayout_2.addWidget(self.DesignBox)
@@ -320,6 +350,7 @@ class Ui_DesignBoxWidget(object):
         self.DesignBox.setTitle(_translate("DesignBoxWidget", "Design"))
         self.DesignPath_label.setText(_translate("DesignBoxWidget", "Design Path"))
         self.BrowseDesignPath_button.setText(_translate("DesignBoxWidget", "..."))
-        self.CompileDesign_checkBox.setText(_translate("DesignBoxWidget", "Check to Compile Design"))
-        self.CompilationConfig_button.setText(_translate("DesignBoxWidget", "Compilation configuration"))
-        self.LaunchingConfig_button.setText(_translate("DesignBoxWidget", "Launching Configuration"))
+        self.CompileDesign_checkBox.setText(_translate("DesignBoxWidget", "Compile Design"))
+        self.CompilationConfig_button.setText(_translate("DesignBoxWidget", "Compilation Configuration"))
+        self.LaunchDpi_checkBox.setText(_translate("DesignBoxWidget", "Launch DPI"))
+        self.LaunchDpi_button.setText(_translate("DesignBoxWidget", "DPI Configuration"))

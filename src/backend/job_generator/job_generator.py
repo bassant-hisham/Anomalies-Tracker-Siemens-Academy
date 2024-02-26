@@ -35,14 +35,14 @@ def create_jobs(from_front_end: Union[dict, str], server: jenkins.Jenkins) -> di
             solution = SolutionHandlerFactory.create_solution_handler(solution_type)
             if solution is not None:
                 job_ids, job_xmls, job_prerequisites = solution.generate_all_pipeline_job_xml(json_object, task , solution_type )
+                
                 for job_index, job_id in enumerate(job_ids):
-                    # job_names.append(f"{solution_type}-{task_id}-{job_id}")
                     job_names[f"{solution_type}-Task{task_id}-Job{job_id}"] = job_prerequisites[job_index]
                     job_xml = job_xmls[job_index]
-                    # with open(f"{solution_type}-Task{task_id}-Job{job_id}.xml") as xmlFile:
-                    #     config = xmlFile.read()
                     server.upsert_job(f"{solution_type}-Task{task_id}-Job{job_id}", job_xml)
+        
         return job_names
+    
     except Exception as e:
         logging.error(f"Error while creating jobs. Error: {e}")
         return {}
@@ -199,8 +199,6 @@ class EthernetHandler(SolutionHandler):
                 host_name = dut_configuration["custom_comodels_config"][0]["host_name"]
                 domain_id = dut_configuration["custom_comodels_config"][0]["domain_id"]
             
-            # print("lolololo")
-            #print(len(dut_configuration["custom_comodels_config"]))
             
             #script += script_handler.start_stage("DUT Configuration")
             script += script_handler.write_step(f"echo '##################### DUT CONFIG #####################'")

@@ -901,36 +901,41 @@ class Ui_launching_config(object):
         self.Delete_pushButton.setIconSize(QtCore.QSize(24, 30))
         self.Delete_pushButton.setObjectName("Delete_pushButton")
         self.Add_Hlayout.addWidget(self.Delete_pushButton)
-        self.Add_PushButton = QtWidgets.QPushButton(self.lanch_conf_Hlayout)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.Add_PushButton.sizePolicy().hasHeightForWidth())
-        self.Add_PushButton.setSizePolicy(sizePolicy)
-        self.Add_PushButton.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.Add_PushButton.setToolTip("Add Dut Configuration")
-        #self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
-        self.Add_PushButton.setStyleSheet(
-        "QPushButton {"
-        "    background-color: #1b1d23;"
-        "    color: white;"  # Set the text color to white
-        "    padding-right: 10px;"
-        "    padding-left: 10px;"
-        "}"
-        "QToolTip {" 
-        "    color: black;"
-        "    background-color : white ;" # Set the tooltip text color to white
-        "}"
-        )
-
-        self.Add_PushButton.setObjectName("Add_PushButton")
         
-        self.Add_Hlayout.addWidget(self.Add_PushButton)
+        # self.Add_PushButton = QtWidgets.QPushButton(self.lanch_conf_Hlayout)
+        # sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        # sizePolicy.setHorizontalStretch(1)
+        # sizePolicy.setVerticalStretch(0)
+        # sizePolicy.setHeightForWidth(self.Add_PushButton.sizePolicy().hasHeightForWidth())
+        # self.Add_PushButton.setSizePolicy(sizePolicy)
+        # self.Add_PushButton.setLayoutDirection(QtCore.Qt.RightToLeft)
+        # self.Add_PushButton.setToolTip("Add Dut Configuration")
+        # #self.Add_PushButton.setStyleSheet("QToolTip { color: black; }")
+        # self.Add_PushButton.setStyleSheet(
+        # "QPushButton {"
+        # "    background-color: #1b1d23;"
+        # "    color: white;"  # Set the text color to white
+        # "    padding-right: 10px;"
+        # "    padding-left: 10px;"
+        # "}"
+        # "QToolTip {" 
+        # "    color: black;"
+        # "    background-color : white ;" # Set the tooltip text color to white
+        # "}"
+        # )
+
+        # self.Add_PushButton.setObjectName("Add_PushButton")
+        
+        # self.Add_Hlayout.addWidget(self.Add_PushButton)
+        
+        
         self.lanch_conf_VLayout.addLayout(self.Add_Hlayout)
         self.verticalLayout_3.addLayout(self.lanch_conf_VLayout)
-        self.Dutconfig_Vlayout = QtWidgets.QVBoxLayout()
-        self.Dutconfig_Vlayout.setObjectName("Dutconfig_Vlayout")
-        self.verticalLayout_3.addLayout(self.Dutconfig_Vlayout)
+        
+        # self.Dutconfig_Vlayout = QtWidgets.QVBoxLayout()
+        # self.Dutconfig_Vlayout.setObjectName("Dutconfig_Vlayout")
+        # self.verticalLayout_3.addLayout(self.Dutconfig_Vlayout)
+        
         self.Done_HLayout = QtWidgets.QHBoxLayout()
         self.Done_HLayout.setObjectName("Done_HLayout")
         spacerItem10 = QtWidgets.QSpacerItem(632, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -956,8 +961,10 @@ class Ui_launching_config(object):
 
     def retranslateUi(self, launching_config):
         _translate = QtCore.QCoreApplication.translate
-        launching_config.setWindowTitle(_translate("launching_config", "Launching Configurations"))
-        self.Title.setText(_translate("launching_config", "Launching Configurations :"))
+        launching_config.setWindowTitle(_translate("launching_config", "Tool Launching Configurations"))
+        
+        #self.Title.setAlignment(QtCore.Qt.AlignCenter)
+        #self.Title.setText(_translate("launching_config", "Tool Launching Configurations :"))
         self.ToolConfigGroupBox.setTitle(_translate("launching_config", "Tools Configuration"))
         self.LaunchToolCheckBox.setText(_translate("launching_config", "Launch Tool"))
         self.MasterToolGroupBox.setTitle(_translate("launching_config", "Master Tool Configuration"))
@@ -1000,5 +1007,5 @@ class Ui_launching_config(object):
         self.ToolLaunch_comboBox_2.setItemText(2, _translate("launching_config", "GDB_Run"))
         self.TerminateTool_checkBox_2.setText(_translate("launching_config", "Terminate Tool on Error"))
         self.TerminateOnErr_checkBox_2.setText(_translate("launching_config", "Terminate Tool"))
-        self.Add_PushButton.setText(_translate("launching_config", "+"))
+        #self.Add_PushButton.setText(_translate("launching_config", "+"))
         self.Done_pushButton.setText(_translate("launching_config", "Done"))

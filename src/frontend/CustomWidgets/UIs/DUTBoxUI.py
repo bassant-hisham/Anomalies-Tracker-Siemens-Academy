@@ -753,17 +753,20 @@ class Ui_DUTConfiguration(object):
         self.DPILaunchModeHLayout_2.addWidget(self.DPILaunchMode_lineEdit_2)
         self.gridLayout.addLayout(self.DPILaunchModeHLayout_2, 0, 0, 1, 1)
         self.gridLayout_8.addWidget(self.DPIConf_groupbox, 8, 0, 1, 1)
-        self.LaunchDPI_checkBox = QtWidgets.QCheckBox(DUTConfiguration)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(100)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.LaunchDPI_checkBox.sizePolicy().hasHeightForWidth())
-        self.LaunchDPI_checkBox.setSizePolicy(sizePolicy)
-        self.LaunchDPI_checkBox.setStyleSheet("font-size:22px;\n"
-"font:normal;\n"
-"background:none;")
-        self.LaunchDPI_checkBox.setObjectName("LaunchDPI_checkBox")
-        self.gridLayout_8.addWidget(self.LaunchDPI_checkBox, 3, 0, 1, 1)
+        
+#         self.LaunchDPI_checkBox = QtWidgets.QCheckBox(DUTConfiguration)
+#         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+#         sizePolicy.setHorizontalStretch(100)
+#         sizePolicy.setVerticalStretch(0)
+#         sizePolicy.setHeightForWidth(self.LaunchDPI_checkBox.sizePolicy().hasHeightForWidth())
+#         self.LaunchDPI_checkBox.setSizePolicy(sizePolicy)
+#         self.LaunchDPI_checkBox.setStyleSheet("font-size:22px;\n"
+# "font:normal;\n"
+# "background:none;")
+#         self.LaunchDPI_checkBox.setObjectName("LaunchDPI_checkBox")
+#         self.gridLayout_8.addWidget(self.LaunchDPI_checkBox, 3, 0, 1, 1)
+        
+        
         self.DesignPath_Hlayout_2 = QtWidgets.QHBoxLayout()
         self.DesignPath_Hlayout_2.setObjectName("DesignPath_Hlayout_2")
         
@@ -908,12 +911,10 @@ class Ui_DUTConfiguration(object):
         self.DPILaunchType_comboBox_2.setItemText(2, _translate("DUTConfiguration", "Emulation_Velclkgen"))
         self.DPILaunchType_comboBox_2.setItemText(3, _translate("DUTConfiguration", "Simulation_Velclkgen"))
         self.DPILaunchMode_label_2.setText(_translate("DUTConfiguration", "DPI Launch Mode"))
-        self.LaunchDPI_checkBox.setText(_translate("DUTConfiguration", "  Launch DPI"))
+        #self.LaunchDPI_checkBox.setText(_translate("DUTConfiguration", "  Launch DPI"))
         self.TerminateDPIOnError_checkBox.setText(_translate("DUTConfiguration", "  Terminate DPI on Error"))
         #self.DesignPath_label_2.setText(_translate("DUTConfiguration", "Design Path"))
         #self.DesignPath_toolButton_2.setText(_translate("DUTConfiguration", "..."))
         
-        
-#     def itemChanged(self):
-#         self.collect_data()
+
        
